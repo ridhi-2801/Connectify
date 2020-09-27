@@ -6,10 +6,10 @@ import 'package:social_share/social_share.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class linkCards extends StatelessWidget {
-  const linkCards({
-    Key key,
-  }) : super(key: key);
-
+ final String groupImage;
+ final String groupNameText;
+ final String linkText;
+linkCards({this.groupImage,this.groupNameText,this.linkText});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -43,11 +43,12 @@ class linkCards extends StatelessWidget {
                   child: CircleAvatar(
                     radius: 35,
                     backgroundColor:  Color(0xff075E54),
+                   // backgroundImage: AssetImage(groupImage),
                   ),
                 ),
                 Padding(
                     padding: const EdgeInsets.only(top:18.0),
-                    child: Text("Name of group",style: TextStyle(
+                    child: Text(groupNameText,style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18
                     ),)
@@ -62,7 +63,7 @@ class linkCards extends StatelessWidget {
                         throw 'Could not launch $link';
                       }
                     },
-                    text: "https://chat.whatsapp.com/Egn2G0hhDzD9tgmVdgUl9e",
+                    text: linkText,
                     linkStyle: TextStyle(color: Colors.black,fontSize: 12),
                     options: LinkifyOptions(humanize: true),
                   ),
@@ -89,7 +90,7 @@ class linkCards extends StatelessWidget {
                               children: [
                                 IconButton(icon: Icon(FontAwesomeIcons.whatsapp), onPressed: () async {
                                   SocialShare.shareWhatsapp(
-                                      "https://chat.whatsapp.com/Egn2G0hhDzD9tgmVdgUl9e")
+                                      linkText)
                                       .then((data) {
                                     print(data);
                                     Navigator.pop(context);
@@ -97,7 +98,7 @@ class linkCards extends StatelessWidget {
                                 },color: Color(0xff075E54),),
                                 IconButton(icon: Icon(FontAwesomeIcons.telegram),  onPressed: () async {
                                   SocialShare.shareTelegram(
-                                      "https://chat.whatsapp.com/Egn2G0hhDzD9tgmVdgUl9e")
+                                      linkText)
                                       .then((data) {
                                     print(data);
                                     Navigator.pop(context);
@@ -111,11 +112,11 @@ class linkCards extends StatelessWidget {
                                 IconButton(icon: Icon(FontAwesomeIcons.twitter), onPressed: (){
                                   SocialShare.shareTwitter(
                                       "Hey! I am inviting you to join the group",
-                                      hashtags: ["hey", "invite", "join", "group"],url:"https://your-url-here/");
+                                      hashtags: ["hey", "invite", "join", "group"],url:linkText);
                                   Navigator.pop(context);
                                 },color: Color(0xff00acee),),
                                 IconButton(icon: Icon(FontAwesomeIcons.copy), onPressed: (){
-                                  SocialShare.copyToClipboard("https://chat.whatsapp.com/Egn2G0hhDzD9tgmVdgUl9e");
+                                  SocialShare.copyToClipboard(linkText);
                                   Navigator.pop(context);
                                 },color: Colors.black,),
                               ],
