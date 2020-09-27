@@ -298,6 +298,7 @@ class _ExploreState extends State<Explore> {
     );
   }
 }
+
 class CardSearch extends SearchDelegate<linkCards>{
   @override
   List<Widget> buildActions(BuildContext context) {
