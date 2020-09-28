@@ -4,12 +4,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:social_share/social_share.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:clay_containers/clay_containers.dart';
 
-class linkCards extends StatelessWidget {
+class LinkCards extends StatelessWidget {
  final String groupImage;
  final String groupNameText;
  final String linkText;
-linkCards({this.groupImage,this.groupNameText,this.linkText});
+LinkCards({this.groupImage,this.groupNameText,this.linkText});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -18,20 +19,25 @@ linkCards({this.groupImage,this.groupNameText,this.linkText});
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
+          ClayContainer(
+            borderRadius: 10,
             height: 200,
             width: 150,
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(4.0),
-                boxShadow: <BoxShadow>[
-                  BoxShadow(
-                    color: Color(0xff075E54),
-                    offset: Offset(0.0,10.0),
-                    blurRadius:6,
-                  )
-                ]
-            ),
+            depth: 40,
+            spread: 5,
+            color: Colors.white,
+            curveType: CurveType.none,
+//            decoration: BoxDecoration(
+//                color: Colors.white,
+//                borderRadius: BorderRadius.circular(4.0),
+//                boxShadow: <BoxShadow>[
+//                  BoxShadow(
+//                    color: Color(0xff075E54),
+//                    offset: Offset(0.0,5.0),
+//                    blurRadius:6,
+//                  )
+//                ]
+//            ),
             child: Column(
               children: [
                 Divider(
@@ -42,7 +48,7 @@ linkCards({this.groupImage,this.groupNameText,this.linkText});
                   padding: const EdgeInsets.only(top:8.0),
                   child: CircleAvatar(
                     radius: 35,
-                    backgroundColor:  Color(0xff075E54),
+                    backgroundColor:  Colors.blueAccent,
                    // backgroundImage: AssetImage(groupImage),
                   ),
                 ),
@@ -72,9 +78,12 @@ linkCards({this.groupImage,this.groupNameText,this.linkText});
             ),
           ),
           Container(
-            color: Colors.black,
             height: 30,
             width: 120,
+            decoration: BoxDecoration(
+                color: Colors.black,
+              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10.0),bottomRight: Radius.circular(10.0),)
+            ),
             child: Center(
                 child:GestureDetector(
                   onTap: (){
