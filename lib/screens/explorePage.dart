@@ -1,12 +1,14 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/constants.dart';
 import 'package:flutter_app/linkData.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../LinkCards.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import '../homePageCarousel.dart';
 import 'categories_page.dart';
+import 'login.dart';
 import 'settings_page.dart';
 
 class Explore extends StatefulWidget {
@@ -105,6 +107,7 @@ class _ExploreState extends State<Explore> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: isDark?darkModeColor:baseColor,
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.indigoAccent,
           elevation: 10,
@@ -113,129 +116,130 @@ class _ExploreState extends State<Explore> {
             color: Colors.white,
           ),
           onPressed: () {
-            showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: Text('Add a  Group'),
-                  scrollable: true,
-                  content: Column(
-                    children: [
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          hintText: 'Name of Group',
-                        ),
-                      ),
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          hintText: 'Link of group',
-                        ),
-                      ),
-//                      Form(
-//                        key: formKey,
-//                        child: DropDownFormField(
-//                          hintText: 'Group Genre',
-//                          filled: false,
-//                          value: _myActivity,
-//                          onSaved: (value) {
-//                            setState(() {
-//                              _myActivity = value;
-//                            });
-//                          },
-//                          onChanged: (value) {
-//                            setState(() {
-//                              _myActivity = value;
-//                            });
-//                          },
-//                          dataSource: [
-//                            {
-//                              "display": "Reader's Choice",
-//                              "value": "Reader's Choice",
-//                            },
-//                            {
-//                              "display": "Tech",
-//                              "value": "Tech",
-//                            },
-//                            {
-//                              "display": "Gamers",
-//                              "value": "Gamers",
-//                            },
-//                            {
-//                              "display": "Youtube Promotion",
-//                              "value": "Youtube Promotion",
-//                            },
-//                            {
-//                              "display": "Art n Craft",
-//                              "value": "Art n Craft",
-//                            },
-//                            {
-//                              "display": "News Lovers",
-//                              "value": "News Lovers",
-//                            },
-//                          ],
-//                          textField: 'display',
-//                          valueField: 'value',
+            Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+//            showDialog(
+//              context: context,
+//              barrierDismissible: false,
+//              builder: (BuildContext context) {
+//                return AlertDialog(
+//                  title: Text('Add a  Group'),
+//                  scrollable: true,
+//                  content: Column(
+//                    children: [
+//                      TextFormField(
+//                        decoration: const InputDecoration(
+//                          hintText: 'Name of Group',
 //                        ),
 //                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 18.0),
-                        child: GestureDetector(
-                          onTap: () {
-                            _showPicker(context);
-                          },
-                          child: Card(
-                            elevation: 10,
-                            child: Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: _image != null
-                                    ? ClipRRect(
-                                        child: Image.file(
-                                          _image,
-                                          width: 100,
-                                          height: 100,
-                                          fit: BoxFit.fill,
-                                        ),
-                                      )
-                                    : Column(
-                                        children: [
-                                          Icon(
-                                            Icons.add,
-                                            size: 50,
-                                            color: Colors.black54,
-                                          ),
-                                          SizedBox(
-                                            height: 10,
-                                          ),
-                                          Text(
-                                            "Add Image",
-                                            style: TextStyle(
-                                                color: Colors.black54,
-                                                fontSize: 18),
-                                          )
-                                        ],
-                                      )),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  actions: [
-                    FlatButton(
-                      color: Color(0xff075E54),
-                      child: Text(
-                        "Add",
-                        style: TextStyle(color: Colors.white, fontSize: 20),
-                      ),
-                      onPressed: () {
-                        _saveForm();
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
-                );
-              },
-            );
+//                      TextFormField(
+//                        decoration: const InputDecoration(
+//                          hintText: 'Link of group',
+//                        ),
+//                      ),
+////                      Form(
+////                        key: formKey,
+////                        child: DropDownFormField(
+////                          hintText: 'Group Genre',
+////                          filled: false,
+////                          value: _myActivity,
+////                          onSaved: (value) {
+////                            setState(() {
+////                              _myActivity = value;
+////                            });
+////                          },
+////                          onChanged: (value) {
+////                            setState(() {
+////                              _myActivity = value;
+////                            });
+////                          },
+////                          dataSource: [
+////                            {
+////                              "display": "Reader's Choice",
+////                              "value": "Reader's Choice",
+////                            },
+////                            {
+////                              "display": "Tech",
+////                              "value": "Tech",
+////                            },
+////                            {
+////                              "display": "Gamers",
+////                              "value": "Gamers",
+////                            },
+////                            {
+////                              "display": "Youtube Promotion",
+////                              "value": "Youtube Promotion",
+////                            },
+////                            {
+////                              "display": "Art n Craft",
+////                              "value": "Art n Craft",
+////                            },
+////                            {
+////                              "display": "News Lovers",
+////                              "value": "News Lovers",
+////                            },
+////                          ],
+////                          textField: 'display',
+////                          valueField: 'value',
+////                        ),
+////                      ),
+//                      Padding(
+//                        padding: const EdgeInsets.only(top: 18.0),
+//                        child: GestureDetector(
+//                          onTap: () {
+//                            _showPicker(context);
+//                          },
+//                          child: Card(
+//                            elevation: 10,
+//                            child: Padding(
+//                                padding: const EdgeInsets.all(16.0),
+//                                child: _image != null
+//                                    ? ClipRRect(
+//                                        child: Image.file(
+//                                          _image,
+//                                          width: 100,
+//                                          height: 100,
+//                                          fit: BoxFit.fill,
+//                                        ),
+//                                      )
+//                                    : Column(
+//                                        children: [
+//                                          Icon(
+//                                            Icons.add,
+//                                            size: 50,
+//                                            color: Colors.black54,
+//                                          ),
+//                                          SizedBox(
+//                                            height: 10,
+//                                          ),
+//                                          Text(
+//                                            "Add Image",
+//                                            style: TextStyle(
+//                                                color: Colors.black54,
+//                                                fontSize: 18),
+//                                          )
+//                                        ],
+//                                      )),
+//                          ),
+//                        ),
+//                      )
+//                    ],
+//                  ),
+//                  actions: [
+//                    FlatButton(
+//                      color: Color(0xff075E54),
+//                      child: Text(
+//                        "Add",
+//                        style: TextStyle(color: Colors.white, fontSize: 20),
+//                      ),
+//                      onPressed: () {
+//                        _saveForm();
+//                        Navigator.pop(context);
+//                      },
+//                    ),
+//                  ],
+//                );
+//              },
+//            );
           },
         ),
         body: Container(
@@ -253,12 +257,12 @@ class _ExploreState extends State<Explore> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Spacer(),
-                    IconButton(icon: Icon(EvaIcons.gridOutline,size: 25.0,), onPressed: (){
+                    IconButton(icon: Icon(EvaIcons.gridOutline,size: 25.0,color:isDark?baseColor:darkModeColor), onPressed: (){
                       Navigator.push(context, MaterialPageRoute(builder: (context){
                         return CategoriesPage();
                       }));
                     }),
-                    IconButton(icon: Icon(EvaIcons.settings2Outline,size: 25.0,),
+                    IconButton(icon: Icon(EvaIcons.settings2Outline,size: 25.0,color:isDark?baseColor:darkModeColor),
                         onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsPage())),),
                   ],
                 ),
@@ -266,7 +270,7 @@ class _ExploreState extends State<Explore> {
               Padding(
                 padding: const EdgeInsets.only(left: 20.0,),
                 child: Text(
-                  "Explore",style: TextStyle(color: Colors.black,fontSize: 44.0, fontFamily: 'BalsamiqSans'),
+                  "Explore",style: TextStyle(color:isDark?baseColor:darkModeColor,fontSize: 44.0, fontFamily: 'BalsamiqSans'),
                 ),
               ),
               SizedBox(height: 10,),
