@@ -1,12 +1,13 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/linkData.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../LinkCards.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import '../homePageCarousel.dart';
 import 'categories_page.dart';
 import 'settings_page.dart';
-
 
 class Explore extends StatefulWidget {
   @override
@@ -59,7 +60,6 @@ class _ExploreState extends State<Explore> {
   }
 
   final picker = ImagePicker();
-
   _imgFromCamera() async {
     final pickedFile = await picker.getImage(source: ImageSource.camera ,
         imageQuality: 50);
@@ -94,6 +94,12 @@ class _ExploreState extends State<Explore> {
       });
     }
   }
+
+  List<LinkData> list = [
+    LinkData(name: 'Pepcoding' , categories: '#' , image: '#' , platform: 'Telegram', link: '#' ),
+    LinkData(name: 'PrepInsta' , categories: '#' , image: '#' , platform: 'Telegram', link: '#' ),
+    LinkData(name: 'Coding Ninja' , categories: '#' , image: '#' , platform: 'Telegram', link: '#' ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -232,24 +238,6 @@ class _ExploreState extends State<Explore> {
             );
           },
         ),
-//      appBar: AppBar(
-//        elevation: 0,
-//        backgroundColor: Color(0xff075E54),
-//        centerTitle: true,
-//        title: Text(
-//          "Explore",
-//        ),
-//        actions: [
-//          IconButton(
-//              icon: Icon(
-//                Icons.search,
-//                color: Colors.white,
-//              ),
-//              onPressed: (){
-//                showSearch(context: context, delegate: CardSearch());
-//              })
-//        ],
-//      ),
         body: Container(
           decoration: BoxDecoration(
               color: Colors.transparent,
@@ -307,82 +295,24 @@ class _ExploreState extends State<Explore> {
               SizedBox(height:20),
               Expanded(
                 child: Container(
+                  width: double.infinity,
                   child: ListView(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left:8.0),
-                        child: Text(
-                          "Tech",
-                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,fontFamily: 'Gilroy'),
-                        ),
+                      HomePageCarousel(
+                        listLinkData: list,
+                        title: "Coding",
                       ),
-                      Container(
-                        width: 300,
-                        height: 250,
-                        child: ListView(
-                          scrollDirection: Axis.horizontal,
-                          children: [
-                            LinkCards(
-                              linkText:
-                                  "https://chat.whatsapp.com/Egn2G0hhDzD9tgmVdgUl9e",
-                              groupNameText: "Flutter Dev",
-                              groupImage: '',
-                            ),
-                            LinkCards(
-                              linkText:
-                                  "https://chat.whatsapp.com/Egn2G0hhDzD9tgmVdgUl9e",
-                              groupNameText: "Flutter Dev",
-                              groupImage: '',
-                            ),
-                            LinkCards(
-                              linkText:
-                                  "https://chat.whatsapp.com/Egn2G0hhDzD9tgmVdgUl9e",
-                              groupNameText: "Flutter Dev", groupImage: '',
-                            ),
-                            LinkCards(
-                              linkText:
-                                  "https://chat.whatsapp.com/Egn2G0hhDzD9tgmVdgUl9e",
-                              groupNameText: "Flutter Dev", groupImage: '',
-                            ),
-                          ],
-                        ),
+                      HomePageCarousel(
+                        listLinkData: list,
+                        title: "Technical",
                       ),
-                      SizedBox(height: 12,),
-                      Padding(
-                        padding: const EdgeInsets.only(left:8.0),
-                        child: Text(
-                          "Reader's Choice",
-                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,fontFamily: 'Gilroy'),
-                        ),
+                      HomePageCarousel(
+                        listLinkData: list,
+                        title: "Podcast",
                       ),
-                      Container(
-                        width: 300,
-                        height: 250,
-                        child: ListView(
-                          scrollDirection: Axis.horizontal,
-                          children: [
-                            LinkCards(
-                              linkText:
-                                  "https://chat.whatsapp.com/Egn2G0hhDzD9tgmVdgUl9e",
-                              groupNameText: "Flutter Dev", groupImage: '',
-                            ),
-                            LinkCards(
-                              linkText:
-                                  "https://chat.whatsapp.com/Egn2G0hhDzD9tgmVdgUl9e",
-                              groupNameText: "Flutter Dev", groupImage: '',
-                            ),
-                            LinkCards(
-                              linkText:
-                                  "https://chat.whatsapp.com/Egn2G0hhDzD9tgmVdgUl9e",
-                              groupNameText: "Flutter Dev", groupImage: '',
-                            ),
-                            LinkCards(
-                              linkText:
-                                  "https://chat.whatsapp.com/Egn2G0hhDzD9tgmVdgUl9e",
-                              groupNameText: "Flutter Dev", groupImage: '',
-                            ),
-                          ],
-                        ),
+                      HomePageCarousel(
+                        listLinkData: list,
+                        title: "Chicku <3 Panda",
                       ),
                     ],
                   ),
