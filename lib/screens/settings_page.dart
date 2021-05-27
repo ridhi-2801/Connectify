@@ -4,22 +4,31 @@ import 'package:flutter/material.dart';
 import '../constants.dart';
 
 
-bool isDark=false;
 
-void darkTheme(){}
 
-class SettingsPage extends StatelessWidget {
+
+
+class SettingsPage extends StatefulWidget {
+  @override
+  _SettingsPageState createState() => _SettingsPageState();
+}
+
+class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Container( 
+      child: Container(
+
         child: Scaffold(
+          backgroundColor: isDark?darkModeColor:Colors.white,
+
             body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Padding(
             padding: const EdgeInsets.only(top: 10.0, left: 8.0),
             child: IconButton(
               icon: Icon(
                 EvaIcons.arrowIosBack,
+                color:isDark?Colors.white:darkModeColor,
                 size: 40.0,
               ),
               onPressed: () {
@@ -32,21 +41,27 @@ class SettingsPage extends StatelessWidget {
             child: Text(
               "Settings",
               style: TextStyle(
-                  color: Colors.black, fontSize: 40.0, fontFamily: 'BalsamiqSans'),
+                  color: isDark?Colors.white:darkModeColor, fontSize: 40.0, fontFamily: 'BalsamiqSans'),
             ),
           ),
           SizedBox(
             height: 25.0),
               SettingsListTitles(title: "Switch Theme", icons: EvaIcons.moon,tap: (){
-                if(isDark==false) {
-                  isDark=true;
-                  darkTheme();
-                }
+               setState(() {
+                 if(isDark==false) {
+                   isDark=true;
+
+                 }else{
+                   isDark=false;
+                 }
+               });
               },),
 
               Padding(
                 padding: const EdgeInsets.only(top:18.0),
-                child: SettingsListTitles(title: "Rate and Review", icons: EvaIcons.star, tap: (){},),
+                child: SettingsListTitles(title: "Rate and Review", icons: EvaIcons.star, tap: (){
+                  launchURL("");
+                },),
               ),
 
               Padding(
@@ -63,7 +78,7 @@ class SettingsListTitles extends StatelessWidget {
 
  final String title;
  final IconData icons;
- final  Function tap;
+ final  tap;
 
  SettingsListTitles({required this.title,required this.icons,required this.tap});
 
@@ -74,15 +89,15 @@ class SettingsListTitles extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          color: baseColor,
+          color:  baseColor
         ),
         child: ClayContainer(
           child: ListTile(
-            onTap: (){},
-            title: Text(title,style: TextStyle(fontWeight: FontWeight.w400),),
-            leading: Icon(icons,color: Colors.black,),
+            onTap: tap,
+            title: Text(title,style: TextStyle(fontWeight: FontWeight.w400, color:  isDark?baseColor:darkModeColor,),),
+            leading: Icon(icons,color: isDark?baseColor:darkModeColor,),
           ),
-          color: baseColor,
+          color:  isDark?darkModeColor:baseColor,
           borderRadius: 15,
           depth: 35,
         ),

@@ -5,6 +5,7 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:social_share/social_share.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:clay_containers/clay_containers.dart';
+import 'constants.dart';
 
 class LinkCards extends StatelessWidget {
   final String groupImage;
@@ -30,7 +31,7 @@ class LinkCards extends StatelessWidget {
             width: 150,
             depth: 40,
             spread: 5,
-            color: Colors.white,
+            color: isDark?darkModeColor:baseColor,
             curveType: CurveType.none,
 //            decoration: BoxDecoration(
 //                color: Colors.white,
@@ -46,7 +47,7 @@ class LinkCards extends StatelessWidget {
             child: Column(
               children: [
                 Divider(
-                  color: Colors.black,
+                  color: isDark?baseColor:darkModeColor,
                   thickness: 8,
                 ),
                 Padding(
@@ -62,7 +63,7 @@ class LinkCards extends StatelessWidget {
                     child: Text(
                       groupNameText,
                       style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: isDark?baseColor:darkModeColor,),
                     )),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0, left: 8, right: 8),
@@ -75,7 +76,7 @@ class LinkCards extends StatelessWidget {
                       }
                     },
                     text: linkText,
-                    linkStyle: TextStyle(color: Colors.black, fontSize: 12),
+                    linkStyle: TextStyle(color:  isDark?baseColor:darkModeColor, fontSize: 12),
                     options: LinkifyOptions(humanize: true),
                   ),
                 ),
@@ -86,7 +87,7 @@ class LinkCards extends StatelessWidget {
             height: 30,
             width: 120,
             decoration: BoxDecoration(
-                color: Colors.black,
+                color: isDark?baseColor:darkModeColor,
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(10.0),
                   bottomRight: Radius.circular(10.0),
@@ -174,7 +175,7 @@ class LinkCards extends StatelessWidget {
               child: Text(
                 "Share",
                 style:
-                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                    TextStyle(color: isDark?darkModeColor:baseColor, fontWeight: FontWeight.bold),
               ),
             )),
           )
