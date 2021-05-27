@@ -1,6 +1,16 @@
 import 'package:clay_containers/clay_containers.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'constants.dart';
+
+
+bool isDark=false;
+
+void darkTheme(){
+
+   
+
+}
 
 class SettingsPage extends StatelessWidget {
   @override
@@ -31,28 +41,34 @@ class SettingsPage extends StatelessWidget {
           ),
           SizedBox(
             height: 25.0),
-              SettingsListTitles(title: "Theme", symbol: "🌙",),
+              SettingsListTitles(title: "Switch Theme", icons: EvaIcons.moon,tap: (){
+                if(isDark==false) {
+                  isDark=true;
+                  darkTheme();
+                }
+              },),
 
               Padding(
-                padding: const EdgeInsets.only(top:12.0),
-                child: SettingsListTitles(title: "Rate and Review", symbol: "⭐",),
+                padding: const EdgeInsets.only(top:18.0),
+                child: SettingsListTitles(title: "Rate and Review", icons: EvaIcons.star,),
               ),
 
               Padding(
-                padding: const EdgeInsets.only(top:12.0),
-                child: SettingsListTitles(title: "About", symbol: "🆎",),
+                padding: const EdgeInsets.only(top:18.0),
+                child: SettingsListTitles(title: "About", icons: EvaIcons.people,),
               ),
         ])),
       ),
     );
   }
 }
-final Color baseColor = Colors.white;
+
 class SettingsListTitles extends StatelessWidget {
 
  final String title;
- final String symbol;
- SettingsListTitles({this.title,this.symbol});
+ final IconData icons;
+ final  Function tap;
+ SettingsListTitles({@required this.title,@required this.icons,@required this.tap});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -64,8 +80,9 @@ class SettingsListTitles extends StatelessWidget {
         ),
         child: ClayContainer(
           child: ListTile(
-            title: Text(title,style: TextStyle(fontWeight: FontWeight.w500),),
-            leading: Text(symbol,style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold),),
+            onTap: tap,
+            title: Text(title,style: TextStyle(fontWeight: FontWeight.w400),),
+            leading: Icon(icons,color: Colors.black,),
           ),
           color: baseColor,
           borderRadius: 15,
