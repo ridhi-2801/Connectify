@@ -3,11 +3,6 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import '../constants.dart';
 
-
-
-
-
-
 class SettingsPage extends StatefulWidget {
   @override
   _SettingsPageState createState() => _SettingsPageState();
