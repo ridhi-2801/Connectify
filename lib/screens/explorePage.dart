@@ -1,11 +1,11 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dropdown_formfield/dropdown_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'LinkCards.dart';
+import '../../LinkCards.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'categories_page.dart';
+import 'settings_page.dart';
 
 
 class Explore extends StatefulWidget {
@@ -15,10 +15,12 @@ class Explore extends StatefulWidget {
 
 class _ExploreState extends State<Explore> {
   final formKey = new GlobalKey<FormState>();
-  String _myActivity;
-  String _myActivityResult;
-  File _image;
+  late String _myActivity;
+  late String _myActivityResult;
+  late File _image;
+
   final fireStore = FirebaseFirestore.instance;
+
   @override
   void initState() {
     super.initState();
@@ -56,27 +58,36 @@ class _ExploreState extends State<Explore> {
         });
   }
 
-  _imgFromCamera() async {
-    File image = await ImagePicker.pickImage(
-        source: ImageSource.camera, imageQuality: 50);
+  final picker = ImagePicker();
 
+  _imgFromCamera() async {
+    final pickedFile = await picker.getImage(source: ImageSource.camera ,
+        imageQuality: 50);
     setState(() {
-      _image = image;
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+      } else {
+        print('No image selected.');
+      }
     });
   }
 
   _imgFromGallery() async {
-    File image = await ImagePicker.pickImage(
-        source: ImageSource.gallery, imageQuality: 50);
+    final pickedFile = await picker.getImage(source: ImageSource.camera,
+        imageQuality: 50);
 
     setState(() {
-      _image = image;
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+      } else {
+        print('No image selected.');
+      }
     });
   }
 
   _saveForm() {
     var form = formKey.currentState;
-    if (form.validate()) {
+    if (form!.validate()) {
       form.save();
       setState(() {
         _myActivityResult = _myActivity;
@@ -115,52 +126,52 @@ class _ExploreState extends State<Explore> {
                           hintText: 'Link of group',
                         ),
                       ),
-                      Form(
-                        key: formKey,
-                        child: DropDownFormField(
-                          hintText: 'Group Genre',
-                          filled: false,
-                          value: _myActivity,
-                          onSaved: (value) {
-                            setState(() {
-                              _myActivity = value;
-                            });
-                          },
-                          onChanged: (value) {
-                            setState(() {
-                              _myActivity = value;
-                            });
-                          },
-                          dataSource: [
-                            {
-                              "display": "Reader's Choice",
-                              "value": "Reader's Choice",
-                            },
-                            {
-                              "display": "Tech",
-                              "value": "Tech",
-                            },
-                            {
-                              "display": "Gamers",
-                              "value": "Gamers",
-                            },
-                            {
-                              "display": "Youtube Promotion",
-                              "value": "Youtube Promotion",
-                            },
-                            {
-                              "display": "Art n Craft",
-                              "value": "Art n Craft",
-                            },
-                            {
-                              "display": "News Lovers",
-                              "value": "News Lovers",
-                            },
-                          ],
-                          textField: 'display',
-                          valueField: 'value',
-                        ),
-                      ),
+//                      Form(
+//                        key: formKey,
+//                        child: DropDownFormField(
+//                          hintText: 'Group Genre',
+//                          filled: false,
+//                          value: _myActivity,
+//                          onSaved: (value) {
+//                            setState(() {
+//                              _myActivity = value;
+//                            });
+//                          },
+//                          onChanged: (value) {
+//                            setState(() {
+//                              _myActivity = value;
+//                            });
+//                          },
+//                          dataSource: [
+//                            {
+//                              "display": "Reader's Choice",
+//                              "value": "Reader's Choice",
+//                            },
+//                            {
+//                              "display": "Tech",
+//                              "value": "Tech",
+//                            },
+//                            {
+//                              "display": "Gamers",
+//                              "value": "Gamers",
+//                            },
+//                            {
+//                              "display": "Youtube Promotion",
+//                              "value": "Youtube Promotion",
+//                            },
+//                            {
+//                              "display": "Art n Craft",
+//                              "value": "Art n Craft",
+//                            },
+//                            {
+//                              "display": "News Lovers",
+//                              "value": "News Lovers",
+//                            },
+//                          ],
+//                          textField: 'display',
+//                          valueField: 'value',
+//                        ),
+//                      ),
                       Padding(
                         padding: const EdgeInsets.only(top: 18.0),
                         child: GestureDetector(
@@ -259,8 +270,8 @@ class _ExploreState extends State<Explore> {
                         return CategoriesPage();
                       }));
                     }),
-                    IconButton(icon: Icon(EvaIcons.settings2Outline,size: 25.0,), onPressed: (){}),
-
+                    IconButton(icon: Icon(EvaIcons.settings2Outline,size: 25.0,),
+                        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsPage())),),
                   ],
                 ),
               ),
@@ -301,8 +312,8 @@ class _ExploreState extends State<Explore> {
                       Padding(
                         padding: const EdgeInsets.only(left:8.0),
                         child: Text(
-                          "Tech Groups",
-                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                          "Tech",
+                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,fontFamily: 'Gilroy'),
                         ),
                       ),
                       Container(
@@ -315,21 +326,23 @@ class _ExploreState extends State<Explore> {
                               linkText:
                                   "https://chat.whatsapp.com/Egn2G0hhDzD9tgmVdgUl9e",
                               groupNameText: "Flutter Dev",
+                              groupImage: '',
                             ),
                             LinkCards(
                               linkText:
                                   "https://chat.whatsapp.com/Egn2G0hhDzD9tgmVdgUl9e",
                               groupNameText: "Flutter Dev",
+                              groupImage: '',
                             ),
                             LinkCards(
                               linkText:
                                   "https://chat.whatsapp.com/Egn2G0hhDzD9tgmVdgUl9e",
-                              groupNameText: "Flutter Dev",
+                              groupNameText: "Flutter Dev", groupImage: '',
                             ),
                             LinkCards(
                               linkText:
                                   "https://chat.whatsapp.com/Egn2G0hhDzD9tgmVdgUl9e",
-                              groupNameText: "Flutter Dev",
+                              groupNameText: "Flutter Dev", groupImage: '',
                             ),
                           ],
                         ),
@@ -339,7 +352,7 @@ class _ExploreState extends State<Explore> {
                         padding: const EdgeInsets.only(left:8.0),
                         child: Text(
                           "Reader's Choice",
-                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,fontFamily: 'Gilroy'),
                         ),
                       ),
                       Container(
@@ -351,22 +364,22 @@ class _ExploreState extends State<Explore> {
                             LinkCards(
                               linkText:
                                   "https://chat.whatsapp.com/Egn2G0hhDzD9tgmVdgUl9e",
-                              groupNameText: "Flutter Dev",
+                              groupNameText: "Flutter Dev", groupImage: '',
                             ),
                             LinkCards(
                               linkText:
                                   "https://chat.whatsapp.com/Egn2G0hhDzD9tgmVdgUl9e",
-                              groupNameText: "Flutter Dev",
+                              groupNameText: "Flutter Dev", groupImage: '',
                             ),
                             LinkCards(
                               linkText:
                                   "https://chat.whatsapp.com/Egn2G0hhDzD9tgmVdgUl9e",
-                              groupNameText: "Flutter Dev",
+                              groupNameText: "Flutter Dev", groupImage: '',
                             ),
                             LinkCards(
                               linkText:
                                   "https://chat.whatsapp.com/Egn2G0hhDzD9tgmVdgUl9e",
-                              groupNameText: "Flutter Dev",
+                              groupNameText: "Flutter Dev", groupImage: '',
                             ),
                           ],
                         ),
@@ -397,10 +410,10 @@ class CardSearch extends SearchDelegate<LinkCards> {
 
   @override
   Widget buildLeading(BuildContext context) {
-    IconButton(
+    return IconButton(
         icon: Icon(Icons.arrow_back),
         onPressed: () {
-          close(context, null);
+//          close(context, null);
         });
   }
 
@@ -413,7 +426,7 @@ class CardSearch extends SearchDelegate<LinkCards> {
   Widget buildSuggestions(BuildContext context) {
     return LinkCards(
       linkText: "https://chat.whatsapp.com/Egn2G0hhDzD9tgmVdgUl9e",
-      groupNameText: "Flutter Dev",
+      groupNameText: "Flutter Dev", groupImage: '',
     );
   }
 }

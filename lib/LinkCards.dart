@@ -7,10 +7,15 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:clay_containers/clay_containers.dart';
 
 class LinkCards extends StatelessWidget {
- final String groupImage;
- final String groupNameText;
- final String linkText;
-LinkCards({this.groupImage,this.groupNameText,this.linkText});
+  final String groupImage;
+  final String groupNameText;
+  final String linkText;
+
+  LinkCards({
+      required this.groupImage,
+      required this.groupNameText,
+      required this.linkText});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -45,22 +50,22 @@ LinkCards({this.groupImage,this.groupNameText,this.linkText});
                   thickness: 8,
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top:8.0),
+                  padding: const EdgeInsets.only(top: 8.0),
                   child: CircleAvatar(
                     radius: 35,
-                    backgroundColor:  Colors.blueAccent,
-                   // backgroundImage: AssetImage(groupImage),
+                    backgroundColor: Colors.blueAccent,
+                    // backgroundImage: AssetImage(groupImage),
                   ),
                 ),
                 Padding(
-                    padding: const EdgeInsets.only(top:18.0),
-                    child: Text(groupNameText,style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18
-                    ),)
-                ),
+                    padding: const EdgeInsets.only(top: 18.0),
+                    child: Text(
+                      groupNameText,
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                    )),
                 Padding(
-                  padding: const EdgeInsets.only(top:8.0,left: 8,right: 8),
+                  padding: const EdgeInsets.only(top: 8.0, left: 8, right: 8),
                   child: Linkify(
                     onOpen: (link) async {
                       if (await canLaunch(link.url)) {
@@ -70,7 +75,7 @@ LinkCards({this.groupImage,this.groupNameText,this.linkText});
                       }
                     },
                     text: linkText,
-                    linkStyle: TextStyle(color: Colors.black,fontSize: 12),
+                    linkStyle: TextStyle(color: Colors.black, fontSize: 12),
                     options: LinkifyOptions(humanize: true),
                   ),
                 ),
@@ -82,75 +87,96 @@ LinkCards({this.groupImage,this.groupNameText,this.linkText});
             width: 120,
             decoration: BoxDecoration(
                 color: Colors.black,
-              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10.0),bottomRight: Radius.circular(10.0),)
-            ),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(10.0),
+                  bottomRight: Radius.circular(10.0),
+                )),
             child: Center(
-                child:GestureDetector(
-                  onTap: (){
-                    Alert(
-                      context: context,
-                      title: "Share By:",
-                      content:  Padding(
-                        padding: const EdgeInsets.only(top:28.0),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                IconButton(icon: Icon(FontAwesomeIcons.whatsapp), onPressed: () async {
-                                  SocialShare.shareWhatsapp(
-                                      linkText)
+                child: GestureDetector(
+              onTap: () {
+                Alert(
+                    context: context,
+                    title: "Share By:",
+                    content: Padding(
+                      padding: const EdgeInsets.only(top: 28.0),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              IconButton(
+                                icon: Icon(FontAwesomeIcons.whatsapp),
+                                onPressed: () async {
+                                  SocialShare.shareWhatsapp(linkText)
                                       .then((data) {
                                     print(data);
                                     Navigator.pop(context);
                                   });
-                                },color: Color(0xff075E54),),
-                                IconButton(icon: Icon(FontAwesomeIcons.telegram),  onPressed: () async {
-                                  SocialShare.shareTelegram(
-                                      linkText)
+                                },
+                                color: Color(0xff075E54),
+                              ),
+                              IconButton(
+                                icon: Icon(FontAwesomeIcons.telegram),
+                                onPressed: () async {
+                                  SocialShare.shareTelegram(linkText)
                                       .then((data) {
                                     print(data);
                                     Navigator.pop(context);
                                   });
-                                },color: Colors.blue,),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                IconButton(icon: Icon(FontAwesomeIcons.twitter), onPressed: (){
+                                },
+                                color: Colors.blue,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              IconButton(
+                                icon: Icon(FontAwesomeIcons.twitter),
+                                onPressed: () {
                                   SocialShare.shareTwitter(
                                       "Hey! I am inviting you to join the group",
-                                      hashtags: ["hey", "invite", "join", "group"],url:linkText);
+                                      hashtags: [
+                                        "hey",
+                                        "invite",
+                                        "join",
+                                        "group"
+                                      ],
+                                      url: linkText);
                                   Navigator.pop(context);
-                                },color: Color(0xff00acee),),
-                                IconButton(icon: Icon(FontAwesomeIcons.copy), onPressed: (){
+                                },
+                                color: Color(0xff00acee),
+                              ),
+                              IconButton(
+                                icon: Icon(FontAwesomeIcons.copy),
+                                onPressed: () {
                                   SocialShare.copyToClipboard(linkText);
                                   Navigator.pop(context);
-                                },color: Colors.black,),
-                              ],
-                            ),
-                          ],
-                        ),
+                                },
+                                color: Colors.black,
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
-                        buttons: [
-                          DialogButton(
-                            onPressed: () => Navigator.pop(context),
-                            color: Color(0xff075E54),
-                            child: Text(
-                              "Done",
-                              style: TextStyle(color: Colors.white, fontSize: 20),
-                            ),
-                          )
-                        ]
-                    ).show();
-                  },
-                  child: Text("Share",style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold
-                  ),),
-                )
-            ),
+                    ),
+                    buttons: [
+                      DialogButton(
+                        onPressed: () => Navigator.pop(context),
+                        color: Color(0xff075E54),
+                        child: Text(
+                          "Done",
+                          style: TextStyle(color: Colors.white, fontSize: 20),
+                        ),
+                      )
+                    ]).show();
+              },
+              child: Text(
+                "Share",
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              ),
+            )),
           )
         ],
       ),

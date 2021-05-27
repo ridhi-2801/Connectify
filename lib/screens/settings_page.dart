@@ -1,16 +1,12 @@
 import 'package:clay_containers/clay_containers.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'constants.dart';
+import '../constants.dart';
 
 
 bool isDark=false;
 
-void darkTheme(){
-
-   
-
-}
+void darkTheme(){}
 
 class SettingsPage extends StatelessWidget {
   @override
@@ -50,12 +46,12 @@ class SettingsPage extends StatelessWidget {
 
               Padding(
                 padding: const EdgeInsets.only(top:18.0),
-                child: SettingsListTitles(title: "Rate and Review", icons: EvaIcons.star,),
+                child: SettingsListTitles(title: "Rate and Review", icons: EvaIcons.star, tap: (){},),
               ),
 
               Padding(
                 padding: const EdgeInsets.only(top:18.0),
-                child: SettingsListTitles(title: "About", icons: EvaIcons.people,),
+                child: SettingsListTitles(title: "About", icons: EvaIcons.people, tap: (){},),
               ),
         ])),
       ),
@@ -68,7 +64,9 @@ class SettingsListTitles extends StatelessWidget {
  final String title;
  final IconData icons;
  final  Function tap;
- SettingsListTitles({@required this.title,@required this.icons,@required this.tap});
+
+ SettingsListTitles({required this.title,required this.icons,required this.tap});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -80,7 +78,7 @@ class SettingsListTitles extends StatelessWidget {
         ),
         child: ClayContainer(
           child: ListTile(
-            onTap: tap,
+            onTap: (){},
             title: Text(title,style: TextStyle(fontWeight: FontWeight.w400),),
             leading: Icon(icons,color: Colors.black,),
           ),
