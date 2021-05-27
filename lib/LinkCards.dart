@@ -20,30 +20,19 @@ class LinkCards extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.only(right: 8.0,),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           ClayContainer(
             borderRadius: 10,
-            height: 200,
+            height: 180,
             width: 150,
-            depth: 40,
+            depth: 50,
             spread: 5,
             color: isDark?darkModeColor:baseColor,
             curveType: CurveType.none,
-//            decoration: BoxDecoration(
-//                color: Colors.white,
-//                borderRadius: BorderRadius.circular(4.0),
-//                boxShadow: <BoxShadow>[
-//                  BoxShadow(
-//                    color: Color(0xff075E54),
-//                    offset: Offset(0.0,5.0),
-//                    blurRadius:6,
-//                  )
-//                ]
-//            ),
             child: Column(
               children: [
                 Divider(

@@ -8,7 +8,6 @@ import '../../LinkCards.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import '../homePageCarousel.dart';
 import 'categories_page.dart';
-import 'login.dart';
 import 'settings_page.dart';
 
 class Explore extends StatefulWidget {
@@ -116,7 +115,6 @@ class _ExploreState extends State<Explore> {
             color: Colors.white,
           ),
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
 //            showDialog(
 //              context: context,
 //              barrierDismissible: false,
