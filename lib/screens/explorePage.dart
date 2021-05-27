@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/constants.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../LinkCards.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
@@ -98,7 +99,9 @@ class _ExploreState extends State<Explore> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+
       child: Scaffold(
+        backgroundColor:isDark?darkModeColor:baseColor,
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.indigoAccent,
           elevation: 10,
@@ -265,12 +268,12 @@ class _ExploreState extends State<Explore> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Spacer(),
-                    IconButton(icon: Icon(EvaIcons.gridOutline,size: 25.0,), onPressed: (){
+                    IconButton(icon: Icon(EvaIcons.gridOutline,size: 25.0, color: isDark?baseColor:darkModeColor,), onPressed: (){
                       Navigator.push(context, MaterialPageRoute(builder: (context){
                         return CategoriesPage();
                       }));
                     }),
-                    IconButton(icon: Icon(EvaIcons.settings2Outline,size: 25.0,),
+                    IconButton(icon: Icon(EvaIcons.settings2Outline,size: 25.0, color: isDark?baseColor:darkModeColor,),
                         onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsPage())),),
                   ],
                 ),
@@ -278,7 +281,7 @@ class _ExploreState extends State<Explore> {
               Padding(
                 padding: const EdgeInsets.only(left: 20.0,),
                 child: Text(
-                  "Explore",style: TextStyle(color: Colors.black,fontSize: 44.0, fontFamily: 'BalsamiqSans'),
+                  "Explore",style: TextStyle( color: isDark?baseColor:darkModeColor,fontSize: 44.0, fontFamily: 'BalsamiqSans'),
                 ),
               ),
               SizedBox(height: 10,),

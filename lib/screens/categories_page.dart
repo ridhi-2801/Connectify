@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/rendering.dart';
 import '../category_page.dart';
+import '../constants.dart';
 
 class CategoriesPage extends StatefulWidget {
   @override
@@ -21,17 +22,18 @@ class _CategoriesPageState extends State<CategoriesPage> {
 //        ]
 //      )),
       child: Scaffold(
+        backgroundColor:isDark?darkModeColor:baseColor,
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 10.0, left: 8.0),
-              child: IconButton(icon: Icon(EvaIcons.arrowIosBack,size: 40.0,), onPressed: (){Navigator.pop(context);}, ),
+              child: IconButton(icon: Icon(EvaIcons.arrowIosBack,size: 40.0,color:isDark?baseColor:darkModeColor), onPressed: (){Navigator.pop(context);}, ),
             ),
             Padding(
               padding: const EdgeInsets.only(top:10.0,left: 20.0),
               child: Text(
-                "Categories",style: TextStyle(color: Colors.black,fontSize: 40.0, fontFamily: 'BalsamiqSans'),
+                "Categories",style: TextStyle(  color: isDark?baseColor:darkModeColor,fontSize: 40.0, fontFamily: 'BalsamiqSans'),
               ),
             ),
             SizedBox(height: 15.0,),
@@ -109,7 +111,7 @@ class CategoriesCard extends StatelessWidget {
     this.categoryIcon,
   });
 
-  final Color baseColor = Colors.white;
+
 
   @override
   Widget build(BuildContext context) {
@@ -138,13 +140,14 @@ class CategoriesCard extends StatelessWidget {
                   children: [
                     Icon(
                       categoryIcon,size: y/13,
+                      color: isDark?baseColor:darkModeColor,
                     ),
                     SizedBox(height: 4.0,),
-                    Text(categoryName),
+                    Text(categoryName,style: TextStyle(  color: isDark?baseColor:darkModeColor,),),
                   ],
                 ),
               ),
-              color: baseColor,
+              color: isDark?darkModeColor:baseColor,
               borderRadius: 15,
               depth: 35,
               spread: 6,
