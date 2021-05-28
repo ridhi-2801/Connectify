@@ -1,11 +1,14 @@
 import 'dart:ui';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/constants.dart';
 import 'package:flutter_app/screens/Register.dart';
 import 'addLinkPage.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter_app/googleAuth.dart';
 bool isSee=true;
 
 class Login extends StatefulWidget {
@@ -110,8 +113,12 @@ class _LoginState extends State<Login> {
                               Navigator.push(context, MaterialPageRoute(builder: (contextBuilder)=>Register()));
                             }, child: Text("REGISTER",style: TextStyle(fontSize: 16,color: loginColor,fontWeight: FontWeight.w700),)),
                             GestureDetector(
-                                onTap: (){
-
+                                onTap: () async {
+                                  FirebaseAuth auth = FirebaseAuth.instance;
+                                  await GoogleAuth().signInWithGoogle().then((value){
+                                    print(value);
+                                    Navigator.push(context,MaterialPageRoute(builder: (context)=>AddLinkPage()));
+                                  });
                                 },
                                 child: CircleAvatar(backgroundColor: loginColor,child: Icon(EvaIcons.google,color: baseColor,),))
 
