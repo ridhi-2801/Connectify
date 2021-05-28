@@ -37,6 +37,29 @@ class _CategoriesPageState extends State<CategoriesPage> {
               ),
             ),
             SizedBox(height: 15.0,),
+            Padding(
+              padding: const EdgeInsets.only(left: 20.0,right: 20.0),
+              child: Container(
+                padding: EdgeInsets.only(left: 10.0,right: 10.0),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                    color: Colors.blueGrey.withOpacity(0.1)
+                ),
+                child: TextField(
+                  style: TextStyle(color: Colors.black),
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    icon: Icon(EvaIcons.searchOutline,size: 25.0,color: Color(0xFF6486B2),),
+                    hintText: 'Search',
+                    hintStyle: TextStyle(color: Color(0xFF6486B2)),
+                    labelStyle: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 15.0,),
             Expanded(
               child: SingleChildScrollView(
                 child: Container(
