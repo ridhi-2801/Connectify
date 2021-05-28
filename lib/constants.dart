@@ -15,13 +15,10 @@ launchURL(String url) async {
 }
 
 //login page constants
-
 final textStyle=TextStyle(fontSize: 20,fontWeight: FontWeight.w500);
 final loginColor=Color(0xff744cbc);
 
-
-
-var iconMap = {
+Map<String,IconData> iconMap = {
   'Coding':EvaIcons.smartphoneOutline,
   'Fashion':EvaIcons.shoppingBagOutline,
   'Photography':EvaIcons.cameraOutline,
