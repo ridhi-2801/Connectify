@@ -1,8 +1,8 @@
 import 'dart:io';
-
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/constants.dart';
+import 'package:flutter_app/dropDown.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddLinkPage extends StatefulWidget {
@@ -96,19 +96,17 @@ class _AddLinkPageState extends State<AddLinkPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: isDark ? darkModeColor : baseColor,
+        backgroundColor: baseColor,
         body: Padding(
             padding: const EdgeInsets.only(top: 18.0),
-            child:
-                ListView(
-                    children: [
+            child: ListView(children: [
               Padding(
                 padding: const EdgeInsets.only(top: 10.0),
                 child: Align(
                   alignment: Alignment.topLeft,
                   child: IconButton(
-                    icon: Icon(EvaIcons.close,
-                        size: 40.0, color: darkModeColor),
+                    icon:
+                        Icon(EvaIcons.close, size: 40.0, color: darkModeColor),
                     onPressed: () {
                       Navigator.pop(context);
                     },
@@ -120,16 +118,14 @@ class _AddLinkPageState extends State<AddLinkPage> {
                 child: Text(
                   'Add Community Link',
                   style: TextStyle(
-                      color: isDark ? baseColor : darkModeColor,
+                      color: darkModeColor,
                       fontSize: 30.0,
                       fontFamily: 'BalsamiqSans'),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 16,right: 16,top: 50),
-                child: Column(
-
-                  children: [
+                  padding: const EdgeInsets.only(left: 16, right: 16, top: 50),
+                  child: Column(children: [
                     TextFormField(
                       decoration: const InputDecoration(
                         hintText: 'Name of Group',
@@ -140,52 +136,8 @@ class _AddLinkPageState extends State<AddLinkPage> {
                         hintText: 'Link of group',
                       ),
                     ),
-//                      Form(
-//                        key: formKey,
-//                        child: DropDownFormField(
-//                          hintText: 'Group Genre',
-//                          filled: false,
-//                          value: _myActivity,
-//                          onSaved: (value) {
-//                            setState(() {
-//                              _myActivity = value;
-//                            });
-//                          },
-//                          onChanged: (value) {
-//                            setState(() {
-//                              _myActivity = value;
-//                            });
-//                          },
-//                          dataSource: [
-//                            {
-//                              "display": "Reader's Choice",
-//                              "value": "Reader's Choice",
-//                            },
-//                            {
-//                              "display": "Tech",
-//                              "value": "Tech",
-//                            },
-//                            {
-//                              "display": "Gamers",
-//                              "value": "Gamers",
-//                            },
-//                            {
-//                              "display": "Youtube Promotion",
-//                              "value": "Youtube Promotion",
-//                            },
-//                            {
-//                              "display": "Art n Craft",
-//                              "value": "Art n Craft",
-//                            },
-//                            {
-//                              "display": "News Lovers",
-//                              "value": "News Lovers",
-//                            },
-//                          ],
-//                          textField: 'display',
-//                          valueField: 'value',
-//                        ),
-//                      ),
+                    SizedBox(height: 20,),
+                    DropDown(),
                     Padding(
                       padding: const EdgeInsets.only(top: 58.0),
                       child: GestureDetector(
@@ -193,8 +145,8 @@ class _AddLinkPageState extends State<AddLinkPage> {
                           _showPicker(context);
                         },
                         child: Container(
-                          height: MediaQuery.of(context).size.height/4,
-                          width: MediaQuery.of(context).size.width/2,
+                          height: MediaQuery.of(context).size.height / 4,
+                          width: MediaQuery.of(context).size.width / 2,
                           decoration: BoxDecoration(
                             boxShadow: [
                               BoxShadow(
@@ -225,34 +177,30 @@ class _AddLinkPageState extends State<AddLinkPage> {
 ////                                      fit: BoxFit.fill,
 ////                                    ),
 ////                                  )
-                              child:  Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.add,
-                                        size: 50,
-                                        color: Colors.black54,
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Text(
-                                        "Add Image",
-                                        style: TextStyle(
-                                            color: Colors.black54,
-                                            fontSize: 18),
-                                      ),
-
-
-                                    ])),
+                              child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.add,
+                                      size: 50,
+                                      color: Colors.black54,
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      "Add Image",
+                                      style: TextStyle(
+                                          color: Colors.black54, fontSize: 18),
+                                    ),
+                                  ])),
                         ),
-
-
-
-                ),
-              ),
-                    SizedBox(height: 50,),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 50,
+                    ),
                     FlatButton(
                       color: Colors.indigoAccent,
                       child: Text(
@@ -264,9 +212,7 @@ class _AddLinkPageState extends State<AddLinkPage> {
                         Navigator.pop(context);
                       },
                     ),
-            ]
-                )
-              )])
-        ));
+                  ]))
+            ])));
   }
 }
