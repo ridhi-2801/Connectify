@@ -1,6 +1,7 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/constants.dart';
+import 'package:flutter_app/dropDown.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddLinkPage extends StatefulWidget {
@@ -136,52 +137,8 @@ class _AddLinkPageState extends State<AddLinkPage> {
                         hintText: 'Link of group',
                       ),
                     ),
-//                      Form(
-//                        key: formKey,
-//                        child: DropDownFormField(
-//                          hintText: 'Group Genre',
-//                          filled: false,
-//                          value: _myActivity,
-//                          onSaved: (value) {
-//                            setState(() {
-//                              _myActivity = value;
-//                            });
-//                          },
-//                          onChanged: (value) {
-//                            setState(() {
-//                              _myActivity = value;
-//                            });
-//                          },
-//                          dataSource: [
-//                            {
-//                              "display": "Reader's Choice",
-//                              "value": "Reader's Choice",
-//                            },
-//                            {
-//                              "display": "Tech",
-//                              "value": "Tech",
-//                            },
-//                            {
-//                              "display": "Gamers",
-//                              "value": "Gamers",
-//                            },
-//                            {
-//                              "display": "Youtube Promotion",
-//                              "value": "Youtube Promotion",
-//                            },
-//                            {
-//                              "display": "Art n Craft",
-//                              "value": "Art n Craft",
-//                            },
-//                            {
-//                              "display": "News Lovers",
-//                              "value": "News Lovers",
-//                            },
-//                          ],
-//                          textField: 'display',
-//                          valueField: 'value',
-//                        ),
-//                      ),
+                    SizedBox(height: 30,),
+                    DropDown(),
                     Padding(
                       padding: const EdgeInsets.only(top: 58.0),
                       child: GestureDetector(
