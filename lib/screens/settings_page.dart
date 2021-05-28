@@ -63,6 +63,11 @@ class _SettingsPageState extends State<SettingsPage> {
                 padding: const EdgeInsets.only(top:18.0),
                 child: SettingsListTitles(title: "About", icons: EvaIcons.people, tap: (){},),
               ),
+
+              Padding(
+                padding: const EdgeInsets.only(top:18.0),
+                child: SettingsListTitles(title: "Admin Area", icons: EvaIcons.people, tap: (){},),
+              ),
         ])),
       ),
     );

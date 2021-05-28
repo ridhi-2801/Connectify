@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:clay_containers/clay_containers.dart';
@@ -12,15 +13,11 @@ class CategoriesPage extends StatefulWidget {
 
 class _CategoriesPageState extends State<CategoriesPage> {
 
+  FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(child: Container(
-//      decoration: BoxDecoration(gradient: LinearGradient(
-//        colors: [
-//          Color(0xffFC354C),
-//          Color(0xFF0ABFBC),
-//        ]
-//      )),
       child: Scaffold(
         backgroundColor:isDark?darkModeColor:baseColor,
         body: Column(
@@ -36,9 +33,8 @@ class _CategoriesPageState extends State<CategoriesPage> {
                 "Categories",style: TextStyle(  color: isDark?baseColor:darkModeColor,fontSize: 40.0, fontFamily: 'BalsamiqSans'),
               ),
             ),
-            SizedBox(height: 15.0,),
             Padding(
-              padding: const EdgeInsets.only(left: 20.0,right: 20.0),
+              padding: const EdgeInsets.only(top : 12.0,left: 20.0,right: 20.0),
               child: Container(
                 padding: EdgeInsets.only(left: 10.0,right: 10.0),
                 decoration: BoxDecoration(
@@ -59,63 +55,15 @@ class _CategoriesPageState extends State<CategoriesPage> {
                 ),
               ),
             ),
-            SizedBox(height: 15.0,),
+            SizedBox(height: 8.0,),
             Expanded(
-              child: SingleChildScrollView(
-                child: Container(
-                  padding: EdgeInsets.all(10.0),
-                  width: double.infinity,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          CategoriesCard(categoryName: 'Tech',categoryIcon: EvaIcons.smartphoneOutline,),
-                          CategoriesCard(categoryName: 'Fashion',categoryIcon: EvaIcons.shoppingBagOutline,),
-                          CategoriesCard(categoryName: 'Photography',categoryIcon: EvaIcons.cameraOutline,),
-                        ],
-                      ),
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          CategoriesCard(categoryName: 'Google',categoryIcon: EvaIcons.google,),
-                          CategoriesCard(categoryName: 'Github',categoryIcon: EvaIcons.githubOutline,),
-                          CategoriesCard(categoryName: 'Linkedin',categoryIcon: EvaIcons.linkedinOutline,),
-                        ],
-                      ),
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          CategoriesCard(categoryName: 'Tech',categoryIcon: EvaIcons.smartphoneOutline,),
-                          CategoriesCard(categoryName: 'Fashion',categoryIcon: EvaIcons.shoppingBagOutline,),
-                          CategoriesCard(categoryName: 'Photography',categoryIcon: EvaIcons.cameraOutline,),
-                        ],
-                      ),
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          CategoriesCard(categoryName: 'Tech',categoryIcon: EvaIcons.smartphoneOutline,),
-                          CategoriesCard(categoryName: 'Fashion',categoryIcon: EvaIcons.shoppingBagOutline,),
-                          CategoriesCard(categoryName: 'Photography',categoryIcon: EvaIcons.cameraOutline,),
-                        ],
-                      ),
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          CategoriesCard(categoryName: 'Tech',categoryIcon: EvaIcons.smartphoneOutline,),
-                          CategoriesCard(categoryName: 'Fashion',categoryIcon: EvaIcons.shoppingBagOutline,),
-                          CategoriesCard(categoryName: 'Photography',categoryIcon: EvaIcons.cameraOutline,),
-                        ],
-                      ),
-                    ],
-                  )
-                ),
+              child: GridView.builder(
+                  gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 150),
+                  itemCount: clist.length,
+                  itemBuilder: (context, index) {
+                    return CategoriesCard(
+                      categoryName: clist[index].categoryName,
+                      categoryIcon: clist[index].categoryIcon,);}
               ),
             ),
           ],
@@ -124,6 +72,27 @@ class _CategoriesPageState extends State<CategoriesPage> {
     ));
   }
 }
+
+List<CategoriesCard> clist = [
+  CategoriesCard(categoryName: 'Tech',categoryIcon: EvaIcons.smartphoneOutline,),
+  CategoriesCard(categoryName: 'Fashion',categoryIcon: EvaIcons.shoppingBagOutline,),
+  CategoriesCard(categoryName: 'Photography',categoryIcon: EvaIcons.cameraOutline,),
+  CategoriesCard(categoryName: 'Google',categoryIcon: EvaIcons.google,),
+  CategoriesCard(categoryName: 'Github',categoryIcon: EvaIcons.githubOutline,),
+  CategoriesCard(categoryName: 'Linkedin',categoryIcon: EvaIcons.linkedinOutline,),
+  CategoriesCard(categoryName: 'Tech',categoryIcon: EvaIcons.smartphoneOutline,),
+  CategoriesCard(categoryName: 'Fashion',categoryIcon: EvaIcons.shoppingBagOutline,),
+  CategoriesCard(categoryName: 'Photography',categoryIcon: EvaIcons.cameraOutline,),
+  CategoriesCard(categoryName: 'Tech',categoryIcon: EvaIcons.smartphoneOutline,),
+  CategoriesCard(categoryName: 'Fashion',categoryIcon: EvaIcons.shoppingBagOutline,),
+  CategoriesCard(categoryName: 'Photography',categoryIcon: EvaIcons.cameraOutline,),
+  CategoriesCard(categoryName: 'Google',categoryIcon: EvaIcons.google,),
+  CategoriesCard(categoryName: 'Github',categoryIcon: EvaIcons.githubOutline,),
+  CategoriesCard(categoryName: 'Linkedin',categoryIcon: EvaIcons.linkedinOutline,),
+  CategoriesCard(categoryName: 'Tech',categoryIcon: EvaIcons.smartphoneOutline,),
+  CategoriesCard(categoryName: 'Fashion',categoryIcon: EvaIcons.shoppingBagOutline,),
+  CategoriesCard(categoryName: 'Photography',categoryIcon: EvaIcons.cameraOutline,),
+];
 
 class CategoriesCard extends StatelessWidget {
 
@@ -183,3 +152,63 @@ class CategoriesCard extends StatelessWidget {
     );
   }
 }
+
+//Column(
+//crossAxisAlignment: CrossAxisAlignment.end,
+//children: [
+//Row(
+//mainAxisSize: MainAxisSize.max,
+//mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//children: [
+//CategoriesCard(categoryName: 'Tech',categoryIcon: EvaIcons.smartphoneOutline,),
+//CategoriesCard(categoryName: 'Fashion',categoryIcon: EvaIcons.shoppingBagOutline,),
+//CategoriesCard(categoryName: 'Photography',categoryIcon: EvaIcons.cameraOutline,),
+//],
+//),
+//Row(
+//mainAxisSize: MainAxisSize.max,
+//mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//children: [
+//CategoriesCard(categoryName: 'Google',categoryIcon: EvaIcons.google,),
+//CategoriesCard(categoryName: 'Github',categoryIcon: EvaIcons.githubOutline,),
+//CategoriesCard(categoryName: 'Linkedin',categoryIcon: EvaIcons.linkedinOutline,),
+//],
+//),
+//Row(
+//mainAxisSize: MainAxisSize.max,
+//mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//children: [
+//CategoriesCard(categoryName: 'Tech',categoryIcon: EvaIcons.smartphoneOutline,),
+//CategoriesCard(categoryName: 'Fashion',categoryIcon: EvaIcons.shoppingBagOutline,),
+//CategoriesCard(categoryName: 'Photography',categoryIcon: EvaIcons.cameraOutline,),
+//],
+//),
+//Row(
+//mainAxisSize: MainAxisSize.max,
+//mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//children: [
+//CategoriesCard(categoryName: 'Tech',categoryIcon: EvaIcons.smartphoneOutline,),
+//CategoriesCard(categoryName: 'Fashion',categoryIcon: EvaIcons.shoppingBagOutline,),
+//CategoriesCard(categoryName: 'Photography',categoryIcon: EvaIcons.cameraOutline,),
+//],
+//),
+//Row(
+//mainAxisSize: MainAxisSize.max,
+//mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//children: [
+//CategoriesCard(categoryName: 'Tech',categoryIcon: EvaIcons.smartphoneOutline,),
+//CategoriesCard(categoryName: 'Fashion',categoryIcon: EvaIcons.shoppingBagOutline,),
+//CategoriesCard(categoryName: 'Photography',categoryIcon: EvaIcons.cameraOutline,),
+//],
+//),
+//Row(
+//mainAxisSize: MainAxisSize.max,
+//mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//children: [
+//CategoriesCard(categoryName: 'Tech',categoryIcon: EvaIcons.smartphoneOutline,),
+//CategoriesCard(categoryName: 'Fashion',categoryIcon: EvaIcons.shoppingBagOutline,),
+//CategoriesCard(categoryName: 'Photography',categoryIcon: EvaIcons.cameraOutline,),
+//],
+//),
+//],
+//)
