@@ -7,16 +7,43 @@ import 'linkData.dart';
 
 class CategoryPage extends StatelessWidget {
   final categoryName;
-  final fireStore = FirebaseFirestore.instance;
-  CategoryPage({this.categoryName});
+  final linksDataIds;
+  
+  CategoryPage({this.categoryName, this.linksDataIds});
+  
+  Future<void> generateList(List<String> listLinksDataId) async{
+    FirebaseFirestore fireStore = FirebaseFirestore.instance;
+
+    List<DocumentSnapshot> list = [];
+
+    listLinksDataId.forEach((linkDataId) async{
+      DocumentSnapshot document = await fireStore.collection('LinksData').doc(linkDataId).get();
+      list.add(document);
+    });
+
+    try{
+
+      final listLinksData = list.map((snapshot) => LinkCards(
+        link: snapshot.get('link'),
+        linkTitle: snapshot.get('title'),
+        linkImage: snapshot.get('image'),
+        relatedCategories: snapshot.get('categories'),
+        platform: snapshot.get('platform'),
+      ));
+
+    }catch(e){
+      print(e);
+    }
+
+  }
 
   List<LinkData> list = [
-    LinkData(name: 'Pepcoding' , categories: '#' , image: '#' , platform: 'Telegram', link: '#' ),
-    LinkData(name: 'PrepInsta' , categories: '#' , image: '#' , platform: 'Telegram', link: '#' ),
-    LinkData(name: 'Coding Ninja' , categories: '#' , image: '#' , platform: 'Telegram', link: '#' ),
-    LinkData(name: 'Pepcoding' , categories: '#' , image: '#' , platform: 'Telegram', link: '#' ),
-    LinkData(name: 'PrepInsta' , categories: '#' , image: '#' , platform: 'Telegram', link: '#' ),
-    LinkData(name: 'Coding Ninja' , categories: '#' , image: '#' , platform: 'Telegram', link: '#' ),
+    LinkData(name: 'Pepcoding' , categories: ['#'] , image: '#' , platform: 'Telegram', link: '#' ),
+    LinkData(name: 'PrepInsta' , categories: ['#'] , image: '#' , platform: 'Telegram', link: '#' ),
+    LinkData(name: 'Coding Ninja' , categories: ['#'] , image: '#' , platform: 'Telegram', link: '#' ),
+    LinkData(name: 'Pepcoding' , categories: ['#'] , image: '#' , platform: 'Telegram', link: '#' ),
+    LinkData(name: 'PrepInsta' , categories: ['#'] , image: '#' , platform: 'Telegram', link: '#' ),
+    LinkData(name: 'Coding Ninja' , categories: ['#'] , image: '#' , platform: 'Telegram', link: '#' ),
   ];
 
   @override
@@ -39,19 +66,32 @@ class CategoryPage extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: GridView.builder(
-                  gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 220,
-                      mainAxisSpacing: 10.0,
-                  ),
-                  itemCount: list.length,
-                  itemBuilder: (context, index) {
-                    return new LinkCards(
-                      linkText: list[index].link,
-                      groupNameText: list[index].name,
-                      groupImage: list[index].image,
-                    );}
-              ),
+              child: FutureBuilder(
+                future: generateList(linksDataIds),
+                builder: (context, snapshot) {
+                  if(snapshot.hasError){
+                    return Center(child: Text('Oops! Some Error Occured!'));
+                  }else{
+                    if(!snapshot.hasData){
+                        return Center(child: CircularProgressIndicator());
+                    }
+                    return GridView.builder(
+                        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                          maxCrossAxisExtent: 220,
+                          mainAxisSpacing: 10.0,
+                        ),
+                        itemCount: list.length,
+                        itemBuilder: (context, index) {
+                          return new LinkCards(
+                            link: list[index].link,
+                            linkTitle: list[index].name,
+                            linkImage: list[index].image,
+                            platform: list[index].platform,
+                            relatedCategories: list[index].categories,
+                          );}
+                    );
+                  }
+                },)
             ),
           ],
         ),
@@ -59,3 +99,4 @@ class CategoryPage extends StatelessWidget {
     );
   }
 }
+

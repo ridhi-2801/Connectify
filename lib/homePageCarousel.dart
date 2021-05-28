@@ -30,9 +30,11 @@ class HomePageCarousel extends StatelessWidget {
                 itemCount: listLinkData.length,
                 itemBuilder: (context, index) {
                   return new LinkCards(
-                    linkText: listLinkData[index].link,
-                    groupNameText: listLinkData[index].name,
-                    groupImage: listLinkData[index].image,
+                    link: listLinkData[index].link,
+                    linkTitle: listLinkData[index].name,
+                    linkImage: listLinkData[index].image,
+                    platform: listLinkData[index].platform,
+                    relatedCategories: listLinkData[index].categories,
                   );
                 }),
           ),
