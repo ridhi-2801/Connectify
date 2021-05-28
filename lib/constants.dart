@@ -11,3 +11,8 @@ launchURL(String url) async {
     throw 'Could not launch $url';
   }
 }
+
+//login page constants
+
+final textStyle=TextStyle(fontSize: 20,fontWeight: FontWeight.w500);
+final loginColor=Color(0xff744cbc);
