@@ -1,3 +1,6 @@
+
+import 'dart:io';
+
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/constants.dart';
@@ -10,11 +13,12 @@ class AddLinkPage extends StatefulWidget {
 }
 
 class _AddLinkPageState extends State<AddLinkPage> {
-//  late File _image=;
+ File? _image;
+final picker = ImagePicker();
 
   final formKey = new GlobalKey<FormState>();
   late String _myActivity;
-  late String _myActivityResult;
+   late String _myActivityResult;
 
   @override
   void initState() {
@@ -53,14 +57,14 @@ class _AddLinkPageState extends State<AddLinkPage> {
         });
   }
 
-  final picker = ImagePicker();
+
 
   _imgFromCamera() async {
     final pickedFile =
         await picker.getImage(source: ImageSource.camera, imageQuality: 50);
     setState(() {
       if (pickedFile != null) {
-//        _image = File(pickedFile.path);
+        _image = File(pickedFile.path);
       } else {
         print('No image selected.');
       }
@@ -73,7 +77,7 @@ class _AddLinkPageState extends State<AddLinkPage> {
 
     setState(() {
       if (pickedFile != null) {
-//        _image = File(pickedFile.path);
+        _image = File(pickedFile.path);
       } else {
         print('No image selected.');
       }
@@ -169,16 +173,16 @@ class _AddLinkPageState extends State<AddLinkPage> {
                           ),
                           child: Padding(
                               padding: const EdgeInsets.all(16.0),
-//                            child: _image != null
-////                                ? ClipRRect(
-////                                    child: Image.file(
-//////                                      _image,
-////                                      width: 100,
-////                                      height: 100,
-////                                      fit: BoxFit.fill,
-////                                    ),
-////                                  )
-                              child:  Column(
+                            child: _image != null
+                                ? ClipRRect(
+                                    child: Image.file(
+                                      _image!,
+                                      width: 100,
+                                      height: 100,
+                                      fit: BoxFit.fill,
+                                    ),
+                                  )
+                              :  Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
