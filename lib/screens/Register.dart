@@ -1,7 +1,8 @@
 import 'dart:ui';
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'addLinkPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/Authentication.dart';
 import 'package:flutter_app/constants.dart';
 
 class Register extends StatefulWidget {
@@ -10,17 +11,12 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-  bool isSee=false;
+  bool isSee=true;
 
-  void seePassword(){
-    if(isSee==false){
-      isSee=true;
 
-    }else{
-      isSee = false;
-    }
-  }
 
+    TextEditingController _emailField = new TextEditingController();
+    TextEditingController _passwordField = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +59,7 @@ class _RegisterState extends State<Register> {
                         children: [
                           Text("Email Adress",style: textStyle),
                           TextField(
+                            controller: _emailField,
                             decoration: InputDecoration(
                                 prefixIcon: Icon(Icons.mail),
                                 hintText: "abc@example.com"
@@ -71,11 +68,13 @@ class _RegisterState extends State<Register> {
                           SizedBox(height: 30,),
                           Text("Password",style: textStyle),
                           TextField(
+                            controller: _passwordField,
                             obscureText: isSee,
                             decoration: InputDecoration(
                                 prefixIcon: Icon(Icons.lock),
                                 suffixIcon:IconButton(
                                     onPressed: () {
+
                                       setState(() {
                                         isSee =
                                         isSee ? false : true;
@@ -113,7 +112,15 @@ class _RegisterState extends State<Register> {
 
                           SizedBox(height: 20,),
 
-                          GestureDetector(onTap: (){}, child: Center(
+                          GestureDetector(onTap: ()async{
+                            bool shouldNavigate = await register(_emailField.toString(), _passwordField.toString());
+                            if(shouldNavigate==true){
+                              Navigator.push(context, MaterialPageRoute(builder: (contextBuilder)=>AddLinkPage()));
+                            }else{
+                                 print("weak password");
+                            }
+
+                            }, child: Center(
                             child: Card(
 
                               color: loginColor,

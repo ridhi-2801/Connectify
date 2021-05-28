@@ -4,17 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/constants.dart';
 import 'package:flutter_app/screens/Register.dart';
+import 'addLinkPage.dart';
 
-bool isSee=false;
+bool isSee=true;
 
-void seePassword(){
-  if(isSee==false){
-    isSee=true;
-
-  }else{
-    isSee = false;
-  }
-}
 class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
@@ -70,6 +63,7 @@ class _LoginState extends State<Login> {
                         SizedBox(height: 30,),
                         Text("Password",style: textStyle),
                         TextField(
+                          obscureText: isSee,
                           decoration: InputDecoration(
                               prefixIcon: Icon(Icons.lock),
                               suffixIcon: IconButton(
@@ -86,7 +80,7 @@ class _LoginState extends State<Login> {
                               hintText: "Enter Password"
 
                           ),
-                          obscureText: isSee,
+
 
                         ),
                         SizedBox(height: 30,),
@@ -94,7 +88,9 @@ class _LoginState extends State<Login> {
                             onTap: (){},
                             child: Text("Forgot Password",style: TextStyle(fontSize: 16,color: Colors.black54,fontWeight: FontWeight.w500),))),
                         SizedBox(height: 10),
-                        GestureDetector(onTap: (){}, child: Center(
+                        GestureDetector(onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (contextBuilder)=>AddLinkPage()));
+                        }, child: Center(
                           child: Card(
 
                               color: loginColor,
