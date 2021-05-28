@@ -1,9 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/rendering.dart';
-import '../categoryPage.dart';
+import '../categoriesCard.dart';
 import '../constants.dart';
 
 class CategoriesPage extends StatefulWidget {
@@ -12,40 +11,54 @@ class CategoriesPage extends StatefulWidget {
 }
 
 class _CategoriesPageState extends State<CategoriesPage> {
-
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(child: Container(
+    return SafeArea(
+        child: Container(
       child: Scaffold(
-        backgroundColor:isDark?darkModeColor:baseColor,
+        backgroundColor: isDark ? darkModeColor : baseColor,
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 10.0, left: 8.0),
-              child: IconButton(icon: Icon(EvaIcons.arrowIosBack,size: 40.0,color:isDark?baseColor:darkModeColor), onPressed: (){Navigator.pop(context);}, ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top:10.0,left: 20.0),
-              child: Text(
-                "Categories",style: TextStyle(  color: isDark?baseColor:darkModeColor,fontSize: 40.0, fontFamily: 'BalsamiqSans'),
+              child: IconButton(
+                icon: Icon(EvaIcons.arrowIosBack,
+                    size: 40.0, color: isDark ? baseColor : darkModeColor),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top : 12.0,left: 20.0,right: 20.0),
+              padding: const EdgeInsets.only(top: 10.0, left: 20.0),
+              child: Text(
+                "Categories",
+                style: TextStyle(
+                    color: isDark ? baseColor : darkModeColor,
+                    fontSize: 40.0,
+                    fontFamily: 'BalsamiqSans'),
+              ),
+            ),
+            Padding(
+              padding:
+                  const EdgeInsets.only(top: 12.0, left: 20.0, right: 20.0),
               child: Container(
-                padding: EdgeInsets.only(left: 10.0,right: 10.0),
+                padding: EdgeInsets.only(left: 10.0, right: 10.0),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10.0),
-                    color: Colors.blueGrey.withOpacity(0.1)
-                ),
+                    color: Colors.blueGrey.withOpacity(0.1)),
                 child: TextField(
                   style: TextStyle(color: Colors.black),
                   decoration: InputDecoration(
                     border: InputBorder.none,
-                    icon: Icon(EvaIcons.searchOutline,size: 25.0,color: Color(0xFF6486B2),),
+                    icon: Icon(
+                      EvaIcons.searchOutline,
+                      size: 25.0,
+                      color: Color(0xFF6486B2),
+                    ),
                     hintText: 'Search',
                     hintStyle: TextStyle(color: Color(0xFF6486B2)),
                     labelStyle: TextStyle(
@@ -55,17 +68,42 @@ class _CategoriesPageState extends State<CategoriesPage> {
                 ),
               ),
             ),
-            SizedBox(height: 8.0,),
-            Expanded(
-              child: GridView.builder(
-                  gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 150),
-                  itemCount: clist.length,
-                  itemBuilder: (context, index) {
-                    return CategoriesCard(
-                      categoryName: clist[index].categoryName,
-                      categoryIcon: clist[index].categoryIcon,);}
-              ),
+            SizedBox(
+              height: 8.0,
             ),
+            Expanded(
+                child: StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection('Categories')
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return Center(
+                    child:
+                        Text('Oops! An Error Occured!\nCheck your connection!'),
+                  );
+                } else {
+                  if (!snapshot.hasData) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+
+                  final categoriesList = snapshot.data!.docs;
+                  return GridView.builder(
+                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                          maxCrossAxisExtent: 150),
+                      itemCount: categoriesList.length,
+                      itemBuilder: (context, index) {
+                        return CategoriesCard(
+                          categoryName: categoriesList[index].get('title'),
+                          categoryIcon: categoriesList[index].get('icon'),
+                          linksDataIds: categoriesList[index].get('linksData'),
+                        );
+                      });
+                }
+              },
+            )),
           ],
         ),
       ),
@@ -73,142 +111,4 @@ class _CategoriesPageState extends State<CategoriesPage> {
   }
 }
 
-List<CategoriesCard> clist = [
-  CategoriesCard(categoryName: 'Tech',categoryIcon: EvaIcons.smartphoneOutline,),
-  CategoriesCard(categoryName: 'Fashion',categoryIcon: EvaIcons.shoppingBagOutline,),
-  CategoriesCard(categoryName: 'Photography',categoryIcon: EvaIcons.cameraOutline,),
-  CategoriesCard(categoryName: 'Google',categoryIcon: EvaIcons.google,),
-  CategoriesCard(categoryName: 'Github',categoryIcon: EvaIcons.githubOutline,),
-  CategoriesCard(categoryName: 'Linkedin',categoryIcon: EvaIcons.linkedinOutline,),
-  CategoriesCard(categoryName: 'Tech',categoryIcon: EvaIcons.smartphoneOutline,),
-  CategoriesCard(categoryName: 'Fashion',categoryIcon: EvaIcons.shoppingBagOutline,),
-  CategoriesCard(categoryName: 'Photography',categoryIcon: EvaIcons.cameraOutline,),
-  CategoriesCard(categoryName: 'Tech',categoryIcon: EvaIcons.smartphoneOutline,),
-  CategoriesCard(categoryName: 'Fashion',categoryIcon: EvaIcons.shoppingBagOutline,),
-  CategoriesCard(categoryName: 'Photography',categoryIcon: EvaIcons.cameraOutline,),
-  CategoriesCard(categoryName: 'Google',categoryIcon: EvaIcons.google,),
-  CategoriesCard(categoryName: 'Github',categoryIcon: EvaIcons.githubOutline,),
-  CategoriesCard(categoryName: 'Linkedin',categoryIcon: EvaIcons.linkedinOutline,),
-  CategoriesCard(categoryName: 'Tech',categoryIcon: EvaIcons.smartphoneOutline,),
-  CategoriesCard(categoryName: 'Fashion',categoryIcon: EvaIcons.shoppingBagOutline,),
-  CategoriesCard(categoryName: 'Photography',categoryIcon: EvaIcons.cameraOutline,),
-];
 
-class CategoriesCard extends StatelessWidget {
-
-  final categoryIcon;
-  final categoryName;
-  CategoriesCard({
-    this.categoryName,
-    this.categoryIcon,
-  });
-
-
-
-  @override
-  Widget build(BuildContext context) {
-    double y = MediaQuery. of(context). size. width;
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: GestureDetector(
-        onTap: (){
-          Navigator.push(context, MaterialPageRoute(
-            builder: (context) {
-              return CategoryPage(categoryName: categoryName,);
-            }
-          ));
-          },
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: baseColor,
-          ),
-          child: Center(
-            child: ClayContainer(
-              child: Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      categoryIcon,size: y/13,
-                      color: isDark?baseColor:darkModeColor,
-                    ),
-                    SizedBox(height: 4.0,),
-                    Text(categoryName,style: TextStyle(  color: isDark?baseColor:darkModeColor,),),
-                  ],
-                ),
-              ),
-              color: isDark?darkModeColor:baseColor,
-              borderRadius: 15,
-              depth: 35,
-              spread: 6,
-              width: y/4,
-              height: y/4,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-//Column(
-//crossAxisAlignment: CrossAxisAlignment.end,
-//children: [
-//Row(
-//mainAxisSize: MainAxisSize.max,
-//mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//children: [
-//CategoriesCard(categoryName: 'Tech',categoryIcon: EvaIcons.smartphoneOutline,),
-//CategoriesCard(categoryName: 'Fashion',categoryIcon: EvaIcons.shoppingBagOutline,),
-//CategoriesCard(categoryName: 'Photography',categoryIcon: EvaIcons.cameraOutline,),
-//],
-//),
-//Row(
-//mainAxisSize: MainAxisSize.max,
-//mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//children: [
-//CategoriesCard(categoryName: 'Google',categoryIcon: EvaIcons.google,),
-//CategoriesCard(categoryName: 'Github',categoryIcon: EvaIcons.githubOutline,),
-//CategoriesCard(categoryName: 'Linkedin',categoryIcon: EvaIcons.linkedinOutline,),
-//],
-//),
-//Row(
-//mainAxisSize: MainAxisSize.max,
-//mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//children: [
-//CategoriesCard(categoryName: 'Tech',categoryIcon: EvaIcons.smartphoneOutline,),
-//CategoriesCard(categoryName: 'Fashion',categoryIcon: EvaIcons.shoppingBagOutline,),
-//CategoriesCard(categoryName: 'Photography',categoryIcon: EvaIcons.cameraOutline,),
-//],
-//),
-//Row(
-//mainAxisSize: MainAxisSize.max,
-//mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//children: [
-//CategoriesCard(categoryName: 'Tech',categoryIcon: EvaIcons.smartphoneOutline,),
-//CategoriesCard(categoryName: 'Fashion',categoryIcon: EvaIcons.shoppingBagOutline,),
-//CategoriesCard(categoryName: 'Photography',categoryIcon: EvaIcons.cameraOutline,),
-//],
-//),
-//Row(
-//mainAxisSize: MainAxisSize.max,
-//mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//children: [
-//CategoriesCard(categoryName: 'Tech',categoryIcon: EvaIcons.smartphoneOutline,),
-//CategoriesCard(categoryName: 'Fashion',categoryIcon: EvaIcons.shoppingBagOutline,),
-//CategoriesCard(categoryName: 'Photography',categoryIcon: EvaIcons.cameraOutline,),
-//],
-//),
-//Row(
-//mainAxisSize: MainAxisSize.max,
-//mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//children: [
-//CategoriesCard(categoryName: 'Tech',categoryIcon: EvaIcons.smartphoneOutline,),
-//CategoriesCard(categoryName: 'Fashion',categoryIcon: EvaIcons.shoppingBagOutline,),
-//CategoriesCard(categoryName: 'Photography',categoryIcon: EvaIcons.cameraOutline,),
-//],
-//),
-//],
-//)
