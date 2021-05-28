@@ -3,12 +3,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/constants.dart';
 import 'package:flutter_app/linkData.dart';
+import 'package:flutter_app/screens/addLinkPage.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../LinkCards.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import '../homePageCarousel.dart';
-import 'categories_page.dart';
-import 'settings_page.dart';
+import 'categoriesPage.dart';
+import 'settingsPage.dart';
 
 class Explore extends StatefulWidget {
   @override
@@ -62,8 +63,8 @@ class _ExploreState extends State<Explore> {
 
   final picker = ImagePicker();
   _imgFromCamera() async {
-    final pickedFile = await picker.getImage(source: ImageSource.camera ,
-        imageQuality: 50);
+    final pickedFile =
+        await picker.getImage(source: ImageSource.camera, imageQuality: 50);
     setState(() {
       if (pickedFile != null) {
         _image = File(pickedFile.path);
@@ -74,8 +75,8 @@ class _ExploreState extends State<Explore> {
   }
 
   _imgFromGallery() async {
-    final pickedFile = await picker.getImage(source: ImageSource.camera,
-        imageQuality: 50);
+    final pickedFile =
+        await picker.getImage(source: ImageSource.camera, imageQuality: 50);
 
     setState(() {
       if (pickedFile != null) {
@@ -97,16 +98,31 @@ class _ExploreState extends State<Explore> {
   }
 
   List<LinkData> list = [
-    LinkData(name: 'Pepcoding' , categories: '#' , image: '#' , platform: 'Telegram', link: '#' ),
-    LinkData(name: 'PrepInsta' , categories: '#' , image: '#' , platform: 'Telegram', link: '#' ),
-    LinkData(name: 'Coding Ninja' , categories: '#' , image: '#' , platform: 'Telegram', link: '#' ),
+    LinkData(
+        name: 'Pepcoding',
+        categories: '#',
+        image: '#',
+        platform: 'Telegram',
+        link: '#'),
+    LinkData(
+        name: 'PrepInsta',
+        categories: '#',
+        image: '#',
+        platform: 'Telegram',
+        link: '#'),
+    LinkData(
+        name: 'Coding Ninja',
+        categories: '#',
+        image: '#',
+        platform: 'Telegram',
+        link: '#'),
   ];
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: isDark?darkModeColor:baseColor,
+        backgroundColor: isDark ? darkModeColor : baseColor,
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.indigoAccent,
           elevation: 10,
@@ -114,177 +130,80 @@ class _ExploreState extends State<Explore> {
             Icons.add,
             color: Colors.white,
           ),
-          onPressed: () {
-//            showDialog(
-//              context: context,
-//              barrierDismissible: false,
-//              builder: (BuildContext context) {
-//                return AlertDialog(
-//                  title: Text('Add a  Group'),
-//                  scrollable: true,
-//                  content: Column(
-//                    children: [
-//                      TextFormField(
-//                        decoration: const InputDecoration(
-//                          hintText: 'Name of Group',
-//                        ),
-//                      ),
-//                      TextFormField(
-//                        decoration: const InputDecoration(
-//                          hintText: 'Link of group',
-//                        ),
-//                      ),
-////                      Form(
-////                        key: formKey,
-////                        child: DropDownFormField(
-////                          hintText: 'Group Genre',
-////                          filled: false,
-////                          value: _myActivity,
-////                          onSaved: (value) {
-////                            setState(() {
-////                              _myActivity = value;
-////                            });
-////                          },
-////                          onChanged: (value) {
-////                            setState(() {
-////                              _myActivity = value;
-////                            });
-////                          },
-////                          dataSource: [
-////                            {
-////                              "display": "Reader's Choice",
-////                              "value": "Reader's Choice",
-////                            },
-////                            {
-////                              "display": "Tech",
-////                              "value": "Tech",
-////                            },
-////                            {
-////                              "display": "Gamers",
-////                              "value": "Gamers",
-////                            },
-////                            {
-////                              "display": "Youtube Promotion",
-////                              "value": "Youtube Promotion",
-////                            },
-////                            {
-////                              "display": "Art n Craft",
-////                              "value": "Art n Craft",
-////                            },
-////                            {
-////                              "display": "News Lovers",
-////                              "value": "News Lovers",
-////                            },
-////                          ],
-////                          textField: 'display',
-////                          valueField: 'value',
-////                        ),
-////                      ),
-//                      Padding(
-//                        padding: const EdgeInsets.only(top: 18.0),
-//                        child: GestureDetector(
-//                          onTap: () {
-//                            _showPicker(context);
-//                          },
-//                          child: Card(
-//                            elevation: 10,
-//                            child: Padding(
-//                                padding: const EdgeInsets.all(16.0),
-//                                child: _image != null
-//                                    ? ClipRRect(
-//                                        child: Image.file(
-//                                          _image,
-//                                          width: 100,
-//                                          height: 100,
-//                                          fit: BoxFit.fill,
-//                                        ),
-//                                      )
-//                                    : Column(
-//                                        children: [
-//                                          Icon(
-//                                            Icons.add,
-//                                            size: 50,
-//                                            color: Colors.black54,
-//                                          ),
-//                                          SizedBox(
-//                                            height: 10,
-//                                          ),
-//                                          Text(
-//                                            "Add Image",
-//                                            style: TextStyle(
-//                                                color: Colors.black54,
-//                                                fontSize: 18),
-//                                          )
-//                                        ],
-//                                      )),
-//                          ),
-//                        ),
-//                      )
-//                    ],
-//                  ),
-//                  actions: [
-//                    FlatButton(
-//                      color: Color(0xff075E54),
-//                      child: Text(
-//                        "Add",
-//                        style: TextStyle(color: Colors.white, fontSize: 20),
-//                      ),
-//                      onPressed: () {
-//                        _saveForm();
-//                        Navigator.pop(context);
-//                      },
-//                    ),
-//                  ],
-//                );
-//              },
-//            );
-          },
+          onPressed: () => Navigator.push(
+              context, MaterialPageRoute(builder: (context) => AddLinkPage())),
         ),
         body: Container(
           decoration: BoxDecoration(
-              color: Colors.transparent,
+            color: Colors.transparent,
           ),
           width: double.infinity,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 20.0,left: 8.0,),
+                padding: const EdgeInsets.only(
+                  top: 20.0,
+                  left: 8.0,
+                ),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Spacer(),
-                    IconButton(icon: Icon(EvaIcons.gridOutline,size: 25.0,color:isDark?baseColor:darkModeColor), onPressed: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context){
-                        return CategoriesPage();
-                      }));
-                    }),
-                    IconButton(icon: Icon(EvaIcons.settings2Outline,size: 25.0,color:isDark?baseColor:darkModeColor),
-                        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsPage())),),
+                    IconButton(
+                        icon: Icon(EvaIcons.gridOutline,
+                            size: 25.0,
+                            color: isDark ? baseColor : darkModeColor),
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return CategoriesPage();
+                          }));
+                        }),
+                    IconButton(
+                      icon: Icon(EvaIcons.settings2Outline,
+                          size: 25.0,
+                          color: isDark ? baseColor : darkModeColor),
+                      onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SettingsPage())),
+                    ),
                   ],
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 20.0,),
+                padding: const EdgeInsets.only(
+                  left: 20.0,
+                ),
                 child: Text(
-                  "Explore",style: TextStyle(color:isDark?baseColor:darkModeColor,fontSize: 44.0, fontFamily: 'BalsamiqSans'),
+                  "Explore",
+                  style: TextStyle(
+                      color: isDark ? baseColor : darkModeColor,
+                      fontSize: 44.0,
+                      fontFamily: 'BalsamiqSans'),
                 ),
               ),
-              SizedBox(height: 10,),
+              SizedBox(
+                height: 10,
+              ),
               Padding(
-                padding: const EdgeInsets.only(left: 20.0,right: 20.0),
+                padding: const EdgeInsets.only(left: 20.0, right: 20.0),
                 child: Container(
-                  padding: EdgeInsets.only(left: 10.0,right: 10.0),
+                  padding: EdgeInsets.only(left: 10.0, right: 10.0),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
-                    color: Colors.blueGrey.withOpacity(0.1)
-                  ),
+                      borderRadius: BorderRadius.circular(10.0),
+                      color: Colors.blueGrey.withOpacity(0.1)),
                   child: TextField(
                     style: TextStyle(color: Colors.black),
                     decoration: InputDecoration(
                       border: InputBorder.none,
-                      icon: Icon(EvaIcons.searchOutline,size: 25.0,color: Color(0xFF6486B2),),
+                      icon: Icon(
+                        EvaIcons.searchOutline,
+                        size: 25.0,
+                        color: Color(0xFF6486B2),
+                      ),
                       hintText: 'Search',
                       hintStyle: TextStyle(color: Color(0xFF6486B2)),
                       labelStyle: TextStyle(
@@ -294,7 +213,7 @@ class _ExploreState extends State<Explore> {
                   ),
                 ),
               ),
-              SizedBox(height:20),
+              SizedBox(height: 20),
               Expanded(
                 child: Container(
                   width: double.infinity,
@@ -358,7 +277,8 @@ class CardSearch extends SearchDelegate<LinkCards> {
   Widget buildSuggestions(BuildContext context) {
     return LinkCards(
       linkText: "https://chat.whatsapp.com/Egn2G0hhDzD9tgmVdgUl9e",
-      groupNameText: "Flutter Dev", groupImage: '',
+      groupNameText: "Flutter Dev",
+      groupImage: '',
     );
   }
 }

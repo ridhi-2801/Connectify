@@ -3,7 +3,7 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/rendering.dart';
-import '../category_page.dart';
+import '../categoryPage.dart';
 import '../constants.dart';
 
 class CategoriesPage extends StatefulWidget {
