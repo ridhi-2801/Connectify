@@ -1,6 +1,10 @@
+
+import 'dart:io';
+
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/constants.dart';
+import 'package:flutter_app/dropDown.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddLinkPage extends StatefulWidget {
@@ -9,11 +13,12 @@ class AddLinkPage extends StatefulWidget {
 }
 
 class _AddLinkPageState extends State<AddLinkPage> {
-//  late File _image=;
+ File? _image;
+final picker = ImagePicker();
 
   final formKey = new GlobalKey<FormState>();
   late String _myActivity;
-  late String _myActivityResult;
+   late String _myActivityResult;
 
   @override
   void initState() {
@@ -52,14 +57,14 @@ class _AddLinkPageState extends State<AddLinkPage> {
         });
   }
 
-  final picker = ImagePicker();
+
 
   _imgFromCamera() async {
     final pickedFile =
         await picker.getImage(source: ImageSource.camera, imageQuality: 50);
     setState(() {
       if (pickedFile != null) {
-//        _image = File(pickedFile.path);
+        _image = File(pickedFile.path);
       } else {
         print('No image selected.');
       }
@@ -72,7 +77,7 @@ class _AddLinkPageState extends State<AddLinkPage> {
 
     setState(() {
       if (pickedFile != null) {
-//        _image = File(pickedFile.path);
+        _image = File(pickedFile.path);
       } else {
         print('No image selected.');
       }
@@ -136,52 +141,8 @@ class _AddLinkPageState extends State<AddLinkPage> {
                         hintText: 'Link of group',
                       ),
                     ),
-//                      Form(
-//                        key: formKey,
-//                        child: DropDownFormField(
-//                          hintText: 'Group Genre',
-//                          filled: false,
-//                          value: _myActivity,
-//                          onSaved: (value) {
-//                            setState(() {
-//                              _myActivity = value;
-//                            });
-//                          },
-//                          onChanged: (value) {
-//                            setState(() {
-//                              _myActivity = value;
-//                            });
-//                          },
-//                          dataSource: [
-//                            {
-//                              "display": "Reader's Choice",
-//                              "value": "Reader's Choice",
-//                            },
-//                            {
-//                              "display": "Tech",
-//                              "value": "Tech",
-//                            },
-//                            {
-//                              "display": "Gamers",
-//                              "value": "Gamers",
-//                            },
-//                            {
-//                              "display": "Youtube Promotion",
-//                              "value": "Youtube Promotion",
-//                            },
-//                            {
-//                              "display": "Art n Craft",
-//                              "value": "Art n Craft",
-//                            },
-//                            {
-//                              "display": "News Lovers",
-//                              "value": "News Lovers",
-//                            },
-//                          ],
-//                          textField: 'display',
-//                          valueField: 'value',
-//                        ),
-//                      ),
+                    SizedBox(height: 30,),
+                    DropDown(),
                     Padding(
                       padding: const EdgeInsets.only(top: 58.0),
                       child: GestureDetector(
@@ -212,16 +173,16 @@ class _AddLinkPageState extends State<AddLinkPage> {
                           ),
                           child: Padding(
                               padding: const EdgeInsets.all(16.0),
-//                            child: _image != null
-////                                ? ClipRRect(
-////                                    child: Image.file(
-//////                                      _image,
-////                                      width: 100,
-////                                      height: 100,
-////                                      fit: BoxFit.fill,
-////                                    ),
-////                                  )
-                              child:  Column(
+                            child: _image != null
+                                ? ClipRRect(
+                                    child: Image.file(
+                                      _image!,
+                                      width: 100,
+                                      height: 100,
+                                      fit: BoxFit.fill,
+                                    ),
+                                  )
+                              :  Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
