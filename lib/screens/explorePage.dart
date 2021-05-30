@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/constants.dart';
 import 'package:flutter_app/linkData.dart';
-import 'package:flutter_app/screens/addLinkPage.dart';
+import 'package:flutter_app/screens/login.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../LinkCards.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
@@ -18,83 +18,14 @@ class Explore extends StatefulWidget {
 
 class _ExploreState extends State<Explore> {
   final formKey = new GlobalKey<FormState>();
-  late String _myActivity;
-  late String _myActivityResult;
-  late File _image;
+
 
   final fireStore = FirebaseFirestore.instance;
 
   @override
   void initState() {
     super.initState();
-    _myActivity = '';
-    _myActivityResult = '';
-  }
 
-  void _showPicker(context) {
-    showModalBottomSheet(
-        context: context,
-        builder: (BuildContext bc) {
-          return SafeArea(
-            child: Container(
-              child: new Wrap(
-                children: <Widget>[
-                  new ListTile(
-                      leading: new Icon(Icons.photo_library),
-                      title: new Text('Photo Library'),
-                      onTap: () {
-                        _imgFromGallery();
-                        Navigator.of(context).pop();
-                      }),
-                  new ListTile(
-                    leading: new Icon(Icons.photo_camera),
-                    title: new Text('Camera'),
-                    onTap: () {
-                      _imgFromCamera();
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
-              ),
-            ),
-          );
-        });
-  }
-
-  final picker = ImagePicker();
-  _imgFromCamera() async {
-    final pickedFile =
-        await picker.getImage(source: ImageSource.camera, imageQuality: 50);
-    setState(() {
-      if (pickedFile != null) {
-        _image = File(pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
-    });
-  }
-
-  _imgFromGallery() async {
-    final pickedFile =
-        await picker.getImage(source: ImageSource.camera, imageQuality: 50);
-
-    setState(() {
-      if (pickedFile != null) {
-        _image = File(pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
-    });
-  }
-
-  _saveForm() {
-    var form = formKey.currentState;
-    if (form!.validate()) {
-      form.save();
-      setState(() {
-        _myActivityResult = _myActivity;
-      });
-    }
   }
 
   List<LinkData> list = [
@@ -131,7 +62,7 @@ class _ExploreState extends State<Explore> {
             color: Colors.white,
           ),
           onPressed: () => Navigator.push(
-              context, MaterialPageRoute(builder: (context) => AddLinkPage())),
+              context, MaterialPageRoute(builder: (context) => Login())),
         ),
         body: Container(
           decoration: BoxDecoration(
