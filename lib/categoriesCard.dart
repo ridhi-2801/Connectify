@@ -1,6 +1,5 @@
 import 'package:clay_containers/widgets/clay_container.dart';
 import 'package:flutter/material.dart';
-
 import 'categoryPage.dart';
 import 'constants.dart';
 
@@ -14,13 +13,6 @@ class CategoriesCard extends StatelessWidget {
     this.categoryIcon,
     this.linksDataIds,
   });
-
-  IconData? iconData;
-  Future<IconData?> getIcon() async{
-    iconData = iconMap[categoryIcon];
-    return iconData;
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +41,7 @@ class CategoriesCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
-                      iconData,
+                      categoryIcon,
                       size: y / 13,
                       color: isDark ? baseColor : darkModeColor,
                     ),

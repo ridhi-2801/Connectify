@@ -97,6 +97,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                           maxCrossAxisExtent: 150),
                       itemCount: categoriesList.length,
                       itemBuilder: (context, index) {
+
                         final iconData = iconMap[categoriesList[index].get('icon')];
 
                         return CategoriesCard(

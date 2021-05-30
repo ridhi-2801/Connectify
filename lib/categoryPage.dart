@@ -3,7 +3,6 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/LinkCards.dart';
 import 'package:flutter_app/constants.dart';
-import 'linkData.dart';
 
 class CategoryPage extends StatefulWidget {
   final categoryName;
@@ -20,6 +19,7 @@ class _CategoryPageState extends State<CategoryPage> {
   Future<List<LinkCards>> generateList(List<dynamic> listLinksDataId) async{
     FirebaseFirestore fireStore = FirebaseFirestore.instance;
 
+    print("Link data ids : $listLinksDataId");
     List<LinkCards> listCards = [];
 
     listLinksDataId.forEach((linkDataId) async{
@@ -82,7 +82,8 @@ class _CategoryPageState extends State<CategoryPage> {
                         ),
                         itemCount: snapshot.data!.length,
                         itemBuilder: (context, index) {
-                          return snapshot.data![index];}
+                          return snapshot.data![index];
+                        }
                     );
                   }
                 },)
