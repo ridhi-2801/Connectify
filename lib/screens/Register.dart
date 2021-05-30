@@ -1,4 +1,6 @@
 import 'dart:ui';
+import 'package:fluttertoast/fluttertoast.dart';
+
 import 'addLinkPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +22,7 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
+
     double height= MediaQuery.of(context).size.height;
     return SafeArea(
       child: Scaffold(
@@ -57,7 +60,10 @@ class _RegisterState extends State<Register> {
 
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Email Adress",style: textStyle),
+                          Padding(
+                            padding: const EdgeInsets.only(left:8.0),
+                            child: Text("Email Adress",style: textStyle),
+                          ),
                           TextField(
                             controller: _emailField,
                             decoration: InputDecoration(
@@ -66,7 +72,10 @@ class _RegisterState extends State<Register> {
                             ),
                           ),
                           SizedBox(height: 30,),
-                          Text("Password",style: textStyle),
+                          Padding(
+                            padding: const EdgeInsets.only(left:8.0),
+                            child: Text("Password",style: textStyle),
+                          ),
                           TextField(
                             controller: _passwordField,
                             obscureText: isSee,
@@ -88,7 +97,10 @@ class _RegisterState extends State<Register> {
                             ),
                           ),
                           SizedBox(height: 30,),
-                          Text("Confirm Password",style: textStyle),
+                          Padding(
+                            padding: const EdgeInsets.only(left:8.0),
+                            child: Text("Confirm Password",style: textStyle),
+                          ),
                           TextField(
                             decoration: InputDecoration(
                                 prefixIcon: Icon(Icons.lock),
@@ -117,7 +129,15 @@ class _RegisterState extends State<Register> {
                             if(shouldNavigate==true){
                               Navigator.push(context, MaterialPageRoute(builder: (contextBuilder)=>AddLinkPage()));
                             }else{
-                                 print("weak password");
+                              Fluttertoast.showToast(
+                                  msg: "Weak Password",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.CENTER,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: Colors.red,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0
+                              );
                             }
 
                             }, child: Center(

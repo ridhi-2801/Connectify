@@ -3,8 +3,10 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/Authentication.dart';
 import 'package:flutter_app/constants.dart';
 import 'package:flutter_app/screens/Register.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'addLinkPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -16,7 +18,11 @@ class Login extends StatefulWidget {
   _LoginState createState() => _LoginState();
 }
 
+TextEditingController _email = new TextEditingController();
+TextEditingController _password  = new TextEditingController();
+
 class _LoginState extends State<Login> {
+
   @override
   Widget build(BuildContext context) {
     double height= MediaQuery.of(context).size.height;
@@ -56,17 +62,26 @@ class _LoginState extends State<Login> {
 
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Email Adress",style: textStyle),
+                        Padding(
+                          padding: const EdgeInsets.only(left:8.0),
+                          child: Text("Email Adress",style: textStyle),
+                        ),
                         TextField(
+                          controller: _email,
                           decoration: InputDecoration(
                             prefixIcon: Icon(Icons.mail),
                             hintText: "abc@example.com"
                           ),
                         ),
                         SizedBox(height: 30,),
-                        Text("Password",style: textStyle),
+                        Padding(
+
+                          padding: const EdgeInsets.only(left:8.0),
+                          child: Text("Password",style: textStyle),
+                        ),
                         TextField(
                           obscureText: isSee,
+                          controller: _password,
                           decoration: InputDecoration(
                               prefixIcon: Icon(Icons.lock),
                               suffixIcon: IconButton(
@@ -87,12 +102,24 @@ class _LoginState extends State<Login> {
 
                         ),
                         SizedBox(height: 30,),
-                        Center(child: GestureDetector(
-                            onTap: (){},
-                            child: Text("Forgot Password",style: TextStyle(fontSize: 16,color: Colors.black54,fontWeight: FontWeight.w500),))),
-                        SizedBox(height: 10),
-                        GestureDetector(onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (contextBuilder)=>AddLinkPage()));
+
+
+                        GestureDetector(onTap: ()async{
+                            bool isUser = await signIn(_email.toString(), _password.toString());
+                            if(isUser){
+                              Navigator.push(context, MaterialPageRoute(builder: (contextBuilder)=>AddLinkPage()));
+                            }else{
+                              Fluttertoast.showToast(
+                                  msg: "Incorrect email/password",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.CENTER,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: Colors.red,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0
+                              );
+                            }
+//                          Navigator.push(context, MaterialPageRoute(builder: (contextBuilder)=>AddLinkPage()));
                         }, child: Center(
                           child: Card(
 
