@@ -1,6 +1,7 @@
 
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/constants.dart';
@@ -142,7 +143,24 @@ final picker = ImagePicker();
                       ),
                     ),
                     SizedBox(height: 30,),
-                    DropDown(),
+
+                    StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection('Categories')
+                            .snapshots(),
+                        builder: (context , snapshot) {
+                          if(snapshot.hasError){
+                            return Text('Oops Something Wrong browsing categories!\nAdd sometime later');
+                          }else{
+                            if(snapshot.hasData){
+                              final listCategories = snapshot.data!.docs.map((document) => document.get('title'),);
+                              return DropDown(listCategories: listCategories,);
+                            }else{
+                              return CircularProgressIndicator();
+                            }
+                          }
+                        }),
+
                     Padding(
                       padding: const EdgeInsets.only(top: 58.0),
                       child: GestureDetector(
@@ -200,13 +218,8 @@ final picker = ImagePicker();
                                             color: Colors.black54,
                                             fontSize: 18),
                                       ),
-
-
-                                    ])),
+                                ])),
                         ),
-
-
-
                 ),
               ),
                     SizedBox(height: 50,),

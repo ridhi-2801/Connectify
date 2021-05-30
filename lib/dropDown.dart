@@ -1,19 +1,22 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class DropDown extends StatefulWidget {
-  const DropDown({Key? key}) : super(key: key);
+
+  final listCategories;
+  const DropDown({Key? key, this.listCategories }) : super(key: key);
 
   @override
   State<DropDown> createState() => _DropDown();
 }
 
 class _DropDown extends State<DropDown> {
-  String dropdownValue = 'tech';
+  FirebaseFirestore firestore=FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
     return DropdownButton<String>(
-      value: dropdownValue,
+      value: widget.listCategories[0],
       icon: const Icon(Icons.arrow_downward),
       iconSize: 24,
       elevation: 16,
@@ -24,15 +27,13 @@ class _DropDown extends State<DropDown> {
       ),
       onChanged: (String? newValue) {
         setState(() {
-          dropdownValue = newValue!;
+//          dropdownValue = newValue!;
         });
       },
-      items: <String>['tech', 'fashion', 'shopping', 'photography']
-          .map<DropdownMenuItem<String>>((String value) {
+      items: widget.listCategories.map<DropdownMenuItem<String>>((document) {
         return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
+          value: document,
+          child: Text(document),);
       }).toList(),
     );
   }
