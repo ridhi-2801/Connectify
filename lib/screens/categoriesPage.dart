@@ -97,7 +97,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                       itemBuilder: (context, index) {
                         return CategoriesCard(
                           categoryName: categoriesList[index].get('title'),
-                          categoryIcon: categoriesList[index].get('icon'),
+                          categoryIcon: iconMap[categoriesList[index].get('icon')],
                           linksDataIds: categoriesList[index].get('linksData'),
                         );
                       });

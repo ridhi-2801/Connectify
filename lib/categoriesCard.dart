@@ -41,7 +41,7 @@ class CategoriesCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
-                      iconMap[categoryIcon],
+                      categoryIcon,
                       size: y / 13,
                       color: isDark ? baseColor : darkModeColor,
                     ),

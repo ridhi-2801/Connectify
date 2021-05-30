@@ -31,19 +31,19 @@ class _ExploreState extends State<Explore> {
   List<LinkData> list = [
     LinkData(
         name: 'Pepcoding',
-        categories: '#',
+        categories: [],
         image: '#',
         platform: 'Telegram',
         link: '#'),
     LinkData(
         name: 'PrepInsta',
-        categories: '#',
+        categories: ['#'],
         image: '#',
         platform: 'Telegram',
         link: '#'),
     LinkData(
         name: 'Coding Ninja',
-        categories: '#',
+        categories: ['#'],
         image: '#',
         platform: 'Telegram',
         link: '#'),
@@ -207,9 +207,11 @@ class CardSearch extends SearchDelegate<LinkCards> {
   @override
   Widget buildSuggestions(BuildContext context) {
     return LinkCards(
-      linkText: "https://chat.whatsapp.com/Egn2G0hhDzD9tgmVdgUl9e",
-      groupNameText: "Flutter Dev",
-      groupImage: '',
+      link: "https://chat.whatsapp.com/Egn2G0hhDzD9tgmVdgUl9e",
+      linkTitle: "Flutter Dev",
+      linkImage: '',
+      relatedCategories: [],
+      platform: '',
     );
   }
 }

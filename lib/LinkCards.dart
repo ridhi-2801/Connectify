@@ -8,14 +8,18 @@ import 'package:clay_containers/clay_containers.dart';
 import 'constants.dart';
 
 class LinkCards extends StatelessWidget {
-  final String groupImage;
-  final String groupNameText;
-  final String linkText;
+  final String linkImage;
+  final String linkTitle;
+  final String link;
+  final relatedCategories;
+  final platform;
 
   LinkCards({
-      required this.groupImage,
-      required this.groupNameText,
-      required this.linkText});
+      required this.linkImage,
+      required this.linkTitle,
+      required this.link,
+      required this.relatedCategories,
+      required this.platform});
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +54,7 @@ class LinkCards extends StatelessWidget {
                 Padding(
                     padding: const EdgeInsets.only(top: 18.0),
                     child: Text(
-                      groupNameText,
+                      linkTitle,
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: isDark?baseColor:darkModeColor,),
                     )),
@@ -64,7 +68,7 @@ class LinkCards extends StatelessWidget {
                         throw 'Could not launch $link';
                       }
                     },
-                    text: linkText,
+                    text: link,
                     linkStyle: TextStyle(color:  isDark?baseColor:darkModeColor, fontSize: 12),
                     options: LinkifyOptions(humanize: true),
                   ),
@@ -97,7 +101,7 @@ class LinkCards extends StatelessWidget {
                               IconButton(
                                 icon: Icon(FontAwesomeIcons.whatsapp),
                                 onPressed: () async {
-                                  SocialShare.shareWhatsapp(linkText)
+                                  SocialShare.shareWhatsapp(link)
                                       .then((data) {
                                     print(data);
                                     Navigator.pop(context);
@@ -108,7 +112,7 @@ class LinkCards extends StatelessWidget {
                               IconButton(
                                 icon: Icon(FontAwesomeIcons.telegram),
                                 onPressed: () async {
-                                  SocialShare.shareTelegram(linkText)
+                                  SocialShare.shareTelegram(link)
                                       .then((data) {
                                     print(data);
                                     Navigator.pop(context);
@@ -132,7 +136,7 @@ class LinkCards extends StatelessWidget {
                                         "join",
                                         "group"
                                       ],
-                                      url: linkText);
+                                      url: link);
                                   Navigator.pop(context);
                                 },
                                 color: Color(0xff00acee),
@@ -140,7 +144,7 @@ class LinkCards extends StatelessWidget {
                               IconButton(
                                 icon: Icon(FontAwesomeIcons.copy),
                                 onPressed: () {
-                                  SocialShare.copyToClipboard(linkText);
+                                  SocialShare.copyToClipboard(link);
                                   Navigator.pop(context);
                                 },
                                 color: Colors.black,
