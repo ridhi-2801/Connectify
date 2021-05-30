@@ -17,12 +17,13 @@ class CategoryPage extends StatefulWidget {
 
 class _CategoryPageState extends State<CategoryPage> {
 
-  Future<List<dynamic>> generateList(List<dynamic> listLinksDataId) async{
+  Future<List<LinkCards>> generateList(List<dynamic> listLinksDataId) async{
     FirebaseFirestore fireStore = FirebaseFirestore.instance;
-    List<dynamic> list = [];
+
+    List<LinkCards> listCards = [];
 
     listLinksDataId.forEach((linkDataId) async{
-      await fireStore.collection('LinksData').doc(linkDataId).get().then((value) => list.add(
+      await fireStore.collection('LinksData').doc(linkDataId).get().then((value) => listCards.add(
           LinkCards(
             link: value.get('link'),
             linkTitle: value.get('title'),
@@ -33,23 +34,17 @@ class _CategoryPageState extends State<CategoryPage> {
           ));
     });
 
-    return list;
+    return listCards;
   }
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
-  List<LinkData> list = [
-    LinkData(name: 'Pepcoding' , categories: ['#'] , image: '#' , platform: 'Telegram', link: '#' ),
-    LinkData(name: 'PrepInsta' , categories: ['#'] , image: '#' , platform: 'Telegram', link: '#' ),
-    LinkData(name: 'Coding Ninja' , categories: ['#'] , image: '#' , platform: 'Telegram', link: '#' ),
-    LinkData(name: 'Pepcoding' , categories: ['#'] , image: '#' , platform: 'Telegram', link: '#' ),
-    LinkData(name: 'PrepInsta' , categories: ['#'] , image: '#' , platform: 'Telegram', link: '#' ),
-    LinkData(name: 'Coding Ninja' , categories: ['#'] , image: '#' , platform: 'Telegram', link: '#' ),
-  ];
+//  List<LinkData> list = [
+//    LinkData(name: 'Pepcoding' , categories: ['#'] , image: '#' , platform: 'Telegram', link: '#' ),
+//    LinkData(name: 'PrepInsta' , categories: ['#'] , image: '#' , platform: 'Telegram', link: '#' ),
+//    LinkData(name: 'Coding Ninja' , categories: ['#'] , image: '#' , platform: 'Telegram', link: '#' ),
+//    LinkData(name: 'Pepcoding' , categories: ['#'] , image: '#' , platform: 'Telegram', link: '#' ),
+//    LinkData(name: 'PrepInsta' , categories: ['#'] , image: '#' , platform: 'Telegram', link: '#' ),
+//    LinkData(name: 'Coding Ninja' , categories: ['#'] , image: '#' , platform: 'Telegram', link: '#' ),
+//  ];
 
   @override
   Widget build(BuildContext context) {
@@ -71,28 +66,23 @@ class _CategoryPageState extends State<CategoryPage> {
               ),
             ),
             Expanded(
-              child: FutureBuilder(
+              child: FutureBuilder<List<LinkCards>>(
                 future: generateList(widget.linksDataIds),
                 builder: (context, snapshot) {
                   if(snapshot.hasError){
                     return Center(child: Text('Oops! Some Error Occured!'));
                   }else{
                     if(!snapshot.hasData){
-                        return Center(child: CircularProgressIndicator());
+                        return Center(child: Text("Loading..."));
                     }
                     return GridView.builder(
                         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                           maxCrossAxisExtent: 220,
                           mainAxisSpacing: 10.0,
                         ),
-                        itemCount: list.length,
+                        itemCount: snapshot.data!.length,
                         itemBuilder: (context, index) {
-                          return new LinkCards(
-                              linkImage: list[index].image,
-                              linkTitle: list[index].name,
-                              link: list[index].link,
-                              relatedCategories: list[index].categories,
-                              platform: list[index].platform);}
+                          return snapshot.data![index];}
                     );
                   }
                 },)
