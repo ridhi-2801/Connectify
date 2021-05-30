@@ -50,6 +50,10 @@ flutter:
         - asset: fonts/BalsamiqSans-Regular.ttf
         - asset: fonts/BalsamiqSans-Regular.ttf
 
+    - family: MeriendaOne
+      fonts:
+        - asset: fonts/MeriendaOne-Regular.ttf
+
     - family: Gilroy
       fonts:
         - asset: fonts/Gilroy-Light.ttf

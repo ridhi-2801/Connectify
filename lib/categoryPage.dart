@@ -15,12 +15,14 @@ class CategoryPage extends StatefulWidget {
 }
 
 class _CategoryPageState extends State<CategoryPage> {
+
   Future<List<LinkCards>> generateList(List<dynamic> listLinksDataId) async {
     FirebaseFirestore fireStore = FirebaseFirestore.instance;
     List<LinkCards> listCards = [];
 
     listLinksDataId.forEach((linkDataId) async {
       print(linkDataId);
+
       await fireStore
           .collection('LinksData')
           .doc(linkDataId)

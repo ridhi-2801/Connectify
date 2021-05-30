@@ -1,10 +1,11 @@
-import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/constants.dart';
 import 'package:flutter_app/linkData.dart';
+import 'package:flutter_app/screens/addLinkPage.dart';
 import 'package:flutter_app/screens/login.dart';
-import 'package:image_picker/image_picker.dart';
 import '../../LinkCards.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import '../homePageCarousel.dart';
@@ -18,15 +19,10 @@ class Explore extends StatefulWidget {
 
 class _ExploreState extends State<Explore> {
   final formKey = new GlobalKey<FormState>();
-
-
   final fireStore = FirebaseFirestore.instance;
-
-  @override
-  void initState() {
-    super.initState();
-
-  }
+  final currUser = FirebaseAuth.instance.currentUser == null
+      ? 'Stranger'
+      : FirebaseAuth.instance.currentUser!.displayName;
 
   List<LinkData> list = [
     LinkData(
@@ -50,7 +46,17 @@ class _ExploreState extends State<Explore> {
   ];
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    final user = FirebaseAuth.instance.currentUser ?? 'User Not Logged In';
+    print(user);
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: isDark ? darkModeColor : baseColor,
@@ -62,7 +68,12 @@ class _ExploreState extends State<Explore> {
             color: Colors.white,
           ),
           onPressed: () => Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Login())),
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      FirebaseAuth.instance.currentUser == null
+                          ? Login()
+                          : AddLinkPage())),
         ),
         body: Container(
           decoration: BoxDecoration(
@@ -81,6 +92,17 @@ class _ExploreState extends State<Explore> {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15.0),
+                      child: Text(
+                        'Hello $currUser...',
+                        style: TextStyle(
+                            color: Colors.blue,
+                            fontSize: width * 0.045,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'MeriendaOne'),
+                      ),
+                    ),
                     Spacer(),
                     IconButton(
                         icon: Icon(EvaIcons.gridOutline,
@@ -104,8 +126,16 @@ class _ExploreState extends State<Explore> {
                   ],
                 ),
               ),
+              FirebaseAuth.instance.currentUser == null ?
+                  Padding(
+                    padding: const EdgeInsets.only(left:20.0),
+                    child: ElevatedButton(
+                        onPressed: () => Login(), child: Text('Login')),
+                  )
+                  : SizedBox(),
               Padding(
                 padding: const EdgeInsets.only(
+                  top: 10.0,
                   left: 20.0,
                 ),
                 child: Text(
