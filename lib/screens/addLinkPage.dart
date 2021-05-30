@@ -130,7 +130,6 @@ final picker = ImagePicker();
               Padding(
                 padding: const EdgeInsets.only(left: 16,right: 16,top: 50),
                 child: Column(
-
                   children: [
                     TextFormField(
                       decoration: const InputDecoration(
