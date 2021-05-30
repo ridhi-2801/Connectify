@@ -90,14 +90,18 @@ class _CategoriesPageState extends State<CategoriesPage> {
                   }
 
                   final categoriesList = snapshot.data!.docs;
+
+
                   return GridView.builder(
                       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                           maxCrossAxisExtent: 150),
                       itemCount: categoriesList.length,
                       itemBuilder: (context, index) {
+                        final iconData = iconMap[categoriesList[index].get('icon')];
+
                         return CategoriesCard(
                           categoryName: categoriesList[index].get('title'),
-                          categoryIcon: iconMap[categoriesList[index].get('icon')],
+                          categoryIcon: iconData,
                           linksDataIds: categoriesList[index].get('linksData'),
                         );
                       });
@@ -110,5 +114,3 @@ class _CategoriesPageState extends State<CategoriesPage> {
     ));
   }
 }
-
-

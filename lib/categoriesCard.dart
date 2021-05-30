@@ -15,6 +15,13 @@ class CategoriesCard extends StatelessWidget {
     this.linksDataIds,
   });
 
+  IconData? iconData;
+  Future<IconData?> getIcon() async{
+    iconData = iconMap[categoryIcon];
+    return iconData;
+  }
+
+
   @override
   Widget build(BuildContext context) {
     double y = MediaQuery.of(context).size.width;
@@ -25,6 +32,7 @@ class CategoriesCard extends StatelessWidget {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
             return CategoryPage(
               categoryName: categoryName,
+              linksDataIds: linksDataIds,
             );
           }));
         },
@@ -41,7 +49,7 @@ class CategoriesCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
-                      categoryIcon,
+                      iconData,
                       size: y / 13,
                       color: isDark ? baseColor : darkModeColor,
                     ),

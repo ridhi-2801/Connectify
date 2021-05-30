@@ -5,36 +5,41 @@ import 'package:flutter_app/LinkCards.dart';
 import 'package:flutter_app/constants.dart';
 import 'linkData.dart';
 
-class CategoryPage extends StatelessWidget {
+class CategoryPage extends StatefulWidget {
   final categoryName;
   final linksDataIds;
   
-  CategoryPage({this.categoryName, this.linksDataIds});
-  
-  Future<void> generateList(List<String> listLinksDataId) async{
-    FirebaseFirestore fireStore = FirebaseFirestore.instance;
+  CategoryPage({required this.categoryName, required this.linksDataIds});
 
-    List<DocumentSnapshot> list = [];
+  @override
+  _CategoryPageState createState() => _CategoryPageState();
+}
+
+class _CategoryPageState extends State<CategoryPage> {
+
+  Future<List<dynamic>> generateList(List<dynamic> listLinksDataId) async{
+    FirebaseFirestore fireStore = FirebaseFirestore.instance;
+    List<dynamic> list = [];
 
     listLinksDataId.forEach((linkDataId) async{
-      DocumentSnapshot document = await fireStore.collection('LinksData').doc(linkDataId).get();
-      list.add(document);
+      await fireStore.collection('LinksData').doc(linkDataId).get().then((value) => list.add(
+          LinkCards(
+            link: value.get('link'),
+            linkTitle: value.get('title'),
+            linkImage: value.get('image'),
+            relatedCategories: value.get('categories'),
+            platform: value.get('platform'),
+          )
+          ));
     });
 
-    try{
+    return list;
+  }
 
-      final listLinksData = list.map((snapshot) => LinkCards(
-        link: snapshot.get('link'),
-        linkTitle: snapshot.get('title'),
-        linkImage: snapshot.get('image'),
-        relatedCategories: snapshot.get('categories'),
-        platform: snapshot.get('platform'),
-      ));
-
-    }catch(e){
-      print(e);
-    }
-
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
   }
 
   List<LinkData> list = [
@@ -62,12 +67,12 @@ class CategoryPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top:10.0,left: 20.0),
               child: Text(
-                categoryName,style: TextStyle(  color: isDark?baseColor:darkModeColor,fontSize: 40.0, fontFamily: 'BalsamiqSans'),
+                widget.categoryName,style: TextStyle(  color: isDark?baseColor:darkModeColor,fontSize: 40.0, fontFamily: 'BalsamiqSans'),
               ),
             ),
             Expanded(
               child: FutureBuilder(
-                future: generateList(linksDataIds),
+                future: generateList(widget.linksDataIds),
                 builder: (context, snapshot) {
                   if(snapshot.hasError){
                     return Center(child: Text('Oops! Some Error Occured!'));
@@ -83,12 +88,11 @@ class CategoryPage extends StatelessWidget {
                         itemCount: list.length,
                         itemBuilder: (context, index) {
                           return new LinkCards(
-                            link: list[index].link,
-                            linkTitle: list[index].name,
-                            linkImage: list[index].image,
-                            platform: list[index].platform,
-                            relatedCategories: list[index].categories,
-                          );}
+                              linkImage: list[index].image,
+                              linkTitle: list[index].name,
+                              link: list[index].link,
+                              relatedCategories: list[index].categories,
+                              platform: list[index].platform);}
                     );
                   }
                 },)
