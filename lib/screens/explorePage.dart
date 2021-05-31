@@ -128,9 +128,33 @@ class _ExploreState extends State<Explore> {
               ),
               FirebaseAuth.instance.currentUser == null ?
                   Padding(
-                    padding: const EdgeInsets.only(left:20.0),
-                    child: ElevatedButton(
-                        onPressed: () => Login(), child: Text('Login')),
+                    padding: const EdgeInsets.only(left:25.0,bottom: 20),
+                    child: GestureDetector(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Login()));
+                      },
+                      child: Container(
+                      width: 60,
+                        height: 20,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color:Colors.blue,
+                          offset: const Offset(
+                            2.0,
+                            2.0,
+                          ),
+                          blurRadius: 2.0,
+                          spreadRadius: 2.0,
+                        ), //BoxShadow
+
+
+                          ]
+                        ),
+
+                          child: Center(child: Text('Login',style: TextStyle(fontWeight: FontWeight.bold),))),
+                    ),
                   )
                   : SizedBox(),
               Padding(

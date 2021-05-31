@@ -1,6 +1,10 @@
 import 'package:clay_containers/clay_containers.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/Authentication.dart';
+import 'package:flutter_app/screens/explorePage.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import '../constants.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -8,7 +12,22 @@ class SettingsPage extends StatefulWidget {
   _SettingsPageState createState() => _SettingsPageState();
 }
 
+
+
 class _SettingsPageState extends State<SettingsPage> {
+  final GoogleSignIn googleSignIn = GoogleSignIn();
+  SettingsListTitles? logout(){
+    if(FirebaseAuth.instance.currentUser != null){
+
+      return SettingsListTitles(title: "Logout", icons: EvaIcons.logOut, tap: () async {
+        await auth.signOut();
+        await googleSignIn.signOut();
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>Explore()));
+      },);}
+    else {
+      return null;
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -67,6 +86,11 @@ class _SettingsPageState extends State<SettingsPage> {
               Padding(
                 padding: const EdgeInsets.only(top:18.0),
                 child: SettingsListTitles(title: "Admin Area", icons: EvaIcons.people, tap: (){},),
+              ),
+
+              Padding(
+                padding: const EdgeInsets.only(top:18.0),
+                child: logout(),
               ),
         ])),
       ),

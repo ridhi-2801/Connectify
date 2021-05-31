@@ -26,7 +26,5 @@ class GoogleAuth{
    }
   }
 
-  void signOutGoogle()async{
-    await googleSignIn.signOut();
-  }
+
 }
