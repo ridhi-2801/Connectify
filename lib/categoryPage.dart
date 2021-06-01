@@ -16,38 +16,25 @@ class CategoryPage extends StatefulWidget {
 
 class _CategoryPageState extends State<CategoryPage> {
 
-  Future<List<LinkCards>> generateList(List<dynamic> listLinksDataId) async {
-    FirebaseFirestore fireStore = FirebaseFirestore.instance;
-    List<LinkCards> listCards = [];
-
-    listLinksDataId.forEach((linkDataId) async {
-      print(linkDataId);
-
-      await fireStore
-          .collection('LinksData')
-          .doc(linkDataId)
-          .get()
-          .then((value) => {
-                listCards.add(LinkCards(
-                  link: value.get('link'),
-                  linkTitle: value.get('title'),
-                  linkImage: value.get('image'),
-                  relatedCategories: value.get('categories'),
-                  platform: value.get('platform'),
-                ))
-              });
-    });
-    return listCards;
-  }
-
-//  List<LinkData> list = [
-//    LinkData(name: 'Pepcoding' , categories: ['#'] , image: '#' , platform: 'Telegram', link: '#' ),
-//    LinkData(name: 'PrepInsta' , categories: ['#'] , image: '#' , platform: 'Telegram', link: '#' ),
-//    LinkData(name: 'Coding Ninja' , categories: ['#'] , image: '#' , platform: 'Telegram', link: '#' ),
-//    LinkData(name: 'Pepcoding' , categories: ['#'] , image: '#' , platform: 'Telegram', link: '#' ),
-//    LinkData(name: 'PrepInsta' , categories: ['#'] , image: '#' , platform: 'Telegram', link: '#' ),
-//    LinkData(name: 'Coding Ninja' , categories: ['#'] , image: '#' , platform: 'Telegram', link: '#' ),
-//  ];
+//  Future<List<String>> generateList(List<String> listLinksDataId) async {
+//    List<String> listCards = [];
+//    final collection = FirebaseFirestore.instance.collection('LinksData');
+//
+//    for (String docId in listLinksDataId) {
+//      final snapshot = await collection.doc(docId).get();
+//
+//      // snapshot is the document snapshot whose id
+//      // matches the index in the list you're passing in
+//
+//      final linksData = snapshot['linksData']; // list of ids in linksData field
+//
+//      for (var i = 0; i < linksData.length; i++) { // looping through list
+//        final field = linksData[i];
+//        listCards.add(field);
+//      }
+//    }
+//    return listCards;
+//  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,23 +66,35 @@ class _CategoryPageState extends State<CategoryPage> {
                 ),
               ),
               Expanded(
-                  child: FutureBuilder<List<LinkCards>>(
-                future: generateList(widget.linksDataIds),
+                  child: StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection('LinksData')
+                    .where('categories', arrayContains: widget.categoryName)
+                    .snapshots(),
+
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
-                    return Center(child: Text('Oops! Some Error Occurred!'));
+                    return Center(child: Text('${snapshot.error}'));
                   } else {
                     if (!snapshot.hasData) {
                       return Center(child: CircularProgressIndicator());
+                    }
+                    if(snapshot.data!.docs.length == 0){
+                      return Center(child: Text('No Links to Display',style: TextStyle(fontSize: 25.0,),),);
                     }
                     return GridView.builder(
                         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                           maxCrossAxisExtent: 220,
                           mainAxisSpacing: 12.0,
                         ),
-                        itemCount: snapshot.data!.length,
+                        itemCount: snapshot.data!.docs.length,
                         itemBuilder: (context, index) {
-                          return snapshot.data![index];
+                          return LinkCards(
+                              linkImage: snapshot.data!.docs[index].get('image'),
+                              linkTitle: snapshot.data!.docs[index].get('name'),
+                              link: snapshot.data!.docs[index].get('link'),
+                              relatedCategories: snapshot.data!.docs[index].get('categories'),
+                              platform: snapshot.data!.docs[index].get('platform'));
                         });
                   }
                 },

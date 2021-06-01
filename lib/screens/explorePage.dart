@@ -20,9 +20,6 @@ class Explore extends StatefulWidget {
 class _ExploreState extends State<Explore> {
   final formKey = new GlobalKey<FormState>();
   final fireStore = FirebaseFirestore.instance;
-  final currUser = FirebaseAuth.instance.currentUser == null
-      ? 'Stranger'
-      : FirebaseAuth.instance.currentUser!.displayName;
 
   List<LinkData> list = [
     LinkData(
@@ -95,7 +92,7 @@ class _ExploreState extends State<Explore> {
                     Padding(
                       padding: const EdgeInsets.only(left: 15.0),
                       child: Text(
-                        'Hello $currUser...',
+                        FirebaseAuth.instance.currentUser == null ? 'Hello Stranger...' : 'Hello ${FirebaseAuth.instance.currentUser!.displayName}',
                         style: TextStyle(
                             color: Colors.blue,
                             fontSize: width * 0.045,
@@ -121,7 +118,7 @@ class _ExploreState extends State<Explore> {
                       onPressed: () => Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => SettingsPage())),
+                              builder: (context) => SettingsPage())).then((value) => setState(() {})),
                     ),
                   ],
                 ),
@@ -131,11 +128,11 @@ class _ExploreState extends State<Explore> {
                     padding: const EdgeInsets.only(left:25.0,bottom: 20),
                     child: GestureDetector(
                       onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Login()));
+                        Navigator.push(context, MaterialPageRoute(
+                            builder: (context)=>Login())).then((value) => setState(() {}));
                       },
                       child: Container(
-                      width: 60,
-                        height: 20,
+                        width:MediaQuery.of(context).size.width * 0.14,
                         decoration: BoxDecoration(
                             color: Colors.white,
                           boxShadow: [
@@ -145,15 +142,21 @@ class _ExploreState extends State<Explore> {
                             2.0,
                             2.0,
                           ),
-                          blurRadius: 2.0,
-                          spreadRadius: 2.0,
+                          blurRadius: 1.5,
+                          spreadRadius: 1.5,
                         ), //BoxShadow
-
-
                           ]
                         ),
-
-                          child: Center(child: Text('Login',style: TextStyle(fontWeight: FontWeight.bold),))),
+                          child: Center(child: Padding(
+                            padding: const EdgeInsets.all(2.0),
+                            child: Text('Login',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Gilroy',
+                                color: Colors.blue,
+                                fontSize: MediaQuery.of(context).size.width * 0.035
+                              ),),
+                          ))),
                     ),
                   )
                   : SizedBox(),
@@ -198,7 +201,7 @@ class _ExploreState extends State<Explore> {
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 15),
               Expanded(
                 child: Container(
                   width: double.infinity,

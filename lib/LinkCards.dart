@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:social_share/social_share.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:clay_containers/clay_containers.dart';
 import 'constants.dart';
 
@@ -24,17 +22,17 @@ class LinkCards extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: 8.0,),
+      padding: const EdgeInsets.only(right: 10.0,),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           ClayContainer(
-            borderRadius: 10,
-            height: 180,
+            borderRadius: 6,
+//            height: 180,
             width: 150,
             depth: 50,
-            spread: 5,
+            spread: 8,
             color: isDark?darkModeColor:baseColor,
             curveType: CurveType.none,
             child: Column(
@@ -52,38 +50,23 @@ class LinkCards extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                    padding: const EdgeInsets.only(top: 18.0),
+                    padding: const EdgeInsets.only(top: 10.0,bottom: 14.0),
                     child: Text(
                       linkTitle,
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: isDark?baseColor:darkModeColor,),
                     )),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0, left: 8, right: 8),
-                  child: Linkify(
-                    onOpen: (link) async {
-                      if (await canLaunch(link.url)) {
-                        await launch(link.url);
-                      } else {
-                        throw 'Could not launch $link';
-                      }
-                    },
-                    text: link,
-                    linkStyle: TextStyle(color:  isDark?baseColor:darkModeColor, fontSize: 12),
-                    options: LinkifyOptions(humanize: true),
-                  ),
-                ),
               ],
             ),
           ),
           Container(
             height: 30,
-            width: 120,
+            width: 100,
             decoration: BoxDecoration(
                 color: isDark?baseColor:darkModeColor,
                 borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(10.0),
-                  bottomRight: Radius.circular(10.0),
+                  bottomLeft: Radius.circular(6.0),
+                  bottomRight: Radius.circular(6.0),
                 )),
             child: Center(
                 child: GestureDetector(

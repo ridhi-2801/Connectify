@@ -69,7 +69,7 @@ class _LoginState extends State<Login> {
                     elevation: 20,
                     child: Padding(
                       padding: const EdgeInsets.only(
-                          top: 30.0, left: 16, right: 16, bottom: 15),
+                          top: 30.0, left: 16, right: 16, bottom: 10),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -145,47 +145,81 @@ class _LoginState extends State<Login> {
                             ),
                           ),
                           SizedBox(height: 8),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              TextButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (contextBuilder) =>
-                                                Register()));
-                                  },
-                                  child: Text(
-                                    "REGISTER",
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        color: loginColor,
-                                        fontWeight: FontWeight.w700),
-                                  )),
-                              GestureDetector(
-                                  onTap: () async {
-                                    await GoogleAuth()
-                                        .signInWithGoogle()
-                                        .then((value) {
-                                      print(value);
-                                      Navigator.pop(context);
-                                    });
-                                  },
-                                  child: CircleAvatar(
-                                    backgroundColor: loginColor,
-                                    child: Icon(
-                                      EvaIcons.google,
-                                      color: baseColor,
-                                    ),
-                                  )),
-                            ],
+                          Center(
+                            child: TextButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (contextBuilder) =>
+                                              Register()));
+                                },
+                                child: Text(
+                                  "REGISTER",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color: loginColor,
+                                      fontWeight: FontWeight.w700),
+                                )),
                           ),
+
                         ],
                       ),
                     ),
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Text("OR Login with ",
+                    style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500,color: Colors.white),),
+                ),
+                GestureDetector(
+                    onTap: () async {
+                      await GoogleAuth()
+                          .signInWithGoogle()
+                          .then((value) {
+                        print(value);
+                        Navigator.pop(context);
+                      });
+                    },
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                            height: 30,
+                            width: 180,
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.black,width: 1),
+                              boxShadow: [
+                                BoxShadow(
+                                  color:Colors.black54,
+                                  offset: const Offset(
+                                    1.5,
+                                    2.5,
+                                  ),
+                                  blurRadius: 1.0,
+                                  spreadRadius: 1.0,
+                                ), //BoxShadow
+
+
+                              ],
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(2.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(EvaIcons.google,color: Color(0xFFEA4335),),
+                                  SizedBox(width: 8.0,),
+                                  Text("Google",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+                                ],
+                              ),
+                            )
+                        ),
+                      ),
+                    )),
               ],
             ),
           ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/constants.dart';
 import 'LinkCards.dart';
 
 class HomePageCarousel extends StatelessWidget {
@@ -10,7 +11,7 @@ class HomePageCarousel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 10.0,),
+      padding: const EdgeInsets.only(left: 10.0,bottom: 15.0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -19,13 +20,15 @@ class HomePageCarousel extends StatelessWidget {
             padding: const EdgeInsets.only(left:8.0),
             child: Text(
               title,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,fontFamily: 'Gilroy'),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,fontFamily: 'Gilroy',
+              color: isDark ? baseColor :darkModeColor,),
             ),
           ),
           Container(
             width: double.infinity,
-            height: 250,
+            height: 200,
             child: ListView.builder(
+              shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
                 itemCount: listLinkData.length,
                 itemBuilder: (context, index) {
@@ -38,7 +41,6 @@ class HomePageCarousel extends StatelessWidget {
                   );
                 }),
           ),
-          SizedBox(height: 12,),
         ],
       ),
     );

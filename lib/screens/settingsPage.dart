@@ -3,7 +3,6 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/Authentication.dart';
-import 'package:flutter_app/screens/explorePage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import '../constants.dart';
 
@@ -22,7 +21,7 @@ class _SettingsPageState extends State<SettingsPage> {
       return SettingsListTitles(title: "Logout", icons: EvaIcons.logOut, tap: () async {
         await auth.signOut();
         await googleSignIn.signOut();
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>Explore()));
+        Navigator.pop(context);
       },);}
     else {
       return null;
