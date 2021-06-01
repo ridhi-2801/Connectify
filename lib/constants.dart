@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 
@@ -25,4 +26,11 @@ Map<String,IconData> iconMap = {
   'Google' :EvaIcons.google,
   'Github' :EvaIcons.githubOutline,
   'Linkedin': EvaIcons.linkedinOutline,
+};
+
+Map<String,IconData> platformIconMap = {
+  'Telegram' : FontAwesomeIcons.telegram,
+  'Whatsapp' : FontAwesomeIcons.whatsapp,
+  'Facebook' : FontAwesomeIcons.facebookSquare,
+  'Reddit' : FontAwesomeIcons.reddit,
 };

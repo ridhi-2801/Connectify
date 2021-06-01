@@ -12,8 +12,8 @@ class LinkCards extends StatelessWidget {
   final relatedCategories;
   final platform;
 
-  LinkCards({
-      required this.linkImage,
+  LinkCards(
+      {required this.linkImage,
       required this.linkTitle,
       required this.link,
       required this.relatedCategories,
@@ -22,23 +22,24 @@ class LinkCards extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: 10.0,),
+      padding: const EdgeInsets.only(
+        right: 10.0,
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           ClayContainer(
             borderRadius: 6,
-//            height: 180,
             width: 150,
             depth: 50,
-            spread: 8,
-            color: isDark?darkModeColor:baseColor,
+            spread: 10,
+            color: isDark ? darkModeColor : baseColor,
             curveType: CurveType.none,
             child: Column(
               children: [
                 Divider(
-                  color: isDark?baseColor:darkModeColor,
+                  color: isDark ? baseColor : darkModeColor,
                   thickness: 8,
                 ),
                 Padding(
@@ -46,24 +47,32 @@ class LinkCards extends StatelessWidget {
                   child: CircleAvatar(
                     radius: 35,
                     backgroundColor: Colors.blueAccent,
-                    // backgroundImage: AssetImage(groupImage),
+                    backgroundImage: NetworkImage(linkImage),
                   ),
                 ),
                 Padding(
-                    padding: const EdgeInsets.only(top: 10.0,bottom: 14.0),
-                    child: Text(
-                      linkTitle,
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: isDark?baseColor:darkModeColor,),
+                    padding: const EdgeInsets.only(top: 10.0,bottom: 2.0),
+                    child: Flexible(
+                      child: Text(
+                        linkTitle,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                          color: isDark ? baseColor : darkModeColor,
+                        ),
+                      ),
                     )),
+                platformIconMap.containsKey(platform) == true ?
+                Icon(platformIconMap[platform],size: 20.0,) : Text(platform),
+                SizedBox(height: 8.0,),
               ],
             ),
           ),
           Container(
             height: 30,
-            width: 100,
+            width: 120,
             decoration: BoxDecoration(
-                color: isDark?baseColor:darkModeColor,
+                color: isDark ? baseColor : darkModeColor,
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(6.0),
                   bottomRight: Radius.circular(6.0),
@@ -84,19 +93,16 @@ class LinkCards extends StatelessWidget {
                               IconButton(
                                 icon: Icon(FontAwesomeIcons.whatsapp),
                                 onPressed: () async {
-                                  SocialShare.shareWhatsapp(link)
-                                      .then((data) {
+                                  SocialShare.shareWhatsapp(link).then((data) {
                                     print(data);
                                     Navigator.pop(context);
-                                  });
-                                },
+                                  });},
                                 color: Color(0xff075E54),
                               ),
                               IconButton(
                                 icon: Icon(FontAwesomeIcons.telegram),
                                 onPressed: () async {
-                                  SocialShare.shareTelegram(link)
-                                      .then((data) {
+                                  SocialShare.shareTelegram(link).then((data) {
                                     print(data);
                                     Navigator.pop(context);
                                   });
@@ -148,10 +154,40 @@ class LinkCards extends StatelessWidget {
                       )
                     ]).show();
               },
-              child: Text(
-                "Share",
-                style:
-                    TextStyle(color: isDark?darkModeColor:baseColor, fontWeight: FontWeight.bold),
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                    onPressed: (){print('join');},
+                    child: Text(
+                      "Join",
+                      style: TextStyle(
+                          color: isDark ? darkModeColor : baseColor,
+                          fontWeight: FontWeight.bold,
+                      fontFamily: 'Gilroy',
+                      fontSize: 15.0),
+                    ),
+                  ),
+                  SizedBox(width: 0.5,),
+                  InkWell(
+                      onTap: (){print('BalsamiqSans');},
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 0.1,top: 0.1),
+                            child: VerticalDivider(color: isDark ? darkModeColor : baseColor,thickness: 0.4),
+                          ),
+                          Icon(FontAwesomeIcons.share,
+                            color: isDark ? darkModeColor : baseColor,
+                            size: 15.0,),
+                        ],
+                      ),
+                    ),
+                      ),
+                ],
               ),
             )),
           )

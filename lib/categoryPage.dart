@@ -16,26 +16,6 @@ class CategoryPage extends StatefulWidget {
 
 class _CategoryPageState extends State<CategoryPage> {
 
-//  Future<List<String>> generateList(List<String> listLinksDataId) async {
-//    List<String> listCards = [];
-//    final collection = FirebaseFirestore.instance.collection('LinksData');
-//
-//    for (String docId in listLinksDataId) {
-//      final snapshot = await collection.doc(docId).get();
-//
-//      // snapshot is the document snapshot whose id
-//      // matches the index in the list you're passing in
-//
-//      final linksData = snapshot['linksData']; // list of ids in linksData field
-//
-//      for (var i = 0; i < linksData.length; i++) { // looping through list
-//        final field = linksData[i];
-//        listCards.add(field);
-//      }
-//    }
-//    return listCards;
-//  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -26,7 +26,7 @@ class _ExploreState extends State<Explore> {
         name: 'Pepcoding',
         categories: [],
         image: '#',
-        platform: 'Telegram',
+        platform: 'Whatsapp',
         link: '#'),
     LinkData(
         name: 'PrepInsta',
@@ -38,7 +38,7 @@ class _ExploreState extends State<Explore> {
         name: 'Coding Ninja',
         categories: ['#'],
         image: '#',
-        platform: 'Telegram',
+        platform: 'Reddit',
         link: '#'),
   ];
 
