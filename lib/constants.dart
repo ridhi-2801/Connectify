@@ -26,6 +26,7 @@ Map<String,IconData> iconMap = {
   'Google' :EvaIcons.google,
   'Github' :EvaIcons.githubOutline,
   'Linkedin': EvaIcons.linkedinOutline,
+  'Trending':FontAwesomeIcons.hotjar,
 };
 
 Map<String,IconData> platformIconMap = {

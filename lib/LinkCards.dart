@@ -33,7 +33,7 @@ class LinkCards extends StatelessWidget {
             borderRadius: 6,
             width: 150,
             depth: 50,
-            spread: 10,
+            spread: 6,
             color: isDark ? darkModeColor : baseColor,
             curveType: CurveType.none,
             child: Column(
@@ -47,11 +47,12 @@ class LinkCards extends StatelessWidget {
                   child: CircleAvatar(
                     radius: 35,
                     backgroundColor: Colors.blueAccent,
-                    backgroundImage: NetworkImage(linkImage),
+                    backgroundImage: NetworkImage(
+                        linkImage,),
                   ),
                 ),
                 Padding(
-                    padding: const EdgeInsets.only(top: 10.0,bottom: 2.0),
+                    padding: const EdgeInsets.only(top: 10.0,bottom: 4.0),
                     child: Flexible(
                       child: Text(
                         linkTitle,
@@ -63,7 +64,7 @@ class LinkCards extends StatelessWidget {
                       ),
                     )),
                 platformIconMap.containsKey(platform) == true ?
-                Icon(platformIconMap[platform],size: 20.0,) : Text(platform),
+                Icon(platformIconMap[platform],size: 20.0,color: isDark? Colors.white : Colors.black,) : Text(platform),
                 SizedBox(height: 8.0,),
               ],
             ),
