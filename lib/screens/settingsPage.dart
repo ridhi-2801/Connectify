@@ -7,33 +7,39 @@ import 'package:flutter_app/aboutPage.dart';
 import 'package:flutter_app/screens/adminPage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import '../constants.dart';
+import 'login.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
   _SettingsPageState createState() => _SettingsPageState();
 }
 
-
-
 class _SettingsPageState extends State<SettingsPage> {
+
   final GoogleSignIn googleSignIn = GoogleSignIn();
+
   SettingsListTitles? logout(){
     if(FirebaseAuth.instance.currentUser != null){
-
       return SettingsListTitles(title: "Logout", icons: EvaIcons.logOut, tap: () async {
         await auth.signOut();
         await googleSignIn.signOut();
         Navigator.pop(context);
       },);}
     else {
-      return null;
+      return SettingsListTitles(title: "Login", icons: EvaIcons.logIn, tap: () async {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Login()))
+            .then((value) => setState(() {}));
+      },);
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
-
         child: Scaffold(
           backgroundColor: isDark?darkModeColor:Colors.white,
 
@@ -71,25 +77,21 @@ class _SettingsPageState extends State<SettingsPage> {
                  }
                });
               },),
-
               Padding(
                 padding: const EdgeInsets.only(top:18.0),
                 child: SettingsListTitles(title: "Rate and Review", icons: EvaIcons.star, tap: (){
                   launchURL("");
                 },),
               ),
-
               Padding(
                 padding: const EdgeInsets.only(top:18.0),
                 child: SettingsListTitles(title: "About", icons: EvaIcons.people, tap: ()=> AboutPage(),),
               ),
-
               Padding(
                 padding: const EdgeInsets.only(top:18.0),
                 child: SettingsListTitles(title: "Admin Area", icons: EvaIcons.people, tap: ()=> Navigator.push(context, MaterialPageRoute(
                     builder: (context) => AdminPage())),),
               ),
-
               Padding(
                 padding: const EdgeInsets.only(top:18.0),
                 child: logout(),

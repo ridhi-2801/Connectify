@@ -12,36 +12,44 @@ class HomePageCarousel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 10.0,bottom: 15.0),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left:8.0),
-            child: Text(
-              title,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,fontFamily: 'Gilroy',
-              color: isDark ? baseColor :darkModeColor,),
+      child: Container(
+        width: double.infinity,
+        height: 250,
+        child: Flex(
+          direction: Axis.vertical,
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Flexible(
+              flex: 1,
+              child: Padding(
+                padding: const EdgeInsets.only(left:8.0),
+                child: Text(
+                  title,
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,fontFamily: 'Gilroy',
+                  color: isDark ? baseColor :darkModeColor,),
+                ),
+              ),
             ),
-          ),
-          Container(
-            width: double.infinity,
-            height: 200,
-            child: ListView.builder(
-              shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                itemCount: listLinkData.length,
-                itemBuilder: (context, index) {
-                  return new LinkCards(
-                    link: listLinkData[index].get('link'),
-                    linkTitle: listLinkData[index].get('name'),
-                    linkImage: listLinkData[index].get('image'),
-                    platform: listLinkData[index].get('platform'),
-                    relatedCategories: listLinkData[index].get('categories'),
-                  );
-                }),
-          ),
-        ],
+            Flexible(
+            flex: 5,
+              child: ListView.builder(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  itemCount: listLinkData.length,
+                  itemBuilder: (context, index) {
+                    return new LinkCards(
+                      link: listLinkData[index].get('link'),
+                      linkTitle: listLinkData[index].get('name'),
+                      linkImage: listLinkData[index].get('image'),
+                      platform: listLinkData[index].get('platform'),
+                      relatedCategories: listLinkData[index].get('categories'),
+                    );
+                  }),
+            ),
+          ],
+        ),
       ),
     );
   }
