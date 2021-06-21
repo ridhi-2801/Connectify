@@ -81,7 +81,8 @@ class _SettingsPageState extends State<SettingsPage> {
 
               Padding(
                 padding: const EdgeInsets.only(top:18.0),
-                child: SettingsListTitles(title: "About", icons: EvaIcons.people, tap: ()=> AboutPage(),),
+                child: SettingsListTitles(title: "About", icons: EvaIcons.people, tap: ()=> Navigator.push(context, MaterialPageRoute(
+                    builder: (context) => AboutPage())),),
               ),
 
               Padding(
