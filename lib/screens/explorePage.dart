@@ -12,6 +12,10 @@ import 'categoriesPage.dart';
 import 'settingsPage.dart';
 
 class Explore extends StatefulWidget {
+
+  final categoriesList;
+  Explore({this.categoriesList});
+
   @override
   _ExploreState createState() => _ExploreState();
 }
@@ -19,8 +23,7 @@ class Explore extends StatefulWidget {
 class _ExploreState extends State<Explore> {
   final formKey = new GlobalKey<FormState>();
   final fireStore = FirebaseFirestore.instance;
-  var categoriesData = [];
-
+  
   @override
   void initState() {
     super.initState();
@@ -36,7 +39,7 @@ class _ExploreState extends State<Explore> {
       child: Scaffold(
         backgroundColor: isDark ? darkModeColor : baseColor,
         floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.indigoAccent,
+          backgroundColor: Colors.blue,
           elevation: 10,
           child: Icon(
             Icons.add,
@@ -217,7 +220,7 @@ class _ExploreState extends State<Explore> {
                                 return Center(child: CircularProgressIndicator());
                               }
                               final categoryData = snapshot.data!.docs;
-                              categoriesData = categoryData;
+
                               return ListView.builder(
                                   shrinkWrap: true,
                                   itemCount: categoryData.length,
@@ -249,7 +252,10 @@ class _ExploreState extends State<Explore> {
                           return Center(child: Text('${snapshot.error}'));
                         } else {
                           if (!snapshot.hasData) {
-                            return Center(child: CircularProgressIndicator());
+                            return Center(child: Padding(
+                              padding: const EdgeInsets.all(30.0),
+                              child: LinearProgressIndicator(),
+                            ));
                           }
                           final linksData = snapshot.data!.docs;
                           return HomePageCarousel(
@@ -257,38 +263,41 @@ class _ExploreState extends State<Explore> {
                         }
                       },
                     ),
-                    Container(
-                      child: ListView.builder(
-                        physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: categoriesData.length,
-                          itemBuilder: (context, index) {
-                            return StreamBuilder<QuerySnapshot>(
-                                stream: FirebaseFirestore.instance
-                                    .collection('LinksData')
-                                    .where('categories',
-                                        arrayContains: categoriesData[index].get('title'))
-                                    .snapshots()
-                                    .take(6),
-                                builder: (context, snapshot) {
-                                  if (snapshot.hasError) {
-                                    return Center(child: Text('${snapshot.error}'));
-                                  } else {
-                                    if (!snapshot.hasData) {
-                                      return Center(
-                                          child: CircularProgressIndicator());
-                                    }
-                                    final linksData = snapshot.data!.docs;
-                                    if(linksData.length == 0) {
-                                      return SizedBox();
-                                    }
-                                    return HomePageCarousel(
-                                        title: categoriesData[index].get('title'),
-                                        listLinkData: linksData);
-                                  }
-                                });
-                          }),
-                    ),
+//                    Container(
+//                      child: ListView.builder(
+//                        physics: NeverScrollableScrollPhysics(),
+//                          shrinkWrap: true,
+//                          itemCount: widget.categoriesList.docs.length,
+//                          itemBuilder: (context, index) {
+//                            return StreamBuilder<QuerySnapshot>(
+//                                stream: FirebaseFirestore.instance
+//                                    .collection('LinksData')
+//                                    .where('categories',
+//                                        arrayContains: widget.categoriesList.docs[index].get('title'))
+//                                    .snapshots()
+//                                    .take(6),
+//                                builder: (context, snapshot) {
+//                                  if (snapshot.hasError) {
+//                                    return Center(child: Text('${snapshot.error}'));
+//                                  } else {
+//                                    if (!snapshot.hasData) {
+//                                      return Center(
+//                                          child: Padding(
+//                                            padding: const EdgeInsets.all(30.0),
+//                                            child: CircularProgressIndicator(),
+//                                          ));
+//                                    }
+//                                    final linksData = snapshot.data!.docs;
+//                                    if(linksData.length == 0) {
+//                                      return SizedBox();
+//                                    }
+//                                    return HomePageCarousel(
+//                                        title: widget.categoriesList.docs[index].get('title'),
+//                                        listLinkData: linksData);
+//                                  }
+//                                });
+//                          }),
+//                    ),
                   ],
                 ),
               ),

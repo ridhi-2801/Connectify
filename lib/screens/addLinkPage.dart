@@ -58,8 +58,6 @@ final picker = ImagePicker();
         });
   }
 
-
-
   _imgFromCamera() async {
     final pickedFile =
         await picker.getImage(source: ImageSource.camera, imageQuality: 50);
@@ -99,143 +97,147 @@ final picker = ImagePicker();
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: isDark ? darkModeColor : baseColor,
-        body: Padding(
-            padding: const EdgeInsets.only(top: 18.0),
-            child:
-                ListView(
-                    children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 10.0),
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: IconButton(
-                    icon: Icon(EvaIcons.close,
-                        size: 40.0, color: darkModeColor),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
+        body: Column(
+          mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+          Padding(
+              padding: const EdgeInsets.only(top: 35.0),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: IconButton(
+                  icon: Icon(EvaIcons.close,
+                      size: 40.0, color: isDark ? darkModeColor : baseColor),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10.0, left: 20.0),
-                child: Text(
-                  'Add Community Link',
-                  style: TextStyle(
-                      color: isDark ? baseColor : darkModeColor,
-                      fontSize: 30.0,
-                      fontFamily: 'BalsamiqSans'),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 16,right: 16,top: 50),
-                child: Column(
-                  children: [
-                    TextFormField(
-                      decoration: const InputDecoration(
-                        hintText: 'Name of Group',
-                      ),
-                    ),
-                    TextFormField(
-                      decoration: const InputDecoration(
-                        hintText: 'Link of group',
-                      ),
-                    ),
-                    SizedBox(height: 30,),
-
-                    StreamBuilder<QuerySnapshot>(
-                        stream: FirebaseFirestore.instance
-                            .collection('Categories')
-                            .snapshots(),
-                        builder: (context , snapshot) {
-                          if(snapshot.hasError){
-                            return Text('Oops Something Wrong browsing categories!\nAdd sometime later');
-                          }else{
-                            if(snapshot.hasData){
-                              final listCategories = snapshot.data!.docs.map((document) => document.get('title'),);
-                              return DropDown(listCategories: listCategories,);
-                            }else{
-                              return CircularProgressIndicator();
-                            }
-                          }
-                        }),
-
-                    Padding(
-                      padding: const EdgeInsets.only(top: 58.0),
-                      child: GestureDetector(
-                        onTap: () {
-                          _showPicker(context);
-                        },
-                        child: Container(
-                          height: MediaQuery.of(context).size.height/4,
-                          width: MediaQuery.of(context).size.width/2,
-                          decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black54,
-                                offset: const Offset(
-                                  1.0,
-                                  2.0,
-                                ),
-                                blurRadius: 5.0,
-                                spreadRadius: 1.0,
-                              ), //BoxShadow
-                              BoxShadow(
-                                color: Colors.white,
-                                offset: const Offset(0.0, 0.0),
-                                blurRadius: 0.0,
-                                spreadRadius: 0.0,
-                              ), //BoxShadow
-                            ],
-                          ),
-                          child: Padding(
-                              padding: const EdgeInsets.all(16.0),
-                            child: _image != null
-                                ? ClipRRect(
-                                    child: Image.file(
-                                      _image!,
-                                      width: 100,
-                                      height: 100,
-                                      fit: BoxFit.fill,
-                                    ),
-                                  )
-                              :  Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.add,
-                                        size: 50,
-                                        color: Colors.black54,
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Text(
-                                        "Add Image",
-                                        style: TextStyle(
-                                            color: Colors.black54,
-                                            fontSize: 18),
-                                      ),
-                                ])),
-                        ),
-                ),
-              ),
-                    SizedBox(height: 50,),
-                    FlatButton(
-                      color: Colors.indigoAccent,
+          ),
+                  Padding(
+                      padding: const EdgeInsets.only(top: 10.0, left: 20.0),
                       child: Text(
-                        "Add",
-                        style: TextStyle(color: Colors.white, fontSize: 20),
+                        'Add Community Link',
+                        style: TextStyle(
+                            color: isDark ? baseColor : darkModeColor,
+                            fontSize: 30.0,
+                            fontFamily: 'BalsamiqSans'),
                       ),
-                      onPressed: () {
-                        _saveForm();
-                        Navigator.pop(context);
-                      },
-                    ),
-            ]
-                )
-              )])
-        ));
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.only(left: 16,right: 16,top: 50),
+                      child: Column(
+                        children: [
+                          TextFormField(
+                            decoration: const InputDecoration(
+                              hintText: 'Name of Group',
+                            ),
+                          ),
+                          TextFormField(
+                            decoration: const InputDecoration(
+                              hintText: 'Link of group',
+                            ),
+                          ),
+                          SizedBox(height: 30,),
+                          StreamBuilder<QuerySnapshot>(
+                              stream: FirebaseFirestore.instance
+                                  .collection('Categories')
+                                  .snapshots(),
+                              builder: (context , snapshot) {
+                                if(snapshot.hasError){
+                                  return Text('Oops Something Wrong browsing categories!\nAdd sometime later');
+                                }else{
+                                  if(snapshot.hasData){
+                                    final listCategories = snapshot.data!.docs;
+
+                                    List<String> list = [];
+                                    listCategories.forEach((category) {
+                                      list.add(category.get('title'));
+                                    });
+
+                                    return DropDown(listCategories: list);
+
+                                  }else{
+                                    return CircularProgressIndicator();
+                                  }
+                                }
+                              }),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 58.0),
+                            child: GestureDetector(
+                              onTap: () {
+                                _showPicker(context);
+                              },
+                              child: Container(
+                                height: MediaQuery.of(context).size.height/4,
+                                width: MediaQuery.of(context).size.width/2,
+                                decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black54,
+                                      offset: const Offset(
+                                        1.0,
+                                        2.0,
+                                      ),
+                                      blurRadius: 5.0,
+                                      spreadRadius: 1.0,
+                                    ), //BoxShadow
+                                    BoxShadow(
+                                      color: Colors.white,
+                                      offset: const Offset(0.0, 0.0),
+                                      blurRadius: 0.0,
+                                      spreadRadius: 0.0,
+                                    ), //BoxShadow
+                                  ],
+                                ),
+                                child: Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                  child: _image != null
+                                      ? ClipRRect(
+                                          child: Image.file(
+                                            _image!,
+                                            width: 100,
+                                            height: 100,
+                                            fit: BoxFit.fill,
+                                          ),
+                                        )
+                                    :  Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              Icons.add,
+                                              size: 50,
+                                              color: Colors.black54,
+                                            ),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            Text(
+                                              "Add Image",
+                                              style: TextStyle(
+                                                  color: Colors.black54,
+                                                  fontSize: 18),
+                                            ),
+                                      ])),
+                              ),
+                      ),
+                  ),
+                          SizedBox(height: 50,),
+                          ElevatedButton(
+                            child: Text(
+                              "Add",
+                              style: TextStyle(color: Colors.white, fontSize: 20),
+                            ),
+                            onPressed: () {
+                              _saveForm();
+                              Navigator.pop(context);
+                            },
+                          ),
+                ]
+                      )
+                  )
+            ]));
   }
 }

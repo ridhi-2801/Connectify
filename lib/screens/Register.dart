@@ -1,6 +1,5 @@
 import 'dart:ui';
 import 'package:fluttertoast/fluttertoast.dart';
-
 import 'addLinkPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,8 +14,6 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   bool isSee=true;
 
-
-
     TextEditingController _emailField = new TextEditingController();
     TextEditingController _passwordField = new TextEditingController();
 
@@ -26,7 +23,7 @@ class _RegisterState extends State<Register> {
     double height= MediaQuery.of(context).size.height;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: loginColor,
+        backgroundColor: isDark ? darkModeColor : baseColor,
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(10.0),
@@ -35,17 +32,24 @@ class _RegisterState extends State<Register> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(height: height/10,),
-                Center(
-                  child: Icon(
-                    Icons.people,
-
-                    size: 50,
-                    color: Colors.orange,
+                Container(
+                  height: 100,
+                  width: 100,
+                  child: Image(
+                    fit: BoxFit.scaleDown,
+                    image: AssetImage(
+                      'assets/images/logo.png',
+                    ),
                   ),
                 ),
                 Center(
                   child: Text(
-                    "Connectify",style: TextStyle(  color: Colors.orange,fontSize: 40.0, fontFamily: 'BalsamiqSans',),
+                    "Connectify",
+                    style: TextStyle(
+                      color: Color(0xFF58769E),
+                      fontSize: 40.0,
+                      fontFamily: 'Gilroy',
+                    ),
                   ),
                 ),
                 SizedBox(height: height/40,),
@@ -146,7 +150,7 @@ class _RegisterState extends State<Register> {
                               color: loginColor,
                               child: Padding(
                                   padding: const EdgeInsets.only(top:10,bottom:10,right: 20,left: 20),
-                                  child: Text("Register",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500,color: Colors.white))
+                                  child: Text("Register",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500,color: Colors.black))
                               ),
                             ),
                           ),

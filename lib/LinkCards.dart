@@ -1,8 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:social_share/social_share.dart';
-import 'package:clay_containers/clay_containers.dart';
 import 'constants.dart';
 
 class LinkCards extends StatelessWidget {
@@ -29,44 +29,53 @@ class LinkCards extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          ClayContainer(
-            borderRadius: 6,
-            width: 150,
-            depth: 50,
-            spread: 6,
+          Card(
+            elevation: 6,
+            shadowColor: isDark ?baseColor : darkModeColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(6), bottomRight: Radius.circular(6)),
+            ),
+//            borderRadius: 6,
+//            width: 150,
+//            depth: 50,
+//            spread: 6,
             color: isDark ? darkModeColor : baseColor,
-            curveType: CurveType.none,
-            child: Column(
-              children: [
-                Divider(
-                  color: isDark ? baseColor : darkModeColor,
-                  thickness: 8,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: CircleAvatar(
-                    radius: 35,
-                    backgroundColor: Colors.blueAccent,
-                    backgroundImage: NetworkImage(
-                        linkImage,),
+//            curveType: CurveType.none,
+            child: Container(
+              color: Colors.transparent,
+              width: 150,
+              child: Column(
+                children: [
+                  Divider(
+                    color: isDark ? baseColor : darkModeColor,
+                    thickness: 8,
                   ),
-                ),
-                Padding(
-                    padding: const EdgeInsets.only(top: 10.0,bottom: 4.0),
-                    child: Flexible(
-                      child: Text(
-                        linkTitle,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
-                          color: isDark ? baseColor : darkModeColor,
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: CircleAvatar(
+                      radius: linkTitle.length > 20 ? 30 : 35,
+                      backgroundColor: Colors.blueAccent,
+                      backgroundImage: NetworkImage(
+                          linkImage,),
+                    ),
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.only(top: 10.0,bottom: 4.0),
+                      child: Flexible(
+                        child: Text(
+                          linkTitle,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: linkTitle.length > 20 ? 12.5 : 15,
+                            color: isDark ? baseColor : darkModeColor,
+                          ),
                         ),
-                      ),
-                    )),
-                platformIconMap.containsKey(platform) == true ?
-                Icon(platformIconMap[platform],size: 20.0,color: isDark? Colors.white : Colors.black,) : Text(platform),
-                SizedBox(height: 8.0,),
-              ],
+                      )),
+                  platformIconMap.containsKey(platform) == true ?
+                  Icon(platformIconMap[platform],size: linkTitle.length > 20 ? 16.5 : 20.0,color: isDark? Colors.white : Colors.black,) : Text(platform),
+                  SizedBox(height: 8.0,),
+                ],
+              ),
             ),
           ),
           Container(

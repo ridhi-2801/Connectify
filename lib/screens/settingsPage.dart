@@ -3,6 +3,8 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/Authentication.dart';
+import 'package:flutter_app/aboutPage.dart';
+import 'package:flutter_app/screens/adminPage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import '../constants.dart';
 
@@ -59,7 +61,7 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
           SizedBox(
             height: 25.0),
-              SettingsListTitles(title: "Switch Theme", icons: EvaIcons.moon,tap: (){
+              SettingsListTitles(title: "Dark Mode", icons: EvaIcons.moon,tap: (){
                setState(() {
                  if(isDark==false) {
                    isDark=true;
@@ -79,12 +81,13 @@ class _SettingsPageState extends State<SettingsPage> {
 
               Padding(
                 padding: const EdgeInsets.only(top:18.0),
-                child: SettingsListTitles(title: "About", icons: EvaIcons.people, tap: (){},),
+                child: SettingsListTitles(title: "About", icons: EvaIcons.people, tap: ()=> AboutPage(),),
               ),
 
               Padding(
                 padding: const EdgeInsets.only(top:18.0),
-                child: SettingsListTitles(title: "Admin Area", icons: EvaIcons.people, tap: (){},),
+                child: SettingsListTitles(title: "Admin Area", icons: EvaIcons.people, tap: ()=> Navigator.push(context, MaterialPageRoute(
+                    builder: (context) => AdminPage())),),
               ),
 
               Padding(

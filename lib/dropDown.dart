@@ -12,6 +12,7 @@ class DropDown extends StatefulWidget {
 
 class _DropDown extends State<DropDown> {
   FirebaseFirestore firestore=FirebaseFirestore.instance;
+  String dropDownValue = 'Select Categories';
 
   @override
   Widget build(BuildContext context) {
@@ -20,14 +21,14 @@ class _DropDown extends State<DropDown> {
       icon: const Icon(Icons.arrow_downward),
       iconSize: 24,
       elevation: 16,
-      style: const TextStyle(color: Colors.deepPurple),
+      style: const TextStyle(color: Colors.blue),
       underline: Container(
         height: 2,
-        color: Colors.deepPurpleAccent,
+        color: Colors.blue,
       ),
       onChanged: (String? newValue) {
         setState(() {
-//          dropdownValue = newValue!;
+          dropDownValue = newValue!;
         });
       },
       items: widget.listCategories.map<DropdownMenuItem<String>>((document) {

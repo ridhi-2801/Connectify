@@ -1,18 +1,12 @@
 import 'dart:ui';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/Authentication.dart';
 import 'package:flutter_app/constants.dart';
 import 'package:flutter_app/screens/Register.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'addLinkPage.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_app/googleAuth.dart';
-
-import 'explorePage.dart';
 
 bool isSee = true;
 
@@ -30,7 +24,7 @@ class _LoginState extends State<Login> {
     double height = MediaQuery.of(context).size.height;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: loginColor,
+        backgroundColor: isDark ? darkModeColor : baseColor,
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(10.0),
@@ -41,20 +35,23 @@ class _LoginState extends State<Login> {
                 SizedBox(
                   height: height / 10,
                 ),
-                Center(
-                  child: Icon(
-                    Icons.people,
-                    size: 50,
-                    color: Colors.orange,
+                Container(
+                  height: 100,
+                  width: 100,
+                  child: Image(
+                    fit: BoxFit.scaleDown,
+                    image: AssetImage(
+                      'assets/images/logo.png',
+                    ),
                   ),
                 ),
                 Center(
                   child: Text(
                     "Connectify",
                     style: TextStyle(
-                      color: Colors.orange,
+                      color: Color(0xFF58769E),
                       fontSize: 40.0,
-                      fontFamily: 'BalsamiqSans',
+                      fontFamily: 'Gilroy',
                     ),
                   ),
                 ),
@@ -140,7 +137,7 @@ class _LoginState extends State<Login> {
                                         style: TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.w500,
-                                            color: Colors.white))),
+                                            color: Colors.black))),
                               ),
                             ),
                           ),
@@ -158,7 +155,7 @@ class _LoginState extends State<Login> {
                                   "REGISTER",
                                   style: TextStyle(
                                       fontSize: 16,
-                                      color: loginColor,
+                                      color: Colors.black,
                                       fontWeight: FontWeight.w700),
                                 )),
                           ),
@@ -171,7 +168,7 @@ class _LoginState extends State<Login> {
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Text("OR Login with ",
-                    style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500,color: Colors.white),),
+                    style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500, color: isDark ? Colors.white : Colors.black),),
                 ),
                 GestureDetector(
                     onTap: () async {
@@ -186,7 +183,7 @@ class _LoginState extends State<Login> {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
-                            height: 30,
+                            height: 40,
                             width: 180,
                             decoration: BoxDecoration(
                               border: Border.all(color: Colors.black,width: 1),
@@ -198,13 +195,9 @@ class _LoginState extends State<Login> {
                                     2.5,
                                   ),
                                   blurRadius: 1.0,
-                                  spreadRadius: 1.0,
-                                ), //BoxShadow
-
-
-                              ],
+                                  spreadRadius: 1.0,),],
                               color: Colors.white,
-                              borderRadius: BorderRadius.circular(5),
+                              borderRadius: BorderRadius.circular(15),
                             ),
                             child: Padding(
                               padding: const EdgeInsets.all(2.0),
