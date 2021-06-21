@@ -25,9 +25,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
   bool error = false;
-
   Future loadContents() async{
     try{
       final listCategories = await FirebaseFirestore.instance.
