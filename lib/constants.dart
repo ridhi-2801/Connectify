@@ -20,6 +20,7 @@ final textStyle=TextStyle(fontSize: 20,fontWeight: FontWeight.w500);
 final loginColor=baseColor;
 
 Map<String,IconData> iconMap = {
+
   'Coding':EvaIcons.smartphoneOutline,
   'Fashion':EvaIcons.shoppingBagOutline,
   'Photography':EvaIcons.cameraOutline,
@@ -27,6 +28,19 @@ Map<String,IconData> iconMap = {
   'Github' :EvaIcons.githubOutline,
   'Linkedin': EvaIcons.linkedinOutline,
   'Trending':FontAwesomeIcons.hotjar,
+  'Youtube Promotion':FontAwesomeIcons.youtube,
+  'Job Hirings':FontAwesomeIcons.hireAHelper,
+  'Tours n Travels': FontAwesomeIcons.car,
+  'Public Health Care':FontAwesomeIcons.disease,
+  'Women safety': FontAwesomeIcons.female,
+  'Buying and selling': FontAwesomeIcons.buysellads,
+  'Trading':FontAwesomeIcons.bitcoin,
+  'Stocks':FontAwesomeIcons.building,
+  'Art and craft': FontAwesomeIcons.paintBrush,
+  'Promotion': FontAwesomeIcons.teamspeak,
+  'NGOs': FontAwesomeIcons.handsHelping,
+  
+
 };
 
 Map<String,IconData> platformIconMap = {
