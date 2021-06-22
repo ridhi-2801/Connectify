@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/constants.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AboutPage extends StatelessWidget {
+
+//  void _launchURL() async =>
+//      await canLaunch() ? await launch() : throw 'Could not launch $_url';
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -72,24 +77,34 @@ class AboutPage extends StatelessWidget {
                               SizedBox(height: 5,),
                               Row(
                                 children: [
-                                  Card(
-                                    color: Colors.black,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(3.0),
-                                      child: Text("Github", style: TextStyle(
-                                          fontSize: 10,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold),),
-                                    ),),
-                                  Card(
-                                    color: Colors.black,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(3.0),
-                                      child: Text("Linked in", style: TextStyle(
-                                          fontSize: 10,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold),),
-                                    ),)
+                                  GestureDetector(
+                                    onTap:(){
+                                      launchURL("https://github.com/ridhi-2801");
+                                    },
+                                    child: Card(
+                                      color: Colors.black,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(3.0),
+                                        child: Text("Github", style: TextStyle(
+                                            fontSize: 10,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),),
+                                      ),),
+                                  ),
+                                  GestureDetector(
+                                    onTap:(){
+                                      launchURL("https://www.linkedin.com/in/ridhi-jain-8b73711b5/");
+                                    },
+                                    child: Card(
+                                      color: Colors.black,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(3.0),
+                                        child: Text("Linked in", style: TextStyle(
+                                            fontSize: 10,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),),
+                                      ),),
+                                  )
                                 ],
                               )
                             ],
@@ -134,24 +149,34 @@ class AboutPage extends StatelessWidget {
                               SizedBox(height: 5,),
                               Row(
                                 children: [
-                                  Card(
-                                    color: Colors.black,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(3.0),
-                                      child: Text("Github", style: TextStyle(
-                                          fontSize: 10,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold),),
-                                    ),),
-                                  Card(
-                                    color: Colors.black,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(3.0),
-                                      child: Text("Linked in", style: TextStyle(
-                                          fontSize: 10,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold),),
-                                    ),)
+                                  GestureDetector(
+                                    onTap:(){
+                                      launchURL("https://github.com/aamirZaidi");
+                        },
+                                    child: Card(
+                                      color: Colors.black,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(3.0),
+                                        child: Text("Github", style: TextStyle(
+                                            fontSize: 10,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),),
+                                      ),),
+                                  ),
+                                  GestureDetector(
+                                    onTap: (){
+                                      launchURL("https://www.linkedin.com/in/mohd-aamir-01ba73198/");
+                                    },
+                                    child: Card(
+                                      color: Colors.black,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(3.0),
+                                        child: Text("Linked in", style: TextStyle(
+                                            fontSize: 10,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),),
+                                      ),),
+                                  )
                                 ],
                               )
                             ],
