@@ -18,7 +18,7 @@ class SearchViewScreen extends StatelessWidget {
         child: list.length == 0 ?
         Center(
           child: Text(
-            "No Stories to display!!",
+            "No Groups to display!!",
             style: TextStyle(
               fontSize:
               0.03 * MediaQuery.of(context).size.height,
@@ -56,7 +56,7 @@ class SearchViewScreen extends StatelessWidget {
                   title: Text(linkData.get('name')),
                   trailing: IconButton(
                       onPressed: () {
-                        //todo
+                        launchURL(linkData.get('link'));
                       },
                       icon : Icon(Icons.person_add_alt_1_rounded)),
                 );
