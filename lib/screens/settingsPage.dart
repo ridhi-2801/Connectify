@@ -80,7 +80,7 @@ class _SettingsPageState extends State<SettingsPage> {
               Padding(
                 padding: const EdgeInsets.only(top:18.0),
                 child: SettingsListTitles(title: "Rate and Review", icons: EvaIcons.star, tap: (){
-                  launchURL("");
+                  launchURL("https://play.google.com/store/apps/details?id=com.carelesscoders.connectify");
                 },),
               ),
               Padding(
