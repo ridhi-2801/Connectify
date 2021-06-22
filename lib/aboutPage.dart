@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/constants.dart';
-import 'package:url_launcher/url_launcher.dart';
+
 
 class AboutPage extends StatelessWidget {
 
-//  void _launchURL() async =>
-//      await canLaunch() ? await launch() : throw 'Could not launch $_url';
+
+
   @override
   Widget build(BuildContext context) {
+
+    double tsf = MediaQuery.of(context).textScaleFactor;
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -17,20 +20,20 @@ class AboutPage extends StatelessWidget {
             children: [
 
               Center(child: Text("About Us",
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),)),
+                style: TextStyle(fontSize: tsf*35, fontWeight: FontWeight.bold, fontFamily: 'BalsamiqSans'),)),
               SizedBox(
                 height: 50,
               ),
               Center(
                 child: Text("Our Mission",
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.w900),),
+                  style: TextStyle(fontSize: tsf*40, fontWeight: FontWeight.w900,  fontFamily: 'MeriendaOne',),),
               ),
             SizedBox(height: 20,),
               Padding(
                 padding: const EdgeInsets.only(left:20.0,right:20),
                 child: Text(
                     "Our mission is to connect people round the globe to learn and grow together.",
-                    style: TextStyle(fontSize: 13)),
+                    style: TextStyle(fontSize: tsf*20)),
               ),
               SizedBox(height: 20,),
               ClipRRect(
@@ -44,7 +47,7 @@ class AboutPage extends StatelessWidget {
                 height: 50,
               ),
               Text("Our Team",
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.w900),
+                style: TextStyle(fontSize: tsf*40, fontWeight: FontWeight.w900,  fontFamily: 'MeriendaOne'),
                 textAlign: TextAlign.center,),
               SizedBox(height: 20,),
               Padding(
@@ -58,7 +61,7 @@ class AboutPage extends StatelessWidget {
                         child: CircleAvatar(
                           backgroundImage: NetworkImage(
                               "https://media-exp1.licdn.com/dms/image/C5603AQFn4G5OyeKc_A/profile-displayphoto-shrink_800_800/0/1612438527208?e=1629936000&v=beta&t=5Of-iAg0EDBvD_nIi6BsCKtWIr67sG3UEX81XbLLm6c"),
-                          radius: 40,
+                          radius: 48,
                         ),
                       ),
 
@@ -70,10 +73,10 @@ class AboutPage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text("Ridhi Jain", style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.w900)),
+                                  fontSize: tsf*25, fontWeight: FontWeight.w900,fontFamily: 'MeriendaOne')),
                               Text("Flutter Developer",
-                                  style: TextStyle(fontSize: 12)),
-                              Text("Founder", style: TextStyle(fontSize: 11)),
+                                  style: TextStyle(fontSize: tsf*15)),
+                              Text("Founder", style: TextStyle(fontSize: tsf*15)),
                               SizedBox(height: 5,),
                               Row(
                                 children: [
@@ -86,7 +89,7 @@ class AboutPage extends StatelessWidget {
                                       child: Padding(
                                         padding: const EdgeInsets.all(3.0),
                                         child: Text("Github", style: TextStyle(
-                                            fontSize: 10,
+                                            fontSize: tsf*15,
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold),),
                                       ),),
@@ -99,8 +102,8 @@ class AboutPage extends StatelessWidget {
                                       color: Colors.black,
                                       child: Padding(
                                         padding: const EdgeInsets.all(3.0),
-                                        child: Text("Linked in", style: TextStyle(
-                                            fontSize: 10,
+                                        child: Text("Linkedin", style: TextStyle(
+                                            fontSize: tsf*15,
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold),),
                                       ),),
@@ -131,7 +134,7 @@ class AboutPage extends StatelessWidget {
                         child: CircleAvatar(
                           backgroundImage: NetworkImage(
                               "https://media-exp1.licdn.com/dms/image/C4E03AQGu95m4alP_og/profile-displayphoto-shrink_800_800/0/1598511572312?e=1629936000&v=beta&t=l8QDzBWi58Rr5-QMmWvr34tg14g7p_HG1c93F4ulCu4"),
-                          radius: 40,
+                          radius: 48,
                         ),
                       ),
 
@@ -142,10 +145,10 @@ class AboutPage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text("Mohd Aamir", style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.w900)),
+                                  fontSize: tsf*25, fontWeight: FontWeight.w900,  fontFamily: 'MeriendaOne')),
                               Text("Flutter Developer",
-                                  style: TextStyle(fontSize: 12)),
-                              Text("Founder", style: TextStyle(fontSize: 11)),
+                                  style: TextStyle(fontSize: tsf*15)),
+                              Text("Founder", style: TextStyle(fontSize: tsf*15)),
                               SizedBox(height: 5,),
                               Row(
                                 children: [
@@ -158,7 +161,7 @@ class AboutPage extends StatelessWidget {
                                       child: Padding(
                                         padding: const EdgeInsets.all(3.0),
                                         child: Text("Github", style: TextStyle(
-                                            fontSize: 10,
+                                            fontSize: tsf*15,
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold),),
                                       ),),
@@ -171,8 +174,8 @@ class AboutPage extends StatelessWidget {
                                       color: Colors.black,
                                       child: Padding(
                                         padding: const EdgeInsets.all(3.0),
-                                        child: Text("Linked in", style: TextStyle(
-                                            fontSize: 10,
+                                        child: Text("Linkedin", style: TextStyle(
+                                            fontSize: tsf*15,
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold),),
                                       ),),
