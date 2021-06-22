@@ -113,7 +113,7 @@ class _SearchPageState extends State<SearchPage> {
             if(snapshot.data!.docs.length == 0){
               return Center(
                 child: Text(
-                  "No Stories to display!!",
+                  "No Groups to display!!",
                   style: TextStyle(
                     fontSize:
                     0.03 * MediaQuery.of(context).size.height,

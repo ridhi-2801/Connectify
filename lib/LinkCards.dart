@@ -180,23 +180,20 @@ class LinkCards extends StatelessWidget {
                     ),
                   ),
                   SizedBox(width: 0.5,),
-                  InkWell(
-                      onTap: (){print('BalsamiqSans');},
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 0.1,top: 0.1),
-                            child: VerticalDivider(color: isDark ? darkModeColor : baseColor,thickness: 0.4),
-                          ),
-                          Icon(FontAwesomeIcons.share,
-                            color: isDark ? darkModeColor : baseColor,
-                            size: 15.0,),
-                        ],
-                      ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 0.1,top: 0.1),
+                          child: VerticalDivider(color: isDark ? darkModeColor : baseColor,thickness: 0.4),
+                        ),
+                        Icon(FontAwesomeIcons.share,
+                          color: isDark ? darkModeColor : baseColor,
+                          size: 15.0,),
+                      ],
                     ),
-                      ),
+                  ),
                 ],
               ),
             )),
