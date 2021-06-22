@@ -32,7 +32,6 @@ class SearchViewScreen extends StatelessWidget {
                 itemBuilder: (context, index) {
                   if (isCategorySearch) {
                     final category = list[index];
-                    //todo
                     return ListTile(
                       onTap: () {
                         Navigator.push(context,

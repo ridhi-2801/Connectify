@@ -1,12 +1,10 @@
-
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/constants.dart';
-import 'package:flutter_app/dropDown.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class AddLinkPage extends StatefulWidget {
   @override
@@ -14,20 +12,21 @@ class AddLinkPage extends StatefulWidget {
 }
 
 class _AddLinkPageState extends State<AddLinkPage> {
- File? _image;
-final picker = ImagePicker();
+
+  TextEditingController groupNameController = TextEditingController();
+  TextEditingController linkController = TextEditingController();
+
+  String categorySelected = '';
+  String uploadedFileURL ='';
+  File? _image;
+  final picker = ImagePicker();
 
   final formKey = new GlobalKey<FormState>();
-  late String _myActivity;
-   late String _myActivityResult;
 
   @override
   void initState() {
     super.initState();
-    _myActivity = '';
-    _myActivityResult = '';
   }
-
   void _showPicker(context) {
     showModalBottomSheet(
         context: context,
@@ -57,7 +56,6 @@ final picker = ImagePicker();
           );
         });
   }
-
   _imgFromCamera() async {
     final pickedFile =
         await picker.getImage(source: ImageSource.camera, imageQuality: 50);
@@ -69,7 +67,6 @@ final picker = ImagePicker();
       }
     });
   }
-
   _imgFromGallery() async {
     final pickedFile =
         await picker.getImage(source: ImageSource.camera, imageQuality: 50);
@@ -83,63 +80,153 @@ final picker = ImagePicker();
     });
   }
 
-  _saveForm() {
-    var form = formKey.currentState;
-    if (form!.validate()) {
-      form.save();
-      setState(() {
-        _myActivityResult = _myActivity;
+  List<DropdownMenuItem<String>> platformDropDowns(){
+    List<DropdownMenuItem<String>> items = [];
+    platforms.forEach((value) {
+      items.add(new DropdownMenuItem(
+          value: value,
+          child: Text(value)));
+    });
+    return items;
+ }
+
+ Future<void> uploadImage(File? img) async{
+  var path = img!.path;
+  Reference storageReference = FirebaseStorage.instance
+  .ref()
+  .child("${path.split("/").last}");
+  UploadTask uploadTask = storageReference.putFile(img);
+  await uploadTask.whenComplete(() async {
+    print('File Uploaded');
+    uploadedFileURL = await storageReference.getDownloadURL();
+  });
+ }
+
+ Future<void> uploadLink() async{
+    print(uploadedFileURL);
+    print(linkController.text);
+    print(groupNameController.text);
+    print(platform);
+    print(categorySelected);
+
+    if(uploadedFileURL.length ==0){
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Image not uploaded!'),
+        )
+      );
+      return;
+    }else if(linkController.text.length ==0){
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Link Not added!'),
+          )
+      );
+      return;
+    }else if(groupNameController.text.length ==0){
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Group Name Not Added!'),
+          )
+      );
+      return;
+    }else if(platform.length == 0){
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Please Select a Platform!'),
+          )
+      );
+      return;
+    }else if(categorySelected.length ==0){
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Please select a category!'),
+          )
+      );
+      return;
+    }else {
+      FirebaseFirestore.instance.collection('LinksData').add({
+        'image' : uploadedFileURL,
+        'link' : linkController.text,
+        'name' : groupNameController.text,
+        'platform' : platform,
+        'lowerCaseName' : groupNameController.text.toLowerCase(),
+        'categories' : [categorySelected]
+      }).then((value) => {
+        print('Link Added'),
+        Navigator.pop(context),
       });
     }
-  }
+ }
 
+  String platform = "Select Platform";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: isDark ? darkModeColor : baseColor,
-        body: Column(
-          mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-          Padding(
-              padding: const EdgeInsets.only(top: 35.0),
-              child: Align(
-                alignment: Alignment.topLeft,
-                child: IconButton(
-                  icon: Icon(EvaIcons.close,
-                      size: 40.0, color: isDark ? darkModeColor : baseColor),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 15, right: 15),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+              Padding(
+                  padding: const EdgeInsets.only(top: 35.0),
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: IconButton(
+                      icon: Icon(EvaIcons.close,
+                          size: 40.0, color: isDark ? darkModeColor : baseColor),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ),
               ),
-          ),
-                  Padding(
-                      padding: const EdgeInsets.only(top: 10.0, left: 20.0),
-                      child: Text(
+                      SizedBox(height: 20,),
+                      Text(
                         'Add Community Link',
                         style: TextStyle(
                             color: isDark ? baseColor : darkModeColor,
                             fontSize: 30.0,
                             fontFamily: 'BalsamiqSans'),
                       ),
-                  ),
-                  Padding(
-                      padding: const EdgeInsets.only(left: 16,right: 16,top: 50),
-                      child: Column(
+                      SizedBox(height: 40,),
+                      Column(
                         children: [
                           TextFormField(
+                            controller: groupNameController,
                             decoration: const InputDecoration(
                               hintText: 'Name of Group',
                             ),
                           ),
                           TextFormField(
+                            controller: linkController,
                             decoration: const InputDecoration(
-                              hintText: 'Link of group',
+                              hintText: 'Link',
                             ),
                           ),
-                          SizedBox(height: 30,),
+                          SizedBox(height: 12,),
+                          DropdownButton<String>(
+                            value: platforms[0],
+                            icon: const Icon(Icons.arrow_downward),
+                            iconSize: 24,
+                            elevation: 16,
+                            style: const TextStyle(color: Colors.blue),
+                            underline: Container(
+                              height: 2,
+                              color: Colors.blue,
+                            ),
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                platform = newValue!;
+                              });
+                            },
+                            items: platformDropDowns(),
+                          ),
+                          SizedBox(height: 5,),
                           StreamBuilder<QuerySnapshot>(
                               stream: FirebaseFirestore.instance
                                   .collection('Categories')
@@ -150,21 +237,38 @@ final picker = ImagePicker();
                                 }else{
                                   if(snapshot.hasData){
                                     final listCategories = snapshot.data!.docs;
-
                                     List<String> list = [];
                                     listCategories.forEach((category) {
                                       list.add(category.get('title'));
                                     });
-
-                                    return DropDown(listCategories: list);
-
+                                    return DropdownButton<String>(
+                                      value: list[0],
+                                      icon: const Icon(Icons.arrow_downward),
+                                      iconSize: 24,
+                                      elevation: 16,
+                                      style: const TextStyle(color: Colors.blue),
+                                      underline: Container(
+                                        height: 2,
+                                        color: Colors.blue,
+                                      ),
+                                      onChanged: (String? newValue) {
+                                        setState(() {
+                                          categorySelected = newValue!;
+                                        });
+                                      },
+                                      items: list.map<DropdownMenuItem<String>>((document) {
+                                        return DropdownMenuItem<String>(
+                                          value: document,
+                                          child: Text(document),);
+                                      }).toList(),
+                                    );
                                   }else{
                                     return CircularProgressIndicator();
                                   }
                                 }
                               }),
                           Padding(
-                            padding: const EdgeInsets.only(top: 58.0),
+                            padding: const EdgeInsets.only(top: 40.0),
                             child: GestureDetector(
                               onTap: () {
                                 _showPicker(context);
@@ -223,21 +327,21 @@ final picker = ImagePicker();
                                       ])),
                               ),
                       ),
-                  ),
+                      ),
                           SizedBox(height: 50,),
                           ElevatedButton(
                             child: Text(
                               "Add",
                               style: TextStyle(color: Colors.white, fontSize: 20),
                             ),
-                            onPressed: () {
-                              _saveForm();
-                              Navigator.pop(context);
+                            onPressed: () async{
+                              await uploadImage(_image);
+                              await uploadLink();
+                              // Navigator.pop(context);
                             },
-                          ),
-                ]
-                      )
-                  )
-            ]));
+                          ),])
+                ]),
+          ),
+        ));
   }
 }
