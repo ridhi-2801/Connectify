@@ -121,7 +121,11 @@ class _ExploreState extends State<Explore> {
                         fontSize: 44.0,
                         fontFamily: 'BalsamiqSans'),
                   ),
-                  IconButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SearchPage())), icon: Icon(FontAwesomeIcons.search, size: 20,))
+                  IconButton(onPressed: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (context) =>
+                          SearchPage(
+                            searchType: "Community Link",
+                          ))), icon: Icon(FontAwesomeIcons.search, size: 20,))
                 ],
               ),
             ),

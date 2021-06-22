@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/constants.dart';
 
+import 'SearchViewPage.dart';
+
 class SearchPage extends StatefulWidget {
   final searchType;
   SearchPage({this.searchType});
@@ -25,7 +27,7 @@ class _SearchPageState extends State<SearchPage> {
           backgroundColor: Colors.blue,
           automaticallyImplyLeading: false,
           title: Container(
-            height: 50 * MediaQuery.of(context).size.height,
+            height: 0.06 * MediaQuery.of(context).size.height,
             margin: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(50.0),
@@ -79,115 +81,61 @@ class _SearchPageState extends State<SearchPage> {
         body: StreamBuilder<QuerySnapshot> (
           stream: widget.searchType == "Category"
               ? firebaseFirestore.collection("Categories")
-              .orderBy('title')
+              .orderBy('lowerCaseTitle')
               .startAt([textSearch.toLowerCase()])
               .endAt([textSearch.toLowerCase() + '\uf8ff'])
               .snapshots()
               :
               firebaseFirestore.collection("LinksData")
-                  .orderBy('name')
-                  .startAt([textSearch.toLowerCase()])
-                  .endAt([textSearch.toLowerCase() + '\uf8ff'])
+                  .orderBy('lowerCaseName',)
+                  .startAt([textSearch.toLowerCase() ,])
+                  .endAt([textSearch.toLowerCase() + '\uf8ff', ])
                   .snapshots(),
+            // textSearch[0].toUpperCase() + textSearch.substring(1) + '\uf8ff'
 
-          builder: (context, snapshot) {
-            if (snapshot.hasData)
-              snapshot.data!.docs.forEach((result) {
+            builder: (context, snapshot) {
+            if (!snapshot.hasData){
+              return Center(child: CircularProgressIndicator());
+            }
+
+            if(snapshot.hasError){
+              return Center(child: Text(
+                "Something went wrong, try again!",
+                style: TextStyle(
+                  fontSize:
+                  0.03 * MediaQuery.of(context).size.height,
+                  fontFamily: 'Poppins-SemiBold',
+                  color: darkModeColor,
+                ),
+              ));
+            }
+
+            if(snapshot.data!.docs.length == 0){
+              return Center(
+                child: Text(
+                  "No Stories to display!!",
+                  style: TextStyle(
+                    fontSize:
+                    0.03 * MediaQuery.of(context).size.height,
+                    fontFamily: 'Poppins-SemiBold',
+                    color: darkModeColor,
+                  ),
+                ),
+              );
+            }
+            final dataList = snapshot.data!.docs;
+            dataList.forEach((result) {
                 print(result.data());
-                // if (StoryData.fromSnapshot(result)
-                //     .title
-                //     .toLowerCase()
-                //     .contains(textSearch.toLowerCase())) {
-                //   allStories.add(StoryData.fromSnapshot(result));
-                // }else if (StoryData.fromSnapshot(result)
-                //     .content
-                //     .toLowerCase()
-                //     .contains(textSearch.toLowerCase())) {
-                //   allStories.add(StoryData.fromSnapshot(result));
-                // }
               });
 
-            return snapshot.data!.docs.length == 0
-                ? Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  // Image.asset(
-                  //   'assets/images/notFound.png',
-                  //   height: 243 * MediaQuery.of(context).size.height,
-                  //   width: 243 * MediaQuery.of(context).size.height,
-                  // ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      top: 10.0 * MediaQuery.of(context).size.height,
-                    ),
-                    child: Text(
-                      "No Stories to display!!",
-                      style: TextStyle(
-                        fontSize:
-                        18.0 * MediaQuery.of(context).size.height,
-                        fontFamily: 'Poppins-SemiBold',
-                        color: darkModeColor,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            )
-                :
-            SearchViewScreen(
+            return SearchViewScreen(
               // list: allStories,
               isCategorySearch: widget.searchType == "Category" ? true : false,
+              list: dataList,
             );
           },
         ),
       ),
-    );
-  }
-}
-
-class SearchViewScreen extends StatelessWidget {
-  final list;
-  final isCategorySearch;
-  const SearchViewScreen({Key? key, this.list , this.isCategorySearch}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: double.infinity,
-      width: double .infinity,
-      padding: EdgeInsets.only(
-          left: 12.0 ,
-          right: 12.0),
-      child: ListView.builder(
-          scrollDirection: Axis.vertical,
-          itemCount: list.length,
-          itemBuilder: (context, index) {
-            if(isCategorySearch){
-              final category = list[index];
-              //todo
-              return ListTile(
-                onTap: (){},
-                title: Text(category.title),
-              );;
-
-            }else{
-              final linkData = list[index];
-              return ListTile(
-                leading: CircleAvatar(
-                  backgroundImage: NetworkImage(linkData.image),
-                ),
-                title: Text(linkData.name),
-                trailing: IconButton(
-                  onPressed: () {
-                    //todo
-                  },
-                    icon : Icon(Icons.person_add_alt_1_rounded)),
-              );
-            }
-
-          })
     );
   }
 }

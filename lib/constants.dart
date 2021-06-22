@@ -15,6 +15,37 @@ launchURL(String url) async {
   }
 }
 
+class LinkData {
+  LinkData({
+    this.name,
+    this.categories,
+    this.image,
+    this.platform,
+    this.link,
+  });
+
+  final link;
+  final name;
+  final categories;
+  final image;
+  final platform;
+}
+class CategoryData {
+  CategoryData({
+    this.title,
+    this.icon,
+    this.linksData,
+    this.onHomePage,
+  });
+
+  final title;
+  final icon;
+  final linksData;
+  final onHomePage;
+}
+
+
+
 //login page constants
 final textStyle=TextStyle(fontSize: 20,fontWeight: FontWeight.w500);
 final loginColor=baseColor;
@@ -39,8 +70,6 @@ Map<String,IconData> iconMap = {
   'Art and craft': FontAwesomeIcons.paintBrush,
   'Promotion': FontAwesomeIcons.teamspeak,
   'NGOs': FontAwesomeIcons.handsHelping,
-  
-
 };
 
 Map<String,IconData> platformIconMap = {

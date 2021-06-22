@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_app/SearchPage/searchPage.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../categoriesCard.dart';
 import '../constants.dart';
 
@@ -33,39 +35,24 @@ class _CategoriesPageState extends State<CategoriesPage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 10.0, left: 20.0),
-              child: Text(
-                "Categories",
-                style: TextStyle(
-                    color: isDark ? baseColor : darkModeColor,
-                    fontSize: 40.0,
-                    fontFamily: 'BalsamiqSans'),
-              ),
-            ),
-            Padding(
-              padding:
-                  const EdgeInsets.only(top: 12.0, left: 20.0, right: 20.0),
-              child: Container(
-                padding: EdgeInsets.only(left: 10.0, right: 10.0),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
-                    color: Colors.blueGrey.withOpacity(0.1)),
-                child: TextField(
-                  style: TextStyle(color: Colors.black),
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    icon: Icon(
-                      EvaIcons.searchOutline,
-                      size: 25.0,
-                      color: Color(0xFF6486B2),
-                    ),
-                    hintText: 'Search',
-                    hintStyle: TextStyle(color: Color(0xFF6486B2)),
-                    labelStyle: TextStyle(
-                      color: Colors.white,
-                    ),
+              padding: const EdgeInsets.only(top: 10.0, left: 20.0, right: 10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Text(
+                    "Categories",
+                    style: TextStyle(
+                        color: isDark ? baseColor : darkModeColor,
+                        fontSize: 40.0,
+                        fontFamily: 'BalsamiqSans'),
                   ),
-                ),
+                  IconButton(onPressed: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (context) =>
+                          SearchPage(
+                            searchType: "Category",
+                          ))), icon: Icon(FontAwesomeIcons.search, size: 23,))
+                ],
               ),
             ),
             SizedBox(
