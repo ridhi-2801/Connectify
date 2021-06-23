@@ -58,7 +58,7 @@ Map<String,IconData> iconMap = {
   'Google' :EvaIcons.google,
   'Github' :EvaIcons.githubOutline,
   'Linkedin': EvaIcons.linkedinOutline,
-  'Trending':FontAwesomeIcons.hotjar,
+  'Hot and Trending':FontAwesomeIcons.hotjar,
   'Youtube Promotion':FontAwesomeIcons.youtube,
   'Job Hirings':FontAwesomeIcons.hireAHelper,
   'Tours n Travels': FontAwesomeIcons.car,

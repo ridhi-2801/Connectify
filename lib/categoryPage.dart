@@ -4,6 +4,7 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/LinkCards.dart';
 import 'package:flutter_app/constants.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CategoryPage extends StatefulWidget {
   final categoryName;
@@ -18,6 +19,7 @@ class CategoryPage extends StatefulWidget {
 class _CategoryPageState extends State<CategoryPage> {
 
   String platform="";
+  Color color=Color(0xffff);
 
   List<dynamic> getFilteredLinks(String platform,List<QueryDocumentSnapshot> data){
      final items=[];
@@ -33,7 +35,7 @@ class _CategoryPageState extends State<CategoryPage> {
   }
 return items;
  }
-
+List<bool> selected=[false,false,false,false];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,12 +69,57 @@ return items;
                 height: 10,
               ),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-//                   ToggleButtons(children: , isSelected: )
-                ],
-              ),
+             Padding(
+               padding: const EdgeInsets.only(left:18.0,top: 20),
+               child: ClayContainer(
+                  color: isDark?darkModeColor:baseColor,
+                 depth: 20,
+                 emboss: true,
+                 child: ToggleButtons(
+                   selectedBorderColor: color,
+
+                   children: [
+                   Icon(FontAwesomeIcons.whatsapp,color: Colors.green,),
+                   Icon(FontAwesomeIcons.facebook,color: Color(0xff217cf3),),
+                   Icon(FontAwesomeIcons.telegram,color: Colors.blue,),
+                     Icon(FontAwesomeIcons.reddit,color: Colors.redAccent,),
+                 ], isSelected: selected,
+                 onPressed: (int index){
+                     setState(() {
+                       selected[index]=!selected[index];
+                       color=Colors.black;
+                     });
+
+                     if(index==0){
+                       platform="Whatsapp";
+                       selected[1]=false;
+                       selected[2]=false;
+                       selected[3]=false;
+                     }
+                       else if(index==1){
+                         platform="Facebook";
+                         selected[0]=false;
+                         selected[2]=false;
+                         selected[3]=false;
+                     }else if(index==2) {
+                       platform = "Telegram";
+                       selected[1]=false;
+                       selected[0]=false;
+                       selected[3]=false;
+                     }
+                       else if(index==3){
+                         platform="Reddit";
+                         selected[1]=false;
+                         selected[2]=false;
+                         selected[0]=false;
+                     }
+                       else{
+                         platform="";
+                     }
+                 },
+                 ),
+               ),
+             ),
 
 
               Expanded(
@@ -93,7 +140,7 @@ return items;
                    final allLinksData = snapshot.data!.docs;
                     final filteredLinks = getFilteredLinks(platform,allLinksData);//this will return all filtered list values
                     if(filteredLinks.length == 0){
-                      return Center(child: Text('No Links to Display',style: TextStyle(fontSize: 25.0,),),);
+                      return Center(child: Text('No Links to Display',style: TextStyle(fontSize: 25.0,color: isDark?baseColor:darkModeColor),),);
                     }
                     return GridView.builder(
                         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
