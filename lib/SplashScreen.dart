@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'Screens/HomePage/ExplorePage.dart';
@@ -25,7 +26,6 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
 
-
   @override
   void initState() {
     super.initState();
@@ -39,9 +39,10 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        child: Center(child: Column(
+        child: Column(
           mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
               height: 100,
@@ -58,10 +59,11 @@ class _SplashScreenState extends State<SplashScreen> {
                 fontFamily: 'Gilroy',
               ),
             ),
+            SizedBox(height: 10.0,),
             CircularProgressIndicator(),
             error == true ? Text('Oops Some Error Occured! Check your connection') : SizedBox(),
           ],
-        ),),
+        ),
       ),
     );
   }

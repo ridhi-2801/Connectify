@@ -125,7 +125,6 @@ class _ExploreState extends State<Explore> {
             ),
             Padding(
               padding: const EdgeInsets.only(
-                top: 6.0,
                 left: 20.0,
               ),
               child: Row(
@@ -147,15 +146,13 @@ class _ExploreState extends State<Explore> {
                 ],
               ),
             ),
-            SizedBox(
-              height: 20,
-            ),
-            SizedBox(height: 20),
+            SizedBox(height: 15,),
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    SizedBox(height: 10,),
                     Padding(
                       padding: const EdgeInsets.only(left: 18.0),
                       child: Text(
@@ -192,7 +189,7 @@ class _ExploreState extends State<Explore> {
                                   scrollDirection: Axis.horizontal,
                                   itemBuilder: (context, index) {
                                     return CategoriesCard(
-                                      sizeRatio: 5,
+                                      sizeRatio: 4.5,
                                       borderRadius: 60,
                                       categoryIcon: iconMap[
                                           categoryData[index].get('icon')],
@@ -205,7 +202,7 @@ class _ExploreState extends State<Explore> {
                             }
                           }),
                     ),
-                    SizedBox(height: 40.0,),
+                    SizedBox(height: 15.0,),
                     StreamBuilder<QuerySnapshot>(
                       stream: FirebaseFirestore.instance
                           .collection('LinksData')
@@ -228,10 +225,9 @@ class _ExploreState extends State<Explore> {
                         }
                       },
                     ),
-                    SizedBox(height: 10,),
                     Image(image: AssetImage("assets/images/contribute.png")),
-                    SizedBox(height: 40,),
-                   Container(
+                    SizedBox(height: 25,),
+                    Container(
                      child: ListView.builder(
                          physics: NeverScrollableScrollPhysics(),
                          shrinkWrap: true,
@@ -241,9 +237,9 @@ class _ExploreState extends State<Explore> {
                                   stream: FirebaseFirestore.instance
                                       .collection('LinksData')
                                       .where('categories',
-                                          arrayContains: widget.categoriesList.docs[index].get('title'))
-                                      .snapshots()
-                                      .take(6),
+                                      arrayContains: widget.categoriesList.docs[index].get('title'))
+                                      .limit(8)
+                                      .snapshots(),
                                   builder: (context, snapshot) {
                                     if (snapshot.hasError) {
                                       return Center(child: Text('${snapshot.error}'));

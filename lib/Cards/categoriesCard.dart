@@ -9,7 +9,7 @@ class CategoriesCard extends StatelessWidget {
   final categoryName;
   final linksDataIds;
   final double borderRadius;
-  final int sizeRatio;
+  final double sizeRatio;
   final int iconRatio;
 
   CategoriesCard({
