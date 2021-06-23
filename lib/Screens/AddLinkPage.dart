@@ -71,7 +71,7 @@ class _AddLinkPageState extends State<AddLinkPage> {
 
   _imgFromGallery() async {
     final pickedFile =
-        await picker.getImage(source: ImageSource.camera, imageQuality: 50);
+        await picker.getImage(source: ImageSource.gallery, imageQuality: 50);
 
     setState(() {
       if (pickedFile != null) {
