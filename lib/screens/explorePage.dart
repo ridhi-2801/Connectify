@@ -42,7 +42,7 @@ class _ExploreState extends State<Explore> {
       child: Scaffold(
         backgroundColor: isDark ? darkModeColor : baseColor,
         floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.blue,
+          backgroundColor: Colors.black,
           elevation: 10,
           child: Icon(
             Icons.add,
@@ -213,41 +213,41 @@ class _ExploreState extends State<Explore> {
                     SizedBox(height: 10,),
                     Image(image: AssetImage("assets/images/contribute.png")),
                     SizedBox(height: 40,),
-                    Container(
-                      child: ListView.builder(
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: widget.categoriesList.docs.length,
-                          itemBuilder: (context, index) {
-                            return StreamBuilder<QuerySnapshot>(
-                                   stream: FirebaseFirestore.instance
-                                       .collection('LinksData')
-                                       .where('categories',
-                                           arrayContains: widget.categoriesList.docs[index].get('title'))
-                                       .snapshots()
-                                       .take(6),
-                                   builder: (context, snapshot) {
-                                     if (snapshot.hasError) {
-                                       return Center(child: Text('${snapshot.error}'));
-                                     } else {
-                                       if (!snapshot.hasData) {
-                                         return Center(
-                                             child: Padding(
-                                               padding: const EdgeInsets.all(30.0),
-                                               child: CircularProgressIndicator(),
-                                             ));
-                                       }
-                                       final linksData = snapshot.data!.docs;
-                                       if(linksData.length == 0) {
-                                         return SizedBox();
-                                       }
-                                       return HomePageCarousel(
-                                           title: widget.categoriesList.docs[index].get('title'),
-                                           listLinkData: linksData);
-                                     }
-                                   });
-                             }),
-                       ),
+//                    Container(
+//                      child: ListView.builder(
+//                          physics: NeverScrollableScrollPhysics(),
+//                          shrinkWrap: true,
+//                          itemCount: widget.categoriesList.docs.length,
+//                          itemBuilder: (context, index) {
+//                            return StreamBuilder<QuerySnapshot>(
+//                                   stream: FirebaseFirestore.instance
+//                                       .collection('LinksData')
+//                                       .where('categories',
+//                                           arrayContains: widget.categoriesList.docs[index].get('title'))
+//                                       .snapshots()
+//                                       .take(6),
+//                                   builder: (context, snapshot) {
+//                                     if (snapshot.hasError) {
+//                                       return Center(child: Text('${snapshot.error}'));
+//                                     } else {
+//                                       if (!snapshot.hasData) {
+//                                         return Center(
+//                                             child: Padding(
+//                                               padding: const EdgeInsets.all(30.0),
+//                                               child: CircularProgressIndicator(),
+//                                             ));
+//                                       }
+//                                       final linksData = snapshot.data!.docs;
+//                                       if(linksData.length == 0) {
+//                                         return SizedBox();
+//                                       }
+//                                       return HomePageCarousel(
+//                                           title: widget.categoriesList.docs[index].get('title'),
+//                                           listLinkData: linksData);
+//                                     }
+//                                   });
+//                             }),
+//                       ),
                     Container(
                       width: double.infinity,
                       height: 100,
