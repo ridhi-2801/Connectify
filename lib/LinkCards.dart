@@ -92,7 +92,9 @@ class LinkCards extends StatelessWidget {
                   flex: 2,
                   child: Center(
                     child: TextButton(
-                      onPressed: (){print('join');},
+                      onPressed: (){
+                        launchURL(link);
+                      },
                       child: Text(
                         "Join",
                         style: TextStyle(
