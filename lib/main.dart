@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
       final listCategories = await FirebaseFirestore.instance.
       collection('Categories').where('onHomePage', isEqualTo: true).get();
 
-      Navigator.push(context, MaterialPageRoute(builder: (context) =>
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>
           Explore(categoriesList: listCategories,)));
     }catch(e){
       error = true;
@@ -46,6 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     loadContents();
   }
+
 
   @override
   Widget build(BuildContext context) {
