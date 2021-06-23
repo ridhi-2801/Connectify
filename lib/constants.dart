@@ -78,3 +78,5 @@ Map<String,IconData> platformIconMap = {
   'Facebook' : FontAwesomeIcons.facebookSquare,
   'Reddit' : FontAwesomeIcons.reddit,
 };
+
+List<String> platforms = ['Telegram','Whatsapp','Facebook','Reddit'];
