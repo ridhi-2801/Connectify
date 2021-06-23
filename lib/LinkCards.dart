@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:social_share/social_share.dart';
 import 'constants.dart';
+import 'package:share_plus/share_plus.dart';
 
 class LinkCards extends StatelessWidget {
   final String linkImage;
@@ -35,12 +36,7 @@ class LinkCards extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(bottomLeft: Radius.circular(6), bottomRight: Radius.circular(6)),
             ),
-//            borderRadius: 6,
-//            width: 150,
-//            depth: 50,
-//            spread: 6,
             color: isDark ? darkModeColor : baseColor,
-//            curveType: CurveType.none,
             child: Container(
               color: Colors.transparent,
               width: 150,
@@ -87,119 +83,130 @@ class LinkCards extends StatelessWidget {
                   bottomLeft: Radius.circular(6.0),
                   bottomRight: Radius.circular(6.0),
                 )),
-            child: Center(
-                child: GestureDetector(
-              onTap: () {
-                Alert(
-                    context: context,
-                    title: "Share By:",
-                    content: Padding(
-                      padding: const EdgeInsets.only(top: 28.0),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              IconButton(
-                                icon: Icon(FontAwesomeIcons.whatsapp),
-                                onPressed: () async {
-                                  SocialShare.shareWhatsapp(link).then((data) {
-                                    print(data);
-                                    Navigator.pop(context);
-                                  });},
-                                color: Color(0xff075E54),
-                              ),
-                              IconButton(
-                                icon: Icon(FontAwesomeIcons.telegram),
-                                onPressed: () async {
-                                  SocialShare.shareTelegram(link).then((data) {
-                                    print(data);
-                                    Navigator.pop(context);
-                                  });
-                                },
-                                color: Colors.blue,
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              IconButton(
-                                icon: Icon(FontAwesomeIcons.twitter),
-                                onPressed: () {
-                                  SocialShare.shareTwitter(
-                                      "Hey! I am inviting you to join the group",
-                                      hashtags: [
-                                        "hey",
-                                        "invite",
-                                        "join",
-                                        "group"
-                                      ],
-                                      url: link);
-                                  Navigator.pop(context);
-                                },
-                                color: Color(0xff00acee),
-                              ),
-                              IconButton(
-                                icon: Icon(FontAwesomeIcons.copy),
-                                onPressed: () {
-                                  SocialShare.copyToClipboard(link);
-                                  Navigator.pop(context);
-                                },
-                                color: Colors.black,
-                              ),
-                            ],
-                          ),
-                        ],
+            child: Flex(
+              direction: Axis.horizontal,
+              mainAxisSize: MainAxisSize.max,
+              // mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Flexible(
+                  flex: 2,
+                  child: Center(
+                    child: TextButton(
+                      onPressed: (){print('join');},
+                      child: Text(
+                        "Join",
+                        style: TextStyle(
+                            color: isDark ? darkModeColor : baseColor,
+                            fontWeight: FontWeight.bold,
+                        fontFamily: 'Gilroy',
+                        fontSize: 15.0),
                       ),
                     ),
-                    buttons: [
-                      DialogButton(
-                        onPressed: () => Navigator.pop(context),
-                        color: Color(0xff075E54),
-                        child: Text(
-                          "Done",
-                          style: TextStyle(color: Colors.white, fontSize: 20),
-                        ),
-                      )
-                    ]).show();
-              },
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  TextButton(
-                    onPressed: (){print('join');},
-                    child: Text(
-                      "Join",
-                      style: TextStyle(
-                          color: isDark ? darkModeColor : baseColor,
-                          fontWeight: FontWeight.bold,
-                      fontFamily: 'Gilroy',
-                      fontSize: 15.0),
-                    ),
                   ),
-                  SizedBox(width: 0.5,),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 8.0),
+                ),
+                Flexible(
+                  flex: 1,
+                  child: GestureDetector(
+                    onTap: () => share(context, link),
                     child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 0.1,top: 0.1),
-                          child: VerticalDivider(color: isDark ? darkModeColor : baseColor,thickness: 0.4),
-                        ),
+                        VerticalDivider(color: isDark ? darkModeColor : baseColor,thickness: 0.4),
                         Icon(FontAwesomeIcons.share,
                           color: isDark ? darkModeColor : baseColor,
-                          size: 15.0,),
+                          size: 14.0,),
                       ],
                     ),
                   ),
-                ],
-              ),
-            )),
+                ),
+              ],
+            ),
           )
         ],
       ),
     );
   }
+  
+  void share(BuildContext context , String text){
+    String message = "$text\nShared Via Connectify App";
+    RenderBox? box = context.findRenderObject() as RenderBox;
+
+    Share.share(message, subject: 'Shared from app Connectify',
+    sharePositionOrigin: box.localToGlobal(Offset.zero) &  box.size,);
+  }
 }
+
+// Alert(
+//     context: context,
+//     title: "Share By:",
+//     content: Padding(
+//       padding: const EdgeInsets.only(top: 28.0),
+//       child: Column(
+//         children: [
+//           Row(
+//             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//             children: [
+//               IconButton(
+//                 icon: Icon(FontAwesomeIcons.whatsapp),
+//                 onPressed: () async {
+//                   SocialShare.shareWhatsapp(link).then((data) {
+//                     print(data);
+//                     Navigator.pop(context);
+//                   });},
+//                 color: Color(0xff075E54),
+//               ),
+//               IconButton(
+//                 icon: Icon(FontAwesomeIcons.telegram),
+//                 onPressed: () async {
+//                   SocialShare.shareTelegram(link).then((data) {
+//                     print(data);
+//                     Navigator.pop(context);
+//                   });
+//                 },
+//                 color: Colors.blue,
+//               ),
+//             ],
+//           ),
+//           Row(
+//             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//             children: [
+//               IconButton(
+//                 icon: Icon(FontAwesomeIcons.twitter),
+//                 onPressed: () {
+//                   SocialShare.shareTwitter(
+//                       "Hey! I am inviting you to join the group",
+//                       hashtags: [
+//                         "hey",
+//                         "invite",
+//                         "join",
+//                         "group"
+//                       ],
+//                       url: link);
+//                   Navigator.pop(context);
+//                 },
+//                 color: Color(0xff00acee),
+//               ),
+//               IconButton(
+//                 icon: Icon(FontAwesomeIcons.copy),
+//                 onPressed: () {
+//                   SocialShare.copyToClipboard(link);
+//                   Navigator.pop(context);
+//                 },
+//                 color: Colors.black,
+//               ),
+//             ],
+//           ),
+//         ],
+//       ),
+//     ),
+//     buttons: [
+//       DialogButton(
+//         onPressed: () => Navigator.pop(context),
+//         color: Color(0xff075E54),
+//         child: Text(
+//           "Done",
+//           style: TextStyle(color: Colors.white, fontSize: 20),
+//         ),
+//       )
+//     ]).show();
