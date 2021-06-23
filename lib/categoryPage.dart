@@ -36,6 +36,7 @@ class _CategoryPageState extends State<CategoryPage> {
 return items;
  }
 List<bool> selected=[false,false,false,false];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,8 +69,7 @@ List<bool> selected=[false,false,false,false];
               SizedBox(
                 height: 10,
               ),
-
-             Padding(
+              Padding(
                padding: const EdgeInsets.only(left:18.0,top: 20),
                child: ClayContainer(
                   color: isDark?darkModeColor:baseColor,
@@ -77,7 +77,6 @@ List<bool> selected=[false,false,false,false];
                  emboss: true,
                  child: ToggleButtons(
                    selectedBorderColor: color,
-
                    children: [
                    Icon(FontAwesomeIcons.whatsapp,color: Colors.green,),
                    Icon(FontAwesomeIcons.facebook,color: Color(0xff217cf3),),
@@ -120,8 +119,6 @@ List<bool> selected=[false,false,false,false];
                  ),
                ),
              ),
-
-
               Expanded(
                   child: StreamBuilder<QuerySnapshot>(
                   stream: FirebaseFirestore.instance

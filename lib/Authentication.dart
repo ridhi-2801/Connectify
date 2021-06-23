@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -8,7 +9,12 @@ FirebaseAuth auth = FirebaseAuth.instance;
      await FirebaseAuth.instance.createUserWithEmailAndPassword(
          email: email,
          password: password
-     );
+     ).then((user) => {
+       FirebaseFirestore.instance.collection('Users').doc(user.user!.uid).set({
+         'email' :  email,
+         'role' : 'user',
+       }).then((value) => {print('User Created!')})
+     });
      return true;
    } on FirebaseAuthException catch (e) {
      if (e.code == 'weak-password') {

@@ -14,8 +14,9 @@ import 'categoriesPage.dart';
 import 'settingsPage.dart';
 import '../SearchPage/searchPage.dart';
 
-class Explore extends StatefulWidget {
+bool isAdmin = false;
 
+class Explore extends StatefulWidget {
   final categoriesList;
   Explore({this.categoriesList});
 
@@ -26,12 +27,30 @@ class Explore extends StatefulWidget {
 class _ExploreState extends State<Explore> {
   final formKey = new GlobalKey<FormState>();
   final fireStore = FirebaseFirestore.instance;
-  
+
+  Future<void> checkAdmin() async{
+    if(FirebaseAuth.instance.currentUser != null){
+      await FirebaseFirestore.instance.collection('Users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .get()
+          .then((snapshot) => {
+            print(FirebaseAuth.instance.currentUser!.uid),
+        if(snapshot.exists && snapshot.get('role') == 'admin'){
+          isAdmin = true,
+          print('User is Admin!'),
+        }else{
+          print('User not Admin!'),
+        }
+      });
+    }else{
+      print('User Not Logged In');
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    final user = FirebaseAuth.instance.currentUser ?? 'User Not Logged In';
-    print(user);
+    checkAdmin();
   }
 
   @override
@@ -213,45 +232,44 @@ class _ExploreState extends State<Explore> {
                     SizedBox(height: 10,),
                     Image(image: AssetImage("assets/images/contribute.png")),
                     SizedBox(height: 40,),
-//                    Container(
-//                      child: ListView.builder(
-//                          physics: NeverScrollableScrollPhysics(),
-//                          shrinkWrap: true,
-//                          itemCount: widget.categoriesList.docs.length,
-//                          itemBuilder: (context, index) {
-//                            return StreamBuilder<QuerySnapshot>(
-//                                   stream: FirebaseFirestore.instance
-//                                       .collection('LinksData')
-//                                       .where('categories',
-//                                           arrayContains: widget.categoriesList.docs[index].get('title'))
-//                                       .snapshots()
-//                                       .take(6),
-//                                   builder: (context, snapshot) {
-//                                     if (snapshot.hasError) {
-//                                       return Center(child: Text('${snapshot.error}'));
-//                                     } else {
-//                                       if (!snapshot.hasData) {
-//                                         return Center(
-//                                             child: Padding(
-//                                               padding: const EdgeInsets.all(30.0),
-//                                               child: CircularProgressIndicator(),
-//                                             ));
-//                                       }
-//                                       final linksData = snapshot.data!.docs;
-//                                       if(linksData.length == 0) {
-//                                         return SizedBox();
-//                                       }
-//                                       return HomePageCarousel(
-//                                           title: widget.categoriesList.docs[index].get('title'),
-//                                           listLinkData: linksData);
-//                                     }
-//                                   });
-//                             }),
-//                       ),
+                   Container(
+                     child: ListView.builder(
+                         physics: NeverScrollableScrollPhysics(),
+                         shrinkWrap: true,
+                         itemCount: widget.categoriesList.docs.length,
+                         itemBuilder: (context, index) {
+                           return StreamBuilder<QuerySnapshot>(
+                                  stream: FirebaseFirestore.instance
+                                      .collection('LinksData')
+                                      .where('categories',
+                                          arrayContains: widget.categoriesList.docs[index].get('title'))
+                                      .snapshots()
+                                      .take(6),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasError) {
+                                      return Center(child: Text('${snapshot.error}'));
+                                    } else {
+                                      if (!snapshot.hasData) {
+                                        return Center(
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(30.0),
+                                              child: CircularProgressIndicator(),
+                                            ));
+                                      }
+                                      final linksData = snapshot.data!.docs;
+                                      if(linksData.length == 0) {
+                                        return SizedBox();
+                                      }
+                                      return HomePageCarousel(
+                                          title: widget.categoriesList.docs[index].get('title'),
+                                          listLinkData: linksData);
+                                    }
+                                  });
+                            }),
+                      ),
                     Container(
                       width: double.infinity,
                       height: 100,
-
                       decoration: BoxDecoration(
                         color: darkModeColor,
                         boxShadow: [
@@ -281,7 +299,6 @@ class _ExploreState extends State<Explore> {
                             ),
                             Image(image: AssetImage("assets/images/crime.jpg"),)
                           ],
-
                       )
                     ),
                   ],

@@ -1,5 +1,7 @@
 import 'dart:ui';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/Authentication.dart';
@@ -175,6 +177,19 @@ class _LoginState extends State<Login> {
                       await GoogleAuth()
                           .signInWithGoogle()
                           .then((value) {
+                             FirebaseFirestore.instance
+                                .collection('Users')
+                                .doc(FirebaseAuth.instance.currentUser!.uid)
+                                .get()
+                             .then((user) => {
+                               if(!user.exists){
+                                 FirebaseFirestore.instance
+                                     .collection('Users')
+                                     .doc(FirebaseAuth.instance.currentUser!.uid)
+                                     .set({
+                                 'email' :  FirebaseAuth.instance.currentUser!.email,
+                                 'role' : 'user',})}
+                             });
                         print(value);
                         Navigator.pop(context);
                       });
