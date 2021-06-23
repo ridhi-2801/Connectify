@@ -1,3 +1,4 @@
+import 'package:clay_containers/clay_containers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,23 @@ class CategoryPage extends StatefulWidget {
 }
 
 class _CategoryPageState extends State<CategoryPage> {
+
+  String platform="";
+
+  List<dynamic> getFilteredLinks(String platform,List<QueryDocumentSnapshot> data){
+     final items=[];
+
+ if(platform==""){
+   return data;
+ }
+  for(int i=0;i<data.length;i++){
+      final linkPlatform = data[i].get('platform');
+      if(linkPlatform==platform){
+        items.add(data[i]);
+      }
+  }
+return items;
+ }
 
   @override
   Widget build(BuildContext context) {
@@ -45,12 +63,24 @@ class _CategoryPageState extends State<CategoryPage> {
                       fontFamily: 'BalsamiqSans'),
                 ),
               ),
+              SizedBox(
+                height: 10,
+              ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+//                   ToggleButtons(children: , isSelected: )
+                ],
+              ),
+
+
               Expanded(
                   child: StreamBuilder<QuerySnapshot>(
-                stream: FirebaseFirestore.instance
-                    .collection('LinksData')
-                    .where('categories', arrayContains: widget.categoryName)
-                    .snapshots(),
+                  stream: FirebaseFirestore.instance
+                      .collection('LinksData')
+                      .where('categories', arrayContains: widget.categoryName)
+                      .snapshots(),
 
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
@@ -59,7 +89,10 @@ class _CategoryPageState extends State<CategoryPage> {
                     if (!snapshot.hasData) {
                       return Center(child: CircularProgressIndicator());
                     }
-                    if(snapshot.data!.docs.length == 0){
+
+                   final allLinksData = snapshot.data!.docs;
+                    final filteredLinks = getFilteredLinks(platform,allLinksData);//this will return all filtered list values
+                    if(filteredLinks.length == 0){
                       return Center(child: Text('No Links to Display',style: TextStyle(fontSize: 25.0,),),);
                     }
                     return GridView.builder(
@@ -67,14 +100,14 @@ class _CategoryPageState extends State<CategoryPage> {
                           maxCrossAxisExtent: 220,
                           mainAxisSpacing: 12.0,
                         ),
-                        itemCount: snapshot.data!.docs.length,
+                        itemCount: filteredLinks.length,
                         itemBuilder: (context, index) {
                           return LinkCards(
-                              linkImage: snapshot.data!.docs[index].get('image'),
-                              linkTitle: snapshot.data!.docs[index].get('name'),
-                              link: snapshot.data!.docs[index].get('link'),
-                              relatedCategories: snapshot.data!.docs[index].get('categories'),
-                              platform: snapshot.data!.docs[index].get('platform'));
+                              linkImage: filteredLinks[index].get('image'),
+                              linkTitle: filteredLinks[index].get('name'),
+                              link: filteredLinks[index].get('link'),
+                              relatedCategories: filteredLinks[index].get('categories'),
+                              platform: filteredLinks[index].get('platform'));
                         });
                   }
                 },
