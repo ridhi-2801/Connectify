@@ -134,155 +134,158 @@ class _ExploreState extends State<Explore> {
             ),
             SizedBox(height: 20),
             Expanded(
-              child: ListView(
-                shrinkWrap: true,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 18.0),
-                    child: Text(
-                      'Categories',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Gilroy',
-                        color: isDark ? baseColor : darkModeColor,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 18.0),
+                      child: Text(
+                        'Categories',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Gilroy',
+                          color: isDark ? baseColor : darkModeColor,
+                        ),
                       ),
                     ),
-                  ),
-                  Container(
-                    width: double.infinity,
-                    height: 120,
-                    child: StreamBuilder<QuerySnapshot>(
-                        stream: FirebaseFirestore.instance
-                            .collection('Categories')
-                            .where('onHomePage', isEqualTo: true)
-                            .snapshots()
-                            .take(10),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasError) {
-                            return Center(child: Text('${snapshot.error}'));
-                          } else {
-                            if (!snapshot.hasData) {
-                              return Center(child: CircularProgressIndicator());
+                    Container(
+                      width: double.infinity,
+                      height: 120,
+                      child: StreamBuilder<QuerySnapshot>(
+                          stream: FirebaseFirestore.instance
+                              .collection('Categories')
+                              .where('onHomePage', isEqualTo: true)
+                              .snapshots()
+                              .take(10),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasError) {
+                              return Center(child: Text('${snapshot.error}'));
+                            } else {
+                              if (!snapshot.hasData) {
+                                return Center(child: CircularProgressIndicator());
+                              }
+                              final categoryData = snapshot.data!.docs;
+
+                              return ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: categoryData.length,
+                                  scrollDirection: Axis.horizontal,
+                                  itemBuilder: (context, index) {
+                                    return CategoriesCard(
+                                      sizeRatio: 5,
+                                      borderRadius: 60,
+                                      categoryIcon: iconMap[
+                                          categoryData[index].get('icon')],
+                                      categoryName:
+                                          categoryData[index].get('title'),
+                                      linksDataIds:
+                                          categoryData[index].get('linksData'),
+                                    );
+                                  });
                             }
-                            final categoryData = snapshot.data!.docs;
-
-                            return ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: categoryData.length,
-                                scrollDirection: Axis.horizontal,
-                                itemBuilder: (context, index) {
-                                  return CategoriesCard(
-                                    sizeRatio: 5,
-                                    borderRadius: 60,
-                                    categoryIcon: iconMap[
-                                        categoryData[index].get('icon')],
-                                    categoryName:
-                                        categoryData[index].get('title'),
-                                    linksDataIds:
-                                        categoryData[index].get('linksData'),
-                                  );
-                                });
-                          }
-                        }),
-                  ),
-                  SizedBox(height: 40.0,),
-                  StreamBuilder<QuerySnapshot>(
-                    stream: FirebaseFirestore.instance
-                        .collection('LinksData')
-                        .where('categories', arrayContains: 'Trending')
-                        .snapshots()
-                        .take(10),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasError) {
-                        return Center(child: Text('${snapshot.error}'));
-                      } else {
-                        if (!snapshot.hasData) {
-                          return Center(child: Padding(
-                            padding: const EdgeInsets.all(30.0),
-                            child: LinearProgressIndicator(),
-                          ));
-                        }
-                        final linksData = snapshot.data!.docs;
-                        return HomePageCarousel(
-                            title: 'Hot & Trending', listLinkData: linksData);
-                      }
-                    },
-                  ),
-
-                SizedBox(height: 10,),
-                Image(image: AssetImage("assets/images/contribute.png")),
-
-                     SizedBox(height: 40,),
-                     Container(
-                       child: ListView.builder(
-                         physics: NeverScrollableScrollPhysics(),
-                           shrinkWrap: true,
-                           itemCount: widget.categoriesList.docs.length,
-                           itemBuilder: (context, index) {
-                             return StreamBuilder<QuerySnapshot>(
-                                 stream: FirebaseFirestore.instance
-                                     .collection('LinksData')
-                                     .where('categories',
-                                         arrayContains: widget.categoriesList.docs[index].get('title'))
-                                     .snapshots()
-                                     .take(6),
-                                 builder: (context, snapshot) {
-                                   if (snapshot.hasError) {
-                                     return Center(child: Text('${snapshot.error}'));
-                                   } else {
-                                     if (!snapshot.hasData) {
-                                       return Center(
-                                           child: Padding(
-                                             padding: const EdgeInsets.all(30.0),
-                                             child: CircularProgressIndicator(),
-                                           ));
-                                     }
-                                     final linksData = snapshot.data!.docs;
-                                     if(linksData.length == 0) {
-                                       return SizedBox();
-                                     }
-                                     return HomePageCarousel(
-                                         title: widget.categoriesList.docs[index].get('title'),
-                                         listLinkData: linksData);
-                                   }
-                                 });
-                           }),
-                     ),
-                                    Container(
-                    width: double.infinity,
-                    height: 100,
-
-                    decoration: BoxDecoration(
-                      color: darkModeColor,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.white,
-                          offset: const Offset(
-                            2.0,
-                            2.0,
-                          ),
-                          blurRadius: 2.0,
-                          spreadRadius: 2.0,
-                        ),
-                      ],
+                          }),
                     ),
+                    SizedBox(height: 40.0,),
+                    StreamBuilder<QuerySnapshot>(
+                      stream: FirebaseFirestore.instance
+                          .collection('LinksData')
+                          .where('categories', arrayContains: 'Trending')
+                          .snapshots()
+                          .take(10),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return Center(child: Text('${snapshot.error}'));
+                        } else {
+                          if (!snapshot.hasData) {
+                            return Center(child: Padding(
+                              padding: const EdgeInsets.all(30.0),
+                              child: LinearProgressIndicator(),
+                            ));
+                          }
+                          final linksData = snapshot.data!.docs;
+                          return HomePageCarousel(
+                              title: 'Hot & Trending', listLinkData: linksData);
+                        }
+                      },
+                    ),
+                    SizedBox(height: 10,),
+                    Image(image: AssetImage("assets/images/contribute.png")),
+                    SizedBox(height: 40,),
+                    Container(
+                      child: ListView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: widget.categoriesList.docs.length,
+                          itemBuilder: (context, index) {
+                            return StreamBuilder<QuerySnapshot>(
+                                   stream: FirebaseFirestore.instance
+                                       .collection('LinksData')
+                                       .where('categories',
+                                           arrayContains: widget.categoriesList.docs[index].get('title'))
+                                       .snapshots()
+                                       .take(6),
+                                   builder: (context, snapshot) {
+                                     if (snapshot.hasError) {
+                                       return Center(child: Text('${snapshot.error}'));
+                                     } else {
+                                       if (!snapshot.hasData) {
+                                         return Center(
+                                             child: Padding(
+                                               padding: const EdgeInsets.all(30.0),
+                                               child: CircularProgressIndicator(),
+                                             ));
+                                       }
+                                       final linksData = snapshot.data!.docs;
+                                       if(linksData.length == 0) {
+                                         return SizedBox();
+                                       }
+                                       return HomePageCarousel(
+                                           title: widget.categoriesList.docs[index].get('title'),
+                                           listLinkData: linksData);
+                                     }
+                                   });
+                             }),
+                       ),
+                    Container(
+                      width: double.infinity,
+                      height: 100,
 
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          SizedBox(width: 3,),
-                          SizedBox(
-                            width: width/1.5,
-                            child:  Text("Keep your sensitive information private before entering public groups !!", style: TextStyle(color: baseColor,fontWeight: FontWeight.bold,fontSize: 18, fontFamily: 'BalsamiqSans'),),
+                      decoration: BoxDecoration(
+                        color: darkModeColor,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.white,
+                            offset: const Offset(
+                              2.0,
+                              2.0,
+                            ),
+                            blurRadius: 2.0,
+                            spreadRadius: 2.0,
                           ),
-
-                          Image(image: AssetImage("assets/images/crime.jpg"),)
                         ],
+                      ),
 
-                    )
-                  ),
-                ],
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            SizedBox(width: 3,),
+                            SizedBox(
+                              width: width/1.5,
+                              child:  Text("Keep your sensitive information private "
+                                  "before entering public groups !!",
+                                style: TextStyle(color: baseColor,
+                                    fontWeight: FontWeight.bold,fontSize: 18,
+                                    fontFamily: 'BalsamiqSans'),),
+                            ),
+                            Image(image: AssetImage("assets/images/crime.jpg"),)
+                          ],
+
+                      )
+                    ),
+                  ],
+                ),
               ),
             ),
 
