@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/constants.dart';
-import 'LinkCards.dart';
+import 'package:flutter_app/Cards/LinkCards.dart';
+import 'package:flutter_app/Constants/constants.dart';
 
 class HomePageCarousel extends StatelessWidget {
   final title;

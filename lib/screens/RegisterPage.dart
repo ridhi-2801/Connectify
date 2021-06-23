@@ -1,10 +1,10 @@
 import 'dart:ui';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'addLinkPage.dart';
+import 'AddLinkPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/Authentication.dart';
-import 'package:flutter_app/constants.dart';
+import '../AuthService/Authentication.dart';
+import '../Constants/constants.dart';
 
 class Register extends StatefulWidget {
   @override

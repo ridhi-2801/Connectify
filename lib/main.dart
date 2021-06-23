@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'screens/explorePage.dart';
+import 'screens/HomePage/ExplorePage.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async{

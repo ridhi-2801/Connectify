@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'constants.dart';
+import '../Constants/constants.dart';
 import 'package:share_plus/share_plus.dart';
 
 class LinkCards extends StatelessWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../categoryPage.dart';
-import '../constants.dart';
+import 'package:flutter_app/Constants/constants.dart';
+import 'package:flutter_app/screens/CategoriesPage/categoryPage.dart';
 
 class SearchViewScreen extends StatelessWidget {
   final list;

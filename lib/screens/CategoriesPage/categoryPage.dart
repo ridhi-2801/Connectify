@@ -2,8 +2,8 @@ import 'package:clay_containers/clay_containers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/LinkCards.dart';
-import 'package:flutter_app/constants.dart';
+import '../../Cards/LinkCards.dart';
+import '../../Constants/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CategoryPage extends StatefulWidget {

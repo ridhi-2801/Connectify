@@ -4,11 +4,11 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/Authentication.dart';
-import 'package:flutter_app/constants.dart';
-import 'package:flutter_app/screens/Register.dart';
+import '../AuthService/Authentication.dart';
+import '../Constants/constants.dart';
+import 'package:flutter_app/screens/RegisterPage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:flutter_app/googleAuth.dart';
+import '../AuthService/googleAuth.dart';
 
 bool isSee = true;
 

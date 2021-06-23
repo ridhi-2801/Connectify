@@ -2,17 +2,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/SearchPage/searchPage.dart';
-import 'package:flutter_app/categoriesCard.dart';
-import 'package:flutter_app/constants.dart';
-import 'package:flutter_app/screens/addLinkPage.dart';
-import 'package:flutter_app/screens/login.dart';
+import '../AddLinkPage.dart';
+import '../SearchPage/searchPage.dart';
+import '../../Cards/categoriesCard.dart';
+import '../../Constants/constants.dart';
+import 'package:flutter_app/screens/LoginPage.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../homePageCarousel.dart';
-import 'categoriesPage.dart';
-import 'settingsPage.dart';
-import '../SearchPage/searchPage.dart';
+import '../HomePage/homePageCarousel.dart';
+import '../CategoriesPage/categoriesPage.dart';
+import '../SettingsPage.dart';
 
 bool isAdmin = false;
 

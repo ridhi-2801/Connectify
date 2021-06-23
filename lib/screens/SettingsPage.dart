@@ -2,13 +2,13 @@ import 'package:clay_containers/clay_containers.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/Authentication.dart';
-import 'package:flutter_app/aboutPage.dart';
-import 'package:flutter_app/screens/adminPage.dart';
+import '../AuthService/Authentication.dart';
+import 'AboutPage.dart';
+import 'package:flutter_app/screens/AdminPage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import '../constants.dart';
-import 'explorePage.dart';
-import 'login.dart';
+import '../Constants/constants.dart';
+import 'HomePage/ExplorePage.dart';
+import 'LoginPage.dart';
 
 class SettingsPage extends StatefulWidget {
   @override

@@ -1,8 +1,8 @@
 import 'package:clay_containers/clay_containers.dart';
 import 'package:clay_containers/widgets/clay_container.dart';
 import 'package:flutter/material.dart';
-import 'categoryPage.dart';
-import 'constants.dart';
+import '../screens/CategoriesPage/categoryPage.dart';
+import '../Constants/constants.dart';
 
 class CategoriesCard extends StatelessWidget {
   final categoryIcon;

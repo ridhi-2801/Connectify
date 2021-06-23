@@ -2,10 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_app/SearchPage/searchPage.dart';
+import '../SearchPage/searchPage.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../categoriesCard.dart';
-import '../constants.dart';
+import '../../Cards/categoriesCard.dart';
+import '../../Constants/constants.dart';
 
 class CategoriesPage extends StatefulWidget {
   @override
