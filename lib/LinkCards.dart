@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
-import 'package:social_share/social_share.dart';
 import 'constants.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -22,10 +20,7 @@ class LinkCards extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        right: 10.0,
-      ),
+    return Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -41,6 +36,7 @@ class LinkCards extends StatelessWidget {
               color: Colors.transparent,
               width: 150,
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Divider(
                     color: isDark ? baseColor : darkModeColor,
@@ -55,18 +51,17 @@ class LinkCards extends StatelessWidget {
                           linkImage,),
                     ),
                   ),
-                  Padding(
-                      padding: const EdgeInsets.only(top: 10.0,bottom: 4.0),
-                      child: Flexible(
-                        child: Text(
-                          linkTitle,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: linkTitle.length > 20 ? 12.5 : 15,
-                            color: isDark ? baseColor : darkModeColor,
-                          ),
-                        ),
-                      )),
+                  SizedBox(height: 5.0,),
+                  Flexible(
+                    child: Text(
+                      linkTitle,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: linkTitle.length > 20 ? 12.5 : 15,
+                        color: isDark ? baseColor : darkModeColor,
+                      ),
+                    ),
+                  ),
                   platformIconMap.containsKey(platform) == true ?
                   Icon(platformIconMap[platform],size: linkTitle.length > 20 ? 16.5 : 20.0,color: isDark? Colors.white : Colors.black,) : Text(platform),
                   SizedBox(height: 8.0,),
@@ -138,77 +133,3 @@ class LinkCards extends StatelessWidget {
     sharePositionOrigin: box.localToGlobal(Offset.zero) &  box.size,);
   }
 }
-
-// Alert(
-//     context: context,
-//     title: "Share By:",
-//     content: Padding(
-//       padding: const EdgeInsets.only(top: 28.0),
-//       child: Column(
-//         children: [
-//           Row(
-//             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//             children: [
-//               IconButton(
-//                 icon: Icon(FontAwesomeIcons.whatsapp),
-//                 onPressed: () async {
-//                   SocialShare.shareWhatsapp(link).then((data) {
-//                     print(data);
-//                     Navigator.pop(context);
-//                   });},
-//                 color: Color(0xff075E54),
-//               ),
-//               IconButton(
-//                 icon: Icon(FontAwesomeIcons.telegram),
-//                 onPressed: () async {
-//                   SocialShare.shareTelegram(link).then((data) {
-//                     print(data);
-//                     Navigator.pop(context);
-//                   });
-//                 },
-//                 color: Colors.blue,
-//               ),
-//             ],
-//           ),
-//           Row(
-//             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//             children: [
-//               IconButton(
-//                 icon: Icon(FontAwesomeIcons.twitter),
-//                 onPressed: () {
-//                   SocialShare.shareTwitter(
-//                       "Hey! I am inviting you to join the group",
-//                       hashtags: [
-//                         "hey",
-//                         "invite",
-//                         "join",
-//                         "group"
-//                       ],
-//                       url: link);
-//                   Navigator.pop(context);
-//                 },
-//                 color: Color(0xff00acee),
-//               ),
-//               IconButton(
-//                 icon: Icon(FontAwesomeIcons.copy),
-//                 onPressed: () {
-//                   SocialShare.copyToClipboard(link);
-//                   Navigator.pop(context);
-//                 },
-//                 color: Colors.black,
-//               ),
-//             ],
-//           ),
-//         ],
-//       ),
-//     ),
-//     buttons: [
-//       DialogButton(
-//         onPressed: () => Navigator.pop(context),
-//         color: Color(0xff075E54),
-//         child: Text(
-//           "Done",
-//           style: TextStyle(color: Colors.white, fontSize: 20),
-//         ),
-//       )
-//     ]).show();

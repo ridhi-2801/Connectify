@@ -7,6 +7,7 @@ import 'package:flutter_app/aboutPage.dart';
 import 'package:flutter_app/screens/adminPage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import '../constants.dart';
+import 'explorePage.dart';
 import 'login.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -88,11 +89,11 @@ class _SettingsPageState extends State<SettingsPage> {
                 child: SettingsListTitles(title: "About", icons: EvaIcons.people, tap: ()=> Navigator.push(context, MaterialPageRoute(
                     builder: (context) => AboutPage())),),
               ),
-              Padding(
+              isAdmin == true ? Padding(
                 padding: const EdgeInsets.only(top:18.0),
                 child: SettingsListTitles(title: "Admin Area", icons: EvaIcons.people, tap: ()=> Navigator.push(context, MaterialPageRoute(
                     builder: (context) => AdminPage())),),
-              ),
+              ) : SizedBox(),
               Padding(
                 padding: const EdgeInsets.only(top:18.0),
                 child: logout(),
