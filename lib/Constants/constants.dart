@@ -51,7 +51,6 @@ final textStyle=TextStyle(fontSize: 20,fontWeight: FontWeight.w500);
 final loginColor=baseColor;
 
 Map<String,IconData> iconMap = {
-  'Hot & Trending' : FontAwesomeIcons.fire,
   'Coding':EvaIcons.smartphoneOutline,
   'Fashion':EvaIcons.shoppingBagOutline,
   'Photography':EvaIcons.cameraOutline,
@@ -67,7 +66,7 @@ Map<String,IconData> iconMap = {
   'Buying and selling': FontAwesomeIcons.buysellads,
   'Trading':FontAwesomeIcons.bitcoin,
   'Stocks':FontAwesomeIcons.building,
-  'Art and craft': FontAwesomeIcons.paintBrush,
+  'Art & craft': FontAwesomeIcons.paintBrush,
   'Promotion': FontAwesomeIcons.teamspeak,
   'NGOs': FontAwesomeIcons.handsHelping,
   'NoIcon' : FontAwesomeIcons.users,
