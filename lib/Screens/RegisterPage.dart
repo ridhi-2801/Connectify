@@ -87,7 +87,6 @@ class _RegisterState extends State<Register> {
                                 prefixIcon: Icon(Icons.lock),
                                 suffixIcon:IconButton(
                                     onPressed: () {
-
                                       setState(() {
                                         isSee =
                                         isSee ? false : true;
@@ -123,17 +122,16 @@ class _RegisterState extends State<Register> {
 
                             ),
                               obscureText: isSee,
-
                             ),
 
                           SizedBox(height: 20,),
 
                           GestureDetector(onTap: ()async{
-                            bool shouldNavigate = await register(_emailField.toString(), _passwordField.toString());
+                            bool shouldNavigate = await register(_emailField.text.toString().trim(), _passwordField.text.toString().trim());
                             if(shouldNavigate==true){
-                              Navigator.push(context, MaterialPageRoute(builder: (contextBuilder)=>AddLinkPage()));
+                              Navigator.of(context)
+                                  .popUntil(ModalRoute.withName("/HomePage"));
                             }else{
-                              Navigator.push(context, MaterialPageRoute(builder: (contextBuilder)=>AddLinkPage()));
                               Fluttertoast.showToast(
                                   msg: "Weak Password",
                                   toastLength: Toast.LENGTH_SHORT,

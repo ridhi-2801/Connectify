@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../Constants/constants.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -111,6 +112,7 @@ class _AddLinkPageState extends State<AddLinkPage> {
         'categories': [categorySelected]
       }).then((value) => {
             print('Link Added'),
+        Fluttertoast.showToast(msg: 'Link Uploaded!',toastLength: Toast.LENGTH_LONG , backgroundColor: Colors.blue, textColor: Colors.white),
             Navigator.pop(context),
           });
   }
@@ -168,7 +170,6 @@ class _AddLinkPageState extends State<AddLinkPage> {
                     height: 32,
                   ),
                   Text("Select a platform",style: TextStyle(color: isDark?baseColor:darkModeColor),),
-
                   DropdownButton<String>(
                     hint: Text('Select a plaltform!'),
                     value: platform,
@@ -202,11 +203,7 @@ class _AddLinkPageState extends State<AddLinkPage> {
                         } else {
                           if (snapshot.hasData) {
                             final listCategories = snapshot.data!.docs;
-                            List<String> list = [];
-                            listCategories.forEach((category) {
-                              list.add(category.get('title'));
-                            });
-                            categorySelected=list[0];
+                            categorySelected = listCategories[0].get('title') ?? 'Some Error Occurred! Check your connection';
                             return DropdownButton<String>(
                               value: categorySelected,
                               icon: const Icon(Icons.arrow_downward),
@@ -218,18 +215,16 @@ class _AddLinkPageState extends State<AddLinkPage> {
                                 color: Colors.blue,
                               ),
                               onChanged: (String? newValue){
-                                print(categorySelected);
+                                print(newValue);
                                 setState(() {
                                    categorySelected = newValue!;
-
                                 });
-
                               },
-                              items: list
+                              items: listCategories
                                   .map<DropdownMenuItem<String>>((document) {
                                 return DropdownMenuItem<String>(
-                                  value: document,
-                                  child: Text(document),
+                                  value: document.get('title'),
+                                  child: Text(document.get('title')),
                                 );
                               }).toList(),
                             );
@@ -309,42 +304,56 @@ class _AddLinkPageState extends State<AddLinkPage> {
                       style: TextStyle(color: Colors.white, fontSize: 20, ),
                     ),
                     onPressed: () async {
-                      if(_image == null){
-                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                          content: Text('Upload an image!'),
-                        ));
-                      }else if (uploadedFileURL.length == 0) {
-                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                          content: Text('Image not uploaded!'),
-                        ));
-                        return;
-                      } else if (linkController.text.length == 0) {
+                      Fluttertoast.showToast(msg: 'Loading ...', backgroundColor: Colors.blue, textColor: Colors.white);
+
+                      if (linkController.text.length == 0) {
                         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                           content: Text('Link Not added!'),
                         ));
                         return;
-                      } else if (groupNameController.text.length == 0) {
+                      }
+
+                      if (groupNameController.text.length == 0) {
                         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                           content: Text('Group Name Not Added!'),
                         ));
                         return;
-                      } else if (platform.length == 0) {
+                      }
+
+                      if (platform.length == 0) {
                         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                           content: Text('Please Select a Platform!'),
                         ));
                         return;
-                      } else if (categorySelected.length == 0) {
+                      }
+
+                      if (categorySelected.length == 0) {
                         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                           content: Text('Please select a category!'),
                         ));
                         return;
-                      }else {
+                      }
+
+                      if(_image!= null){
+                        await uploadImage(_image);
+                      }else{
                         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text('Upload an image!'),
+                        ));
+                      }
+
+                      if (uploadedFileURL.length == 0) {
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text('Image not uploaded!'),
+                        ));
+                        return;
+                      }
+
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                           content: Text('Uploading! Please Wait!'),
                         ));
-                        await uploadImage(_image);
                         await uploadLink();
-                      }
+
                     },
                   ),
                 ]),

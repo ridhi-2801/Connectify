@@ -69,7 +69,7 @@ Map<String,IconData> iconMap = {
   'Art & craft': FontAwesomeIcons.paintBrush,
   'Promotion': FontAwesomeIcons.teamspeak,
   'NGOs': FontAwesomeIcons.handsHelping,
-  'NoIcon' : FontAwesomeIcons.users,
+  'Others' : FontAwesomeIcons.users,
 };
 
 Map<String,IconData> platformIconMap = {

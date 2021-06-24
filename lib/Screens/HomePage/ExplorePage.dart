@@ -29,6 +29,7 @@ class _ExploreState extends State<Explore> {
 
   Future<void> checkAdmin() async{
     if(FirebaseAuth.instance.currentUser != null){
+      print(FirebaseAuth.instance.currentUser);
       await FirebaseFirestore.instance.collection('Users')
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .get()
@@ -60,15 +61,17 @@ class _ExploreState extends State<Explore> {
       child: Scaffold(
         backgroundColor: isDark ? darkModeColor : baseColor,
         floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.black,
+          backgroundColor: Colors.blue,
           elevation: 10,
           child: Icon(
-            Icons.add,
+            FontAwesomeIcons.plus,
             color: Colors.white,
+            size: 20.0,
           ),
           onPressed: () => Navigator.push(
               context,
               MaterialPageRoute(
+                  settings: RouteSettings(name: "/HomePage"),
                   builder: (context) =>
                       FirebaseAuth.instance.currentUser == null
                           ? Login()
@@ -92,7 +95,9 @@ class _ExploreState extends State<Explore> {
                     child: Text(
                       FirebaseAuth.instance.currentUser == null
                           ? ''
-                          : 'Hello ${FirebaseAuth.instance.currentUser!.displayName}',
+                          :   "Hello ${FirebaseAuth.instance.currentUser!.displayName
+                              ??
+                              FirebaseAuth.instance.currentUser!.email!.split('@')[0] ?? '!!'}",
                       style: TextStyle(
                           color: Colors.blue,
                           fontSize: width * 0.045,
@@ -118,7 +123,9 @@ class _ExploreState extends State<Explore> {
                     size: 25.0, color: isDark ? baseColor : darkModeColor),
                     onPressed: () {
                       Navigator.push(
-                      context,MaterialPageRoute(builder: (context) => SettingsPage()))
+                      context,MaterialPageRoute(
+                          settings: RouteSettings(name: "/HomePage"),
+                          builder: (context) => SettingsPage()))
                             .then((value) => setState(() {}));},
                       ),
                   ],
@@ -146,12 +153,16 @@ class _ExploreState extends State<Explore> {
                           color: isDark ? baseColor : darkModeColor),
                       onPressed: () {
                         Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
+                            MaterialPageRoute(
+                                settings: RouteSettings(name: "/HomePage"),
+                                builder: (context) {
                               return CategoriesPage();
                             }));
                       }),
                   IconButton(onPressed: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (context) =>
+                      MaterialPageRoute(
+                          settings: RouteSettings(name: "/HomePage"),
+                          builder: (context) =>
                           SearchPage(
                             searchType: "Community Link",
                           ))), icon: Icon(FontAwesomeIcons.search, color : isDark ? baseColor : darkModeColor,size: 20,)),

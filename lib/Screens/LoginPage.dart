@@ -112,7 +112,7 @@ class _LoginState extends State<Login> {
                           GestureDetector(
                             onTap: () async {
                               bool isUser = await signIn(
-                                  _email.toString(), _password.toString());
+                                  _email.text.toString().trim(), _password.text.toString().trim());
                               if (isUser) {
                                 Navigator.pop(context);
                               } else {

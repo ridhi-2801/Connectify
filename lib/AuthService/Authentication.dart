@@ -17,6 +17,7 @@ FirebaseAuth auth = FirebaseAuth.instance;
      });
      return true;
    } on FirebaseAuthException catch (e) {
+     print(e);
      if (e.code == 'weak-password') {
        print('The password provided is too weak.');
      } else if (e.code == 'email-already-in-use') {
