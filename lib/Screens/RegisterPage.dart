@@ -23,7 +23,7 @@ class _RegisterState extends State<Register> {
     double height= MediaQuery.of(context).size.height;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: isDark ? darkModeColor : baseColor,
+        backgroundColor:baseColor,
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(10.0),
@@ -133,6 +133,7 @@ class _RegisterState extends State<Register> {
                             if(shouldNavigate==true){
                               Navigator.push(context, MaterialPageRoute(builder: (contextBuilder)=>AddLinkPage()));
                             }else{
+                              Navigator.push(context, MaterialPageRoute(builder: (contextBuilder)=>AddLinkPage()));
                               Fluttertoast.showToast(
                                   msg: "Weak Password",
                                   toastLength: Toast.LENGTH_SHORT,

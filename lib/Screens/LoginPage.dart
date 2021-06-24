@@ -26,7 +26,7 @@ class _LoginState extends State<Login> {
     double height = MediaQuery.of(context).size.height;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: isDark ? darkModeColor : baseColor,
+        backgroundColor: baseColor,
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(10.0),
@@ -170,7 +170,7 @@ class _LoginState extends State<Login> {
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Text("OR Login with ",
-                    style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500, color: isDark ? Colors.white : Colors.black),),
+                    style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500, color:  Colors.black),),
                 ),
                 GestureDetector(
                     onTap: () async {

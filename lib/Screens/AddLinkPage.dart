@@ -115,7 +115,7 @@ class _AddLinkPageState extends State<AddLinkPage> {
           });
   }
 
-  String platform = "Select Platform";
+  String platform = platforms[0];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -152,20 +152,26 @@ class _AddLinkPageState extends State<AddLinkPage> {
                     controller: groupNameController,
                     decoration: const InputDecoration(
                       hintText: 'Name of Group',
+                        hintStyle: TextStyle( color: Colors.blue),
+                      border: UnderlineInputBorder(borderSide: BorderSide(color: Colors.blue))
                     ),
                   ),
                   TextFormField(
                     controller: linkController,
                     decoration: const InputDecoration(
                       hintText: 'Link',
+                        hintStyle: TextStyle( color: Colors.blue),
+                        border: UnderlineInputBorder(borderSide: BorderSide(color: Colors.blue))
                     ),
                   ),
                   SizedBox(
-                    height: 12,
+                    height: 32,
                   ),
+                  Text("Select a platform",style: TextStyle(color: isDark?baseColor:darkModeColor),),
+
                   DropdownButton<String>(
                     hint: Text('Select a plaltform!'),
-                    value: platforms[0],
+                    value: platform,
                     icon: const Icon(Icons.arrow_downward),
                     iconSize: 24,
                     elevation: 16,
@@ -182,8 +188,9 @@ class _AddLinkPageState extends State<AddLinkPage> {
                     items: platformDropDowns(),
                   ),
                   SizedBox(
-                    height: 5,
+                    height: 32,
                   ),
+                  Text("Select a category",style: TextStyle(color: isDark?baseColor:darkModeColor),),
                   StreamBuilder<QuerySnapshot>(
                       stream: FirebaseFirestore.instance
                           .collection('Categories')
@@ -199,8 +206,9 @@ class _AddLinkPageState extends State<AddLinkPage> {
                             listCategories.forEach((category) {
                               list.add(category.get('title'));
                             });
+                            categorySelected=list[0];
                             return DropdownButton<String>(
-                              value: list[0],
+                              value: categorySelected,
                               icon: const Icon(Icons.arrow_downward),
                               iconSize: 24,
                               elevation: 16,
@@ -209,10 +217,13 @@ class _AddLinkPageState extends State<AddLinkPage> {
                                 height: 2,
                                 color: Colors.blue,
                               ),
-                              onChanged: (String? newValue) {
+                              onChanged: (String? newValue){
+                                print(categorySelected);
                                 setState(() {
-                                  categorySelected = newValue!;
+                                   categorySelected = newValue!;
+
                                 });
+
                               },
                               items: list
                                   .map<DropdownMenuItem<String>>((document) {
