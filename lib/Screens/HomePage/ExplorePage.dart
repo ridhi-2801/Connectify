@@ -97,7 +97,7 @@ class _ExploreState extends State<Explore> {
                           ? ''
                           :   "Hello ${FirebaseAuth.instance.currentUser!.displayName
                               ??
-                              FirebaseAuth.instance.currentUser!.email!.split('@')[0] ?? '!!'}",
+                              FirebaseAuth.instance.currentUser!.email!.split('@')[0]}",
                       style: TextStyle(
                           color: Colors.blue,
                           fontSize: width * 0.045,
