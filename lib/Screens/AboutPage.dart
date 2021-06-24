@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../Constants/constants.dart';
 
 
@@ -32,7 +33,7 @@ class AboutPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left:20.0,right:20),
                 child: Text(
-                    "Our mission is to connect people round the globe to learn and grow together.",
+                    "Our mission is to connect people round the globe to learn and grow together by helping each other.",
                     style: TextStyle(fontSize: tsf*20)),
               ),
               SizedBox(height: 20,),
@@ -51,7 +52,7 @@ class AboutPage extends StatelessWidget {
                 textAlign: TextAlign.center,),
               SizedBox(height: 20,),
               Padding(
-                padding: const EdgeInsets.only(left: 50.0, right: 40),
+                padding: const EdgeInsets.only(left: 20.0, right: 40),
                 child: Container(
                   color: Colors.black12,
                   child: Row(
@@ -121,7 +122,7 @@ class AboutPage extends StatelessWidget {
               ),
               SizedBox(height: 20,),
               Padding(
-                padding: const EdgeInsets.only(left: 50.0, right: 40),
+                padding: const EdgeInsets.only(left: 20.0, right: 40),
                 child: Container(
                   color: Colors.black12,
                   child: Row(
@@ -189,8 +190,34 @@ class AboutPage extends StatelessWidget {
                     ],
                   ),
                 ),
-              )
+              ),
+              SizedBox(height: 40,),
+              Center(
+                child: Text("Support us",
+                  style: TextStyle(fontSize: tsf*40, fontWeight: FontWeight.w900,  fontFamily: 'MeriendaOne',),),
+              ),
+        SizedBox(height: 10,),
+        Text("Follow us on:",
+          style: TextStyle(fontSize: tsf*25, fontWeight: FontWeight.w900,  fontFamily: 'MeriendaOne',),),
+
+
+
+                  IconButton(onPressed: (){
+                    launchURL("https://www.instagram.com/carelesscoders/");
+                  }, icon: Icon(FontAwesomeIcons.instagram,color: Colors.pink,size: 30,), ),
+              Center(child: Text("Instagram")),
+              SizedBox(height: 10,),
+              Text("Subscribe Careless Coders:",
+                style: TextStyle(fontSize: tsf*25, fontWeight: FontWeight.w900,  fontFamily: 'MeriendaOne',),),
+              IconButton(onPressed: (){launchURL("https://www.youtube.com/channel/UCqpup921sCCjfTIiYy0CkCw");
+              }, icon: Icon(FontAwesomeIcons.youtube,color: Colors.red,size: 30,), ),
+              Center(child: Text("Youtube")),
+
+
+
             ],
+
+
           ),
         ),
 
