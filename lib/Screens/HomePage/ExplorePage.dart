@@ -102,25 +102,26 @@ class _ExploreState extends State<Explore> {
                   ),
                   Spacer(),
                   IconButton(
-                      icon: Icon(EvaIcons.gridOutline,
+                      icon: Icon(isDark ? EvaIcons.sun : FontAwesomeIcons.moon,
                           size: 25.0,
                           color: isDark ? baseColor : darkModeColor),
                       onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return CategoriesPage();
-                        }));
-                      }),
+                        if(isDark==false) {
+                          isDark=true;
+                        }else{
+                          isDark=false;
+                        }
+                        setState(() {});}
+                  ),
                   IconButton(
                     icon: Icon(EvaIcons.settings2Outline,
-                        size: 25.0, color: isDark ? baseColor : darkModeColor),
-                    onPressed: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SettingsPage()))
-                        .then((value) => setState(() {})),
-                  ),
-                ],
+                    size: 25.0, color: isDark ? baseColor : darkModeColor),
+                    onPressed: () {
+                      Navigator.push(
+                      context,MaterialPageRoute(builder: (context) => SettingsPage()))
+                            .then((value) => setState(() {}));},
+                      ),
+                  ],
               ),
             ),
             Padding(
@@ -138,11 +139,22 @@ class _ExploreState extends State<Explore> {
                         fontSize: 44.0,
                         fontFamily: 'BalsamiqSans'),
                   ),
+                  Spacer(),
+                  IconButton(
+                      icon: Icon(EvaIcons.gridOutline,
+                          size: 25.0,
+                          color: isDark ? baseColor : darkModeColor),
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                              return CategoriesPage();
+                            }));
+                      }),
                   IconButton(onPressed: () => Navigator.push(context,
                       MaterialPageRoute(builder: (context) =>
                           SearchPage(
                             searchType: "Community Link",
-                          ))), icon: Icon(FontAwesomeIcons.search, size: 20,))
+                          ))), icon: Icon(FontAwesomeIcons.search, color : isDark ? baseColor : darkModeColor,size: 20,)),
                 ],
               ),
             ),

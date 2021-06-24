@@ -68,11 +68,10 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
           SizedBox(
             height: 25.0),
-              SettingsListTitles(title: "Dark Mode", icons: EvaIcons.moon,tap: (){
+              SettingsListTitles(title: isDark ? "Light Mode" : "Dark Mode", icons: isDark ? EvaIcons.sun : EvaIcons.moon,tap: (){
                setState(() {
                  if(isDark==false) {
                    isDark=true;
-
                  }else{
                    isDark=false;
                  }
