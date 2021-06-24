@@ -119,13 +119,11 @@ class _RegisterState extends State<Register> {
                                       color: Colors.grey,
                                     )),
                                 hintText: "Confirm Password"
-
                             ),
                               obscureText: isSee,
                             ),
 
                           SizedBox(height: 20,),
-
                           GestureDetector(onTap: ()async{
                             bool shouldNavigate = await register(_emailField.text.toString().trim(), _passwordField.text.toString().trim());
                             if(shouldNavigate==true){
@@ -133,7 +131,7 @@ class _RegisterState extends State<Register> {
                                   .popUntil(ModalRoute.withName("/HomePage"));
                             }else{
                               Fluttertoast.showToast(
-                                  msg: "Weak Password",
+                                  msg: "Register Failed",
                                   toastLength: Toast.LENGTH_SHORT,
                                   gravity: ToastGravity.CENTER,
                                   timeInSecForIosWeb: 1,

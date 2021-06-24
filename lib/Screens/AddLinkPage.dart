@@ -26,6 +26,7 @@ class _AddLinkPageState extends State<AddLinkPage> {
   @override
   void initState() {
     super.initState();
+    categorySelected = 'Coding';
   }
 
   void _showPicker(context) {
@@ -203,7 +204,6 @@ class _AddLinkPageState extends State<AddLinkPage> {
                         } else {
                           if (snapshot.hasData) {
                             final listCategories = snapshot.data!.docs;
-                            categorySelected = listCategories[0].get('title') ?? 'Some Error Occurred! Check your connection';
                             return DropdownButton<String>(
                               value: categorySelected,
                               icon: const Icon(Icons.arrow_downward),

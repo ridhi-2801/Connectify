@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 FirebaseAuth auth = FirebaseAuth.instance;
 
  Future<bool> register(String email,String password)async{
+
    try {
      await FirebaseAuth.instance.createUserWithEmailAndPassword(
          email: email,
@@ -17,7 +19,15 @@ FirebaseAuth auth = FirebaseAuth.instance;
      });
      return true;
    } on FirebaseAuthException catch (e) {
-     print(e);
+     Fluttertoast.showToast(
+         msg: "$e",
+         toastLength: Toast.LENGTH_LONG,
+         gravity: ToastGravity.CENTER,
+         timeInSecForIosWeb: 1,
+         backgroundColor: Colors.red,
+         textColor: Colors.white,
+         fontSize: 16.0
+     );
      if (e.code == 'weak-password') {
        print('The password provided is too weak.');
      } else if (e.code == 'email-already-in-use') {
@@ -29,6 +39,7 @@ FirebaseAuth auth = FirebaseAuth.instance;
      return false;
    }
  }
+
 Future<bool> signIn(String email,String password)async {
   try {
     await FirebaseAuth.instance
@@ -38,6 +49,15 @@ Future<bool> signIn(String email,String password)async {
     );
     return true;
   } on FirebaseAuthException catch (e) {
+    Fluttertoast.showToast(
+        msg: "$e",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0
+    );
     if (e.code == 'user-not-found') {
       print('No user found for that email.');
       return false;
