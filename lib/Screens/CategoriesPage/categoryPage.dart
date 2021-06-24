@@ -33,9 +33,37 @@ class _CategoryPageState extends State<CategoryPage> {
         items.add(data[i]);
       }
   }
-return items;
+  return items;
  }
-List<bool> selected=[false,false,false,false];
+
+List<bool> selected=[false,false,false,false,false];
+
+  void filterToggleValues(index){
+    if(index==0){
+      platform="Whatsapp";
+      toggleValues(index);
+    }else if(index==1){
+      platform="Facebook";
+      toggleValues(index);
+    }else if(index==2) {
+      platform = "Telegram";
+      toggleValues(index);
+    }else if(index==3){
+      platform="Discord";
+      toggleValues(index);
+    }else if(index==4){
+      platform="Reddit";
+      toggleValues(index);
+    }else{
+      platform="";
+    }
+  }
+
+  void toggleValues(int index){
+    for(int i =0 ; i<selected.length && i!= index; i++){
+      selected[i] = false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,43 +106,18 @@ List<bool> selected=[false,false,false,false];
                  child: ToggleButtons(
                    selectedBorderColor: color,
                    children: [
-                   Icon(FontAwesomeIcons.whatsapp,color: Colors.green,),
-                   Icon(FontAwesomeIcons.facebook,color: Color(0xff217cf3),),
-                   Icon(FontAwesomeIcons.telegram,color: Colors.blue,),
+                     Icon(FontAwesomeIcons.whatsapp,color: Colors.green,),
+                     Icon(FontAwesomeIcons.facebook,color: Color(0xff217cf3),),
+                     Icon(FontAwesomeIcons.telegram,color: Colors.blue,),
+                     Icon(FontAwesomeIcons.discord,color: Color(0xFF6E85D2),),
                      Icon(FontAwesomeIcons.reddit,color: Colors.redAccent,),
                  ], isSelected: selected,
                  onPressed: (int index){
+                   filterToggleValues(index);
                      setState(() {
                        selected[index]=!selected[index];
                        color=Colors.black;
                      });
-
-                     if(index==0){
-                       platform="Whatsapp";
-                       selected[1]=false;
-                       selected[2]=false;
-                       selected[3]=false;
-                     }
-                       else if(index==1){
-                         platform="Facebook";
-                         selected[0]=false;
-                         selected[2]=false;
-                         selected[3]=false;
-                     }else if(index==2) {
-                       platform = "Telegram";
-                       selected[1]=false;
-                       selected[0]=false;
-                       selected[3]=false;
-                     }
-                       else if(index==3){
-                         platform="Reddit";
-                         selected[1]=false;
-                         selected[2]=false;
-                         selected[0]=false;
-                     }
-                       else{
-                         platform="";
-                     }
                  },
                  ),
                ),

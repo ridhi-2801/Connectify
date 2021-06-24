@@ -30,6 +30,7 @@ class LinkData {
   final image;
   final platform;
 }
+
 class CategoryData {
   CategoryData({
     this.title,
@@ -76,7 +77,8 @@ Map<String,IconData> platformIconMap = {
   'Telegram' : FontAwesomeIcons.telegram,
   'Whatsapp' : FontAwesomeIcons.whatsapp,
   'Facebook' : FontAwesomeIcons.facebookSquare,
+  'Discord' : FontAwesomeIcons.discord,
   'Reddit' : FontAwesomeIcons.reddit,
 };
 
-List<String> platforms = ['Telegram','Whatsapp','Facebook','Reddit'];
+List<String> platforms = ['Telegram','Whatsapp','Facebook', 'Discord' ,'Reddit'];
